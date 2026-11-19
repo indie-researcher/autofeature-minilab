@@ -7,3 +7,8 @@ tmp/
 .DS_Store
 SEALED*
 *sealed*
+__pycache__/
+*.pyc
+.phase3_*/
+.kaggle_notebook_inventory/
+*.npz
