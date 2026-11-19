@@ -1,0 +1,126 @@
+{
+  "arm": "R-naive",
+  "run": 5,
+  "n_proposals": 60,
+  "n_screened": 50,
+  "n_full_tests": 10,
+  "accepted_real": 8,
+  "accepted_decoys": 0,
+  "decoys_tested": 2,
+  "decoy_fpr": 0.0,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.9770117432099807,
+  "dev_gap_closed_pct": 46.37523420471053,
+  "model": "random",
+  "decoys_proposed": 9,
+  "decoys_screened": 7,
+  "n_dup_total": 0,
+  "tokens": null,
+  "accepted": [
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c3",
+          "h"
+        ],
+        "k": 3,
+        "dir": "next"
+      },
+      "is_decoy": false,
+      "dseed": 5000017,
+      "iter": 2
+    },
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c0",
+          "c4"
+        ],
+        "k": 2,
+        "dir": "prev"
+      },
+      "is_decoy": false,
+      "dseed": 5000020,
+      "iter": 5
+    },
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c3"
+        ],
+        "k": 1,
+        "dir": "next"
+      },
+      "is_decoy": false,
+      "dseed": 5000023,
+      "iter": 8
+    },
+    {
+      "spec": {
+        "op": "count",
+        "keys": [
+          "c1",
+          "c3"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 5000030,
+      "iter": 15
+    },
+    {
+      "spec": {
+        "op": "roll",
+        "keys": [
+          "c1",
+          "c2"
+        ],
+        "w": 600
+      },
+      "is_decoy": false,
+      "dseed": 5000031,
+      "iter": 16
+    },
+    {
+      "spec": {
+        "op": "nunique",
+        "keys": [
+          "c0",
+          "c3",
+          "h"
+        ],
+        "target": "c1"
+      },
+      "is_decoy": false,
+      "dseed": 5000036,
+      "iter": 21
+    },
+    {
+      "spec": {
+        "op": "count",
+        "keys": [
+          "c0",
+          "c2"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 5000060,
+      "iter": 45
+    },
+    {
+      "spec": {
+        "op": "nunique",
+        "keys": [
+          "c4"
+        ],
+        "target": "c1"
+      },
+      "is_decoy": false,
+      "dseed": 5000075,
+      "iter": 60
+    }
+  ],
+  "minutes": 30.1
+}

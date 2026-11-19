@@ -1,0 +1,9 @@
+__pycache__/
+af_cache/
+af_lab/
+*.npz
+tmp/
+.ipynb_checkpoints/
+.DS_Store
+SEALED*
+*sealed*

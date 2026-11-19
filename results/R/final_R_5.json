@@ -1,0 +1,67 @@
+{
+  "arm": "R",
+  "run": 5,
+  "n_proposals": 60,
+  "n_screened": 47,
+  "n_full_tests": 13,
+  "accepted_real": 3,
+  "accepted_decoys": 0,
+  "decoys_tested": 0,
+  "decoy_fpr": null,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.9767070034594325,
+  "dev_gap_closed_pct": 44.25365579158995,
+  "accepted": [
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c0",
+          "c4"
+        ],
+        "k": 2,
+        "dir": "prev"
+      },
+      "is_decoy": false,
+      "dseed": 5000020,
+      "iter": 5
+    },
+    {
+      "spec": {
+        "op": "count",
+        "keys": [
+          "c0"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 5000042,
+      "iter": 27
+    },
+    {
+      "spec": {
+        "op": "ratio",
+        "num": {
+          "op": "count",
+          "keys": [
+            "c0",
+            "c3",
+            "c4"
+          ]
+        },
+        "den": {
+          "op": "roll",
+          "keys": [
+            "c1",
+            "c2",
+            "c3"
+          ],
+          "w": 3600
+        }
+      },
+      "is_decoy": false,
+      "dseed": 5000047,
+      "iter": 32
+    }
+  ],
+  "minutes": 34.6
+}

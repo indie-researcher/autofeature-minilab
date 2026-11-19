@@ -1,0 +1,6 @@
+Fatal error: Failed to relaunch the CLI process.
+FatalSandboxError: Sandbox image 'us-docker.pkg.dev/gemini-code-dev/gemini-cli/sandbox:0.68.0' is missing or could not be pulled. Please check the image name, your network connection, or notify gemini-cli-dev@google.com if the issue persists.
+    at start_sandbox (file:///home/jonathan/.nvm/versions/node/v22.22.2/lib/node_modules/@google/gemini-cli/bundle/gemini-Q2FNZWQG.js:11819:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async relaunchOnExitCode (file:///home/jonathan/.nvm/versions/node/v22.22.2/lib/node_modules/@google/gemini-cli/bundle/gemini-Q2FNZWQG.js:18184:24)
+    at async main (file:///home/jonathan/.nvm/versions/node/v22.22.2/lib/node_modules/@google/gemini-cli/bundle/gemini-Q2FNZWQG.js:18949:7)

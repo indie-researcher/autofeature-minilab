@@ -1,0 +1,95 @@
+{
+  "arm": "R",
+  "run": 4,
+  "n_proposals": 60,
+  "n_screened": 47,
+  "n_full_tests": 13,
+  "accepted_real": 5,
+  "accepted_decoys": 0,
+  "decoys_tested": 1,
+  "decoy_fpr": 0.0,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.9775320591347478,
+  "dev_gap_closed_pct": 49.99763998538996,
+  "accepted": [
+    {
+      "spec": {
+        "op": "nunique",
+        "keys": [
+          "c0",
+          "c1",
+          "c4"
+        ],
+        "target": "h"
+      },
+      "is_decoy": false,
+      "dseed": 4000024,
+      "iter": 12
+    },
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c0",
+          "c2",
+          "h"
+        ],
+        "k": 1,
+        "dir": "next"
+      },
+      "is_decoy": false,
+      "dseed": 4000032,
+      "iter": 20
+    },
+    {
+      "spec": {
+        "op": "ratio",
+        "num": {
+          "op": "nunique",
+          "keys": [
+            "c2",
+            "c3"
+          ],
+          "target": "c1"
+        },
+        "den": {
+          "op": "nunique",
+          "keys": [
+            "c1",
+            "h"
+          ],
+          "target": "c3"
+        }
+      },
+      "is_decoy": false,
+      "dseed": 4000037,
+      "iter": 25
+    },
+    {
+      "spec": {
+        "op": "nunique",
+        "keys": [
+          "c0"
+        ],
+        "target": "c3"
+      },
+      "is_decoy": false,
+      "dseed": 4000041,
+      "iter": 29
+    },
+    {
+      "spec": {
+        "op": "nunique",
+        "keys": [
+          "c0",
+          "c3"
+        ],
+        "target": "c1"
+      },
+      "is_decoy": false,
+      "dseed": 4000049,
+      "iter": 37
+    }
+  ],
+  "minutes": 35.2
+}

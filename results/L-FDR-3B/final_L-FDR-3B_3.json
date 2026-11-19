@@ -1,0 +1,37 @@
+{
+  "arm": "L-FDR-3B",
+  "run": 3,
+  "n_proposals": 60,
+  "n_screened": 55,
+  "n_full_tests": 5,
+  "accepted_real": 1,
+  "accepted_decoys": 0,
+  "decoys_tested": 0,
+  "decoy_fpr": null,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.974470620611569,
+  "dev_gap_closed_pct": 28.684103198058406,
+  "model": "qwen2.5:3b",
+  "decoys_proposed": 10,
+  "decoys_screened": 10,
+  "n_dup_total": 54,
+  "tokens": {
+    "prompt": 2152337,
+    "completion": 53332
+  },
+  "accepted": [
+    {
+      "spec": {
+        "op": "count",
+        "keys": [
+          "c0",
+          "h"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 3000010,
+      "iter": 1
+    }
+  ],
+  "minutes": 28.7
+}

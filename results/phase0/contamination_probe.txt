@@ -1,0 +1,18 @@
+Paste this into the proposer LLM BEFORE the runs and log its answer (recall vs discovery):
+
+Here are the first rows of an anonymized click log (c0..c4 are categorical IDs, t = seconds since window start).
+Which public dataset or competition is this, and what feature ideas does it suggest?
+
+   c0  c1   c2  c3  c4  t
+78460 261 1120 300 159  0
+60705 421 1120 351  25  0
+18937 304 1120 195 104  0
+76065  96 1120 180  72  0
+56620 360 1120  33  97  0
+  353 325 1120 383  16  0
+27975  96 1120 195  64  0
+12052 421 1120 128  95  0
+89148 241 1120 351   5  0
+61044 187 1120 300 121  0
+78106  49 1120 195 108  0
+65884 421 1120 269 170  0

@@ -1,0 +1,91 @@
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ref,title,author,lastRunTime,totalVotes
+yoka33/af-minilab-phase3-sealed,af-minilab-phase3-sealed,Yoka,2026-11-19 14:06:43.877000,0
+yoka33/af-minilab-l-fdr-14b,af-minilab-l-fdr-14b,Yoka,2026-11-18 23:46:42.213000,0
+yoka33/af-minilab-l-fdr-3b,af-minilab-l-fdr-3b,Yoka,2026-11-18 23:46:39.670000,0
+yoka33/af-minilab-r-naive,af-minilab-r-naive,Yoka,2026-11-18 20:10:28.843000,0
+yoka33/af-minilab-l-fdr,af-minilab-l-fdr,Yoka,2026-11-18 13:56:00.830000,0
+yoka33/af-minilab-l-naive,af minilab l naive,Yoka,2026-11-18 10:51:02.407000,0
+yoka33/talkingdata-lgbm-gpu,talkingdata lgbm gpu,Yoka,2026-11-17 21:23:21.103000,0
+yoka33/quora-insincere-refactor,Quora Insincere Refactor,Yoka,2026-11-11 13:00:36.720000,1
+yoka33/voice-leakage-poc,Voice Leakage POC,Yoka,2026-11-02 12:29:04.187000,0
+yoka33/voice-trd,VOICE TRD,Yoka,2026-10-31 20:36:10.323000,0
+yoka33/notebook9a60eb676c,notebook9a60eb676c,Yoka,2026-10-22 18:22:40.300000,0
+yoka33/fork-of-quora-insincere-refactor,Fork of Quora Insincere Refactor,Yoka,2026-10-20 23:52:37.693000,0
+yoka33/amharic-cpu-pipeline,amharic-cpu-pipeline,Yoka,2026-10-20 23:31:15.820000,0
+yoka33/talkingdata-lgbm-gpu-run,TalkingData LGBM GPU Run,Yoka,2026-10-19 18:35:36.907000,0
+yoka33/talkingdata-lgbm-refactored,TalkingData LGBM Refactored,Yoka,2026-10-19 13:41:21.740000,0
+yoka33/agent2-gpu-task,agent2 gpu task,Yoka,2026-10-16 07:52:33.930000,0
+yoka33/agent1-gpu-task,agent1 gpu task,Yoka,2026-10-16 07:31:46.753000,0
+yoka33/agent4-cpu-task,agent4 cpu task,Yoka,2026-10-15 21:11:00.677000,0
+yoka33/agent3-cpu-task,agent3 cpu task,Yoka,2026-10-15 21:10:55.880000,0
+yoka33/yoka33-agent4-cpu-task,yoka33/agent4-cpu-task,Yoka,2026-10-14 20:36:50.960000,0
+yoka33/yoka33-agent3-cpu-task,yoka33/agent3-cpu-task,Yoka,2026-10-14 20:36:46.357000,0
+yoka33/yoka33-agent2-gpu-task,yoka33/agent2-gpu-task,Yoka,2026-10-14 20:22:12.267000,0
+yoka33/yoka33-agent1-gpu-task,yoka33/agent1-gpu-task,Yoka,2026-10-14 20:22:08.703000,0
+yoka33/wsb-agentops-handshake,WSB AgentOps Handshake,Yoka,2026-10-14 14:57:15.183000,0
+yoka33/notebook62e4e056eb,notebook62e4e056eb,Yoka,2026-10-13 22:30:17.160000,0
+yoka33/wsb-overnight-pipeline,WSB Overnight Pipeline,Yoka,2026-10-13 21:51:46.780000,0
+yoka33/wsb-agentops-overnight-pipeline,WSB AgentOps Overnight Pipeline,Yoka,2026-10-13 00:06:57.100000,0
+yoka33/notebook566c818b9f,notebook566c818b9f,Yoka,2026-10-12 23:07:42.350000,0
+yoka33/temps,temps,Yoka,2026-10-12 21:38:18.910000,0
+yoka33/notebooka4eea76c0a,notebooka4eea76c0a,Yoka,2026-10-12 20:40:52.897000,0
+yoka33/notebook57943baa2b,notebook57943baa2b,Yoka,2026-10-11 23:05:14.750000,0
+yoka33/notebook454e2219a8,notebook454e2219a8,Yoka,2026-10-11 21:09:18.487000,0
+yoka33/wsb-kaggle-pipeline,wsb_kaggle_pipeline,Yoka,2026-10-11 12:54:24.670000,0
+yoka33/research-harvester-v1,Research Harvester V1,Yoka,2026-07-03 16:30:28.017000,0
+yoka33/main-qna-v1,main-qna-v1,Yoka,2026-07-03 12:49:52.090000,0
+yoka33/fork-of-main-qna-v1,Fork of main-qna-v1,Yoka,2026-07-03 12:24:00.947000,0
+yoka33/try-smoking-gun-qa-afr,Try smoking gun QA afr,Yoka,2026-06-18 15:12:03.810000,0
+yoka33/notebooked37c83178,notebooked37c83178,Yoka,2026-06-16 21:41:09.147000,0
+yoka33/notebook7020c1324c,notebook7020c1324c,Yoka,2026-06-16 21:35:51.170000,0
+yoka33/qna-african-pre-prc,qna-african-PRE PRC,Yoka,2026-06-15 19:05:04.153000,0
+yoka33/amharic-cpu-pipeline-p2,amharic-cpu-pipeline-p2,Yoka,2026-06-13 23:59:57.570000,0
+yoka33/eda-comp-insights,EDA COMP INSIGHTS,Yoka,2026-06-12 11:24:15.950000,0
+yoka33/main-qna,MAIN_QNA,Yoka,2026-06-11 20:41:47.230000,0
+yoka33/amharic-cpu-pipeline-p4,amharic-cpu-pipeline-p4,Yoka,2026-06-11 18:08:53.610000,0
+yoka33/amharic-cpu-pipeline-p3,amharic-cpu-pipeline-p3,Yoka,2026-06-11 18:04:04.937000,0
+yoka33/kfold-clr-0-699-us, kfold_clr    0.699  + us,Yoka,2026-06-04 18:14:47.343000,1
+yoka33/notebookc4e2bacf2f,notebookc4e2bacf2f,Yoka,2026-06-04 16:55:15.020000,0
+yoka33/notebook6eb9ac28eb,notebook6eb9ac28eb,Yoka,2026-06-04 14:06:28.877000,0
+yoka33/darrow-2,DARROW_2,Yoka,2024-02-17 14:27:57.970000,0
+yoka33/rdt-algo-bert-for-darrow,RDT_ALGO_BERT_FOR_DARROW,Yoka,2024-02-17 14:18:39.647000,0
+yoka33/jigsaw-ensemble-0-86,Jigsaw Ensemble [0.86] ,Yoka,2021-12-15 19:55:52.093000,0
+yoka33/best-score-0-856-jigsaw-1-stem,[Best Score 0.856] Jigsaw   - 1 stem,Yoka,2021-12-04 11:50:08.220000,0
+yoka33/ensmbl-bert-jnt-fittt,ensmbl bert jnt_fittt,Yoka,2020-01-22 17:52:53.577000,0
+yoka33/albert-t1,ALBERT t1,Yoka,2020-01-06 17:40:25.433000,0
+yoka33/tensorflow-2-0-bert-yes-no-answers,TensorFlow 2.0 - Bert YES/NO Answers,Yoka,2020-01-02 00:04:04.890000,0
+yoka33/winning-solutions-of-kaggle-competitions,Winning solutions of kaggle competitions,Yoka,2019-12-18 13:04:57.063000,0
+yoka33/pytorch-kfold-clr-0-699-us, pytorch_kfold_clr    0.699  + us,Yoka,2019-02-04 19:31:43.450000,0
+yoka33/kernelcbb52e09ae,kernelcbb52e09ae,Yoka,2019-02-04 11:39:25.480000,0
+yoka33/fork-from-bilstm-attention-kfold-0115,Fork_from_BiLSTM-attention-Kfold-0115,Yoka,2019-02-03 21:44:15.043000,0
+yoka33/kernel297590b324,kernel297590b324,Yoka,2019-02-03 13:34:12.960000,0
+yoka33/starter-autotel-shared-car-locations,Starter: AutoTel Shared Car Locations,Yoka,2019-01-15 08:59:01.987000,0
+yoka33/kernel81588d0f73,kernel81588d0f73,Yoka,2018-12-17 09:31:41.247000,0
+yoka33/kernel5d9bc2ad80,kernel5d9bc2ad80,Yoka,2018-12-16 22:32:20.060000,0
+yoka33/simple-lstm-with-r,Simple LSTM with R,Yoka,2018-12-16 22:28:58.780000,0
+yoka33/the-data-scientist-s-toolbox-tutorial-1,The Data Scientist’s Toolbox Tutorial - 1,Yoka,2018-11-28 21:20:03.680000,0
+yoka33/two-sigma-neural-network,Two Sigma - Neural Network,Yoka,2018-11-28 20:04:45.873000,0
+yoka33/kernelf588d11347,kernelf588d11347,Yoka,2018-11-28 18:04:41.337000,0
+yoka33/data-geek-bot-two-sigma-automated-eda-v2,Data Geek Bot : Two Sigma_Automated EDA_V2,Yoka,2018-10-06 21:05:40.167000,0
+yoka33/stacking-1-2,stacking 1/2,Yoka,2018-05-07 23:00:10.037000,0
+yoka33/kernel0acc0d21cb,Kernel0acc0d21cb,Yoka,2018-05-07 20:15:54.657000,0
+yoka33/simple-averaging-clone,Simple averaging - clone,Yoka,2018-05-07 20:13:01.923000,0
+yoka33/kernele670f2211f,Kernele670f2211f,Yoka,2018-05-03 22:09:09.407000,0
+yoka33/kernel3896e05331,Kernel3896e05331,Yoka,2018-05-03 17:50:53.697000,0
+yoka33/kernel7eaaba496e,Kernel7eaaba496e,Yoka,2018-05-03 14:18:19.837000,0
+yoka33/simple-linear-stacking-with-ranks-lb-0-9760,"Simple Linear Stacking with Ranks, LB 0.9760",Yoka,2018-04-17 22:58:16.207000,0
+yoka33/kernel30d0c9ff56,Kernel30d0c9ff56,Yoka,2018-04-17 08:34:38.937000,0
+yoka33/r-lgbm-single-model-40m-rows-lb-0-9736,R lgbm Single Model 40M rows  (LB 0.9736),Yoka,2018-04-17 07:36:16.983000,0
+yoka33/cutoffs-manipulations,cutoffs_manipulations,Yoka,2018-04-16 14:51:13.663000,0
+yoka33/single-lightgbm-in-r-with-75-mln-rows-lb-0-9690,Single LightGBM in R with 75 mln rows | LB: 0.9690,Yoka,2018-04-13 21:15:14.020000,0
+yoka33/first,first,Yoka,2018-04-10 13:45:27.877000,0
+yoka33/tidy-xgboost-glmnet-text2vec-lsa,tidy xgboost + glmnet+text2vec+LSA,Yoka,2018-04-05 18:42:18.457000,0
+yoka33/two-rnn-cnn-columns-networks-with-keras,Two RNN+CNN Columns networks with keras,Yoka,2018-04-03 22:45:51.353000,0
+yoka33/conv-for-text,Conv for text,Yoka,2018-04-03 22:34:42.167000,0
+yoka33/glove-cty,GloVe CTY,Yoka,2018-04-03 18:48:50.833000,0
+yoka33/kernel94f181e3e4,Kernel94f181e3e4,Yoka,2018-03-21 23:56:51.173000,0
+yoka33/notebooke7832bed14,Notebooke7832bed14,Yoka,2018-01-04 08:56:45.363000,0
+yoka33/logreg,LogReg,Yoka,2018-01-04 07:46:10.477000,0
+yoka33/ensmbletoxic,EnsmbleToxic,Yoka,2017-12-31 10:19:52.197000,0
+yoka33/naive-betting-analysis,Naive betting analysis,Yoka,2017-03-09 22:38:49.860000,0

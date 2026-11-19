@@ -1,0 +1,6 @@
+arm,run,n_proposals,n_screened,n_full_tests,accepted_real,accepted_decoys,decoys_tested,decoy_fpr,dev_baseline_remeasured,dev_final_auc,dev_gap_closed_pct,model,decoys_proposed,decoys_screened,n_dup_total,tokens,minutes
+L-FDR-3B,1,60,56,4,1,0,0,,0.9703504870359172,0.974470620611569,28.684103198058406,qwen2.5:3b,10,10,83,"{'prompt': 1202150, 'completion': 27880}",34.7
+L-FDR-3B,2,60,53,7,2,0,1,0.0,0.9703504870359172,0.9748470212925056,31.304580368897817,qwen2.5:3b,15,14,78,"{'prompt': 1659442, 'completion': 39678}",29.7
+L-FDR-3B,3,60,55,5,1,0,0,,0.9703504870359172,0.974470620611569,28.684103198058406,qwen2.5:3b,10,10,54,"{'prompt': 2152337, 'completion': 53332}",28.7
+L-FDR-3B,4,60,56,4,1,0,0,,0.9703504870359172,0.974470620611569,28.684103198058406,qwen2.5:3b,16,16,34,"{'prompt': 3055572, 'completion': 80580}",33.6
+L-FDR-3B,5,60,58,2,1,0,0,,0.9703504870359172,0.974470620611569,28.684103198058406,qwen2.5:3b,9,9,56,"{'prompt': 3683461, 'completion': 94687}",26.0

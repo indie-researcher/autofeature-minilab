@@ -1,0 +1,140 @@
+{
+  "arm": "L-naive",
+  "run": 2,
+  "n_proposals": 60,
+  "n_screened": 52,
+  "n_full_tests": 8,
+  "accepted_real": 8,
+  "accepted_decoys": 0,
+  "decoys_tested": 0,
+  "decoy_fpr": null,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.9758266924606781,
+  "dev_gap_closed_pct": 38.12498761348051,
+  "accepted": [
+    {
+      "spec": {
+        "op": "nunique",
+        "keys": [
+          "c1",
+          "c3",
+          "c4",
+          "h"
+        ],
+        "target": "c2"
+      },
+      "is_decoy": false,
+      "dseed": 2000008,
+      "iter": 2
+    },
+    {
+      "spec": {
+        "op": "cumcount",
+        "keys": [
+          "c0",
+          "c2",
+          "h"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 2000009,
+      "iter": 3
+    },
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c0",
+          "c4",
+          "h"
+        ],
+        "k": 1,
+        "dir": "next"
+      },
+      "is_decoy": false,
+      "dseed": 2000022,
+      "iter": 16
+    },
+    {
+      "spec": {
+        "op": "count",
+        "keys": [
+          "c2",
+          "c3",
+          "h"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 2000025,
+      "iter": 19
+    },
+    {
+      "spec": {
+        "op": "ratio",
+        "num": {
+          "op": "count",
+          "keys": [
+            "c0",
+            "c3",
+            "h"
+          ]
+        },
+        "den": {
+          "op": "nunique",
+          "keys": [
+            "c0",
+            "c4",
+            "h"
+          ],
+          "target": "c1"
+        }
+      },
+      "is_decoy": false,
+      "dseed": 2000030,
+      "iter": 24
+    },
+    {
+      "spec": {
+        "op": "roll",
+        "keys": [
+          "c0",
+          "c2",
+          "h"
+        ],
+        "w": 600
+      },
+      "is_decoy": false,
+      "dseed": 2000035,
+      "iter": 29
+    },
+    {
+      "spec": {
+        "op": "nunique",
+        "keys": [
+          "c1",
+          "c2",
+          "c4",
+          "h"
+        ],
+        "target": "c3"
+      },
+      "is_decoy": false,
+      "dseed": 2000062,
+      "iter": 56
+    },
+    {
+      "spec": {
+        "op": "cumcount",
+        "keys": [
+          "c0",
+          "c1",
+          "h"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 2000063,
+      "iter": 57
+    }
+  ],
+  "minutes": 23.2
+}

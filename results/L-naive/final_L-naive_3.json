@@ -1,0 +1,84 @@
+{
+  "arm": "L-naive",
+  "run": 3,
+  "n_proposals": 60,
+  "n_screened": 56,
+  "n_full_tests": 4,
+  "accepted_real": 4,
+  "accepted_decoys": 0,
+  "decoys_tested": 0,
+  "decoy_fpr": null,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.9743266629222344,
+  "dev_gap_closed_pct": 27.681879085366873,
+  "accepted": [
+    {
+      "spec": {
+        "op": "count",
+        "keys": [
+          "c0",
+          "c1",
+          "c2",
+          "h"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 3000010,
+      "iter": 1
+    },
+    {
+      "spec": {
+        "op": "roll",
+        "keys": [
+          "c0",
+          "c2",
+          "h"
+        ],
+        "w": 600
+      },
+      "is_decoy": false,
+      "dseed": 3000014,
+      "iter": 5
+    },
+    {
+      "spec": {
+        "op": "count",
+        "keys": [
+          "c1",
+          "c3",
+          "h"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 3000016,
+      "iter": 7
+    },
+    {
+      "spec": {
+        "op": "ratio",
+        "num": {
+          "op": "nunique",
+          "keys": [
+            "c1",
+            "c4",
+            "h"
+          ],
+          "target": "c2"
+        },
+        "den": {
+          "op": "nunique",
+          "keys": [
+            "c0",
+            "c3",
+            "h"
+          ],
+          "target": "c2"
+        }
+      },
+      "is_decoy": false,
+      "dseed": 3000027,
+      "iter": 18
+    }
+  ],
+  "minutes": 19.0
+}

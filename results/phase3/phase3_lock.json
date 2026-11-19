@@ -1,0 +1,14 @@
+{
+  "status": "started",
+  "started": "2026-11-19 13:06:54",
+  "dseed_base": 900000,
+  "dry_run": false,
+  "effective_outcomes": {
+    "R": 5,
+    "R-naive": 5,
+    "L-naive": 5,
+    "L-FDR": 5,
+    "L-FDR-3B": 2,
+    "L-FDR-14B": 5
+  }
+}

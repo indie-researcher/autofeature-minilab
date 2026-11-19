@@ -1,0 +1,16 @@
+{
+  "id": "yoka33/af-minilab-l-naive",
+  "title": "af minilab l naive",
+  "code_file": "af_phase1C_naive.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [
+    "talkingdata-adtracking-fraud-detection"
+  ],
+  "kernel_sources": []
+}

@@ -1,0 +1,14 @@
+{
+  "id": "yoka33/af-minilab-l-fdr-3b",
+  "title": "af-minilab-l-fdr-3b",
+  "code_file": "af_phase2_L-FDR-3B.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": ["talkingdata-adtracking-fraud-detection"],
+  "kernel_sources": []
+}

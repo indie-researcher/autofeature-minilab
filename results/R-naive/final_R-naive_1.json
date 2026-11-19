@@ -1,0 +1,87 @@
+{
+  "arm": "R-naive",
+  "run": 1,
+  "n_proposals": 60,
+  "n_screened": 51,
+  "n_full_tests": 9,
+  "accepted_real": 5,
+  "accepted_decoys": 0,
+  "decoys_tested": 1,
+  "decoy_fpr": 0.0,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.9763269411281529,
+  "dev_gap_closed_pct": 41.60768644813366,
+  "model": "random",
+  "decoys_proposed": 10,
+  "decoys_screened": 9,
+  "n_dup_total": 0,
+  "tokens": null,
+  "accepted": [
+    {
+      "spec": {
+        "op": "nunique",
+        "keys": [
+          "c0",
+          "c3",
+          "h"
+        ],
+        "target": "c4"
+      },
+      "is_decoy": false,
+      "dseed": 1000004,
+      "iter": 1
+    },
+    {
+      "spec": {
+        "op": "count",
+        "keys": [
+          "c0",
+          "c1"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 1000006,
+      "iter": 3
+    },
+    {
+      "spec": {
+        "op": "nunique",
+        "keys": [
+          "c0",
+          "c4"
+        ],
+        "target": "h"
+      },
+      "is_decoy": false,
+      "dseed": 1000010,
+      "iter": 7
+    },
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c1",
+          "c4"
+        ],
+        "k": 2,
+        "dir": "next"
+      },
+      "is_decoy": false,
+      "dseed": 1000025,
+      "iter": 22
+    },
+    {
+      "spec": {
+        "op": "count",
+        "keys": [
+          "c1",
+          "c3"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 1000060,
+      "iter": 57
+    }
+  ],
+  "minutes": 25.8
+}

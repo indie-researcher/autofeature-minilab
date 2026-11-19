@@ -1,0 +1,14 @@
+{
+  "id": "yoka33/af-minilab-phase3-sealed",
+  "title": "af-minilab-phase3-sealed",
+  "code_file": "af_phase3_sealed.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "dataset_sources": ["yoka33/af-minilab-inputs"],
+  "competition_sources": ["talkingdata-adtracking-fraud-detection"],
+  "kernel_sources": []
+}

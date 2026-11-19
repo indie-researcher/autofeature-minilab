@@ -1,0 +1,2325 @@
+{
+ "runs": {
+  "R_1": {
+   "arm": "R",
+   "run": 1,
+   "accepted": [
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c3",
+      "h"
+     ],
+     "target": "c4"
+    },
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "c1"
+     ]
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "nunique",
+      "keys": [
+       "c0"
+      ],
+      "target": "h"
+     },
+     "den": {
+      "op": "count",
+      "keys": [
+       "c4"
+      ]
+     }
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c4"
+     ],
+     "k": 1,
+     "dir": "next"
+    }
+   ],
+   "decoys": [
+    {
+     "idx": 49,
+     "spec": {
+      "op": "roll",
+      "keys": [
+       "c0",
+       "c1"
+      ],
+      "w": 3600
+     },
+     "dev_accepted": false
+    },
+    {
+     "idx": 51,
+     "spec": {
+      "op": "lag",
+      "keys": [
+       "c0",
+       "c1",
+       "c3"
+      ],
+      "k": 3,
+      "dir": "prev"
+     },
+     "dev_accepted": false
+    },
+    {
+     "idx": 54,
+     "spec": {
+      "op": "cumcount",
+      "keys": [
+       "c0",
+       "c1",
+       "c3"
+      ]
+     },
+     "dev_accepted": false
+    },
+    {
+     "idx": 57,
+     "spec": {
+      "op": "nunique",
+      "keys": [
+       "c1",
+       "c2",
+       "h"
+      ],
+      "target": "c3"
+     },
+     "dev_accepted": false
+    }
+   ],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9771236787246361,
+   "model": "",
+   "minutes": 35.9,
+   "tokens": null,
+   "n_proposals": 60,
+   "n_full_tests": 18,
+   "n_dup_total": null,
+   "decoys_proposed": 0,
+   "decoys_screened": 0,
+   "decoys_tested": 4,
+   "accepted_decoys": 0
+  },
+  "R_2": {
+   "arm": "R",
+   "run": 2,
+   "accepted": [
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c3"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c2"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c1",
+      "c4"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "nunique",
+      "keys": [
+       "c1",
+       "c3"
+      ],
+      "target": "h"
+     },
+     "den": {
+      "op": "count",
+      "keys": [
+       "c0",
+       "c1"
+      ]
+     }
+    }
+   ],
+   "decoys": [
+    {
+     "idx": 5,
+     "spec": {
+      "op": "count",
+      "keys": [
+       "c0",
+       "c2"
+      ]
+     },
+     "dev_accepted": false
+    }
+   ],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9768762652562039,
+   "model": "",
+   "minutes": 34.4,
+   "tokens": null,
+   "n_proposals": 60,
+   "n_full_tests": 12,
+   "n_dup_total": null,
+   "decoys_proposed": 0,
+   "decoys_screened": 0,
+   "decoys_tested": 1,
+   "accepted_decoys": 0
+  },
+  "R_3": {
+   "arm": "R",
+   "run": 3,
+   "accepted": [
+    {
+     "op": "count",
+     "keys": [
+      "c0"
+     ]
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c1",
+      "c3"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c2",
+      "c3"
+     ],
+     "target": "c0"
+    },
+    {
+     "op": "roll",
+     "keys": [
+      "c1",
+      "c3"
+     ],
+     "w": 3600
+    }
+   ],
+   "decoys": [],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9834211046021494,
+   "model": "",
+   "minutes": 29.2,
+   "tokens": null,
+   "n_proposals": 60,
+   "n_full_tests": 9,
+   "n_dup_total": null,
+   "decoys_proposed": 0,
+   "decoys_screened": 0,
+   "decoys_tested": 0,
+   "accepted_decoys": 0
+  },
+  "R_4": {
+   "arm": "R",
+   "run": 4,
+   "accepted": [
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c1",
+      "c4"
+     ],
+     "target": "h"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "nunique",
+      "keys": [
+       "c2",
+       "c3"
+      ],
+      "target": "c1"
+     },
+     "den": {
+      "op": "nunique",
+      "keys": [
+       "c1",
+       "h"
+      ],
+      "target": "c3"
+     }
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0"
+     ],
+     "target": "c3"
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c3"
+     ],
+     "target": "c1"
+    }
+   ],
+   "decoys": [
+    {
+     "idx": 25,
+     "spec": {
+      "op": "lag",
+      "keys": [
+       "c1",
+       "c3"
+      ],
+      "k": 1,
+      "dir": "next"
+     },
+     "dev_accepted": false
+    }
+   ],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9775320591347478,
+   "model": "",
+   "minutes": 35.2,
+   "tokens": null,
+   "n_proposals": 60,
+   "n_full_tests": 13,
+   "n_dup_total": null,
+   "decoys_proposed": 0,
+   "decoys_screened": 0,
+   "decoys_tested": 1,
+   "accepted_decoys": 0
+  },
+  "R_5": {
+   "arm": "R",
+   "run": 5,
+   "accepted": [
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c4"
+     ],
+     "k": 2,
+     "dir": "prev"
+    },
+    {
+     "op": "count",
+     "keys": [
+      "c0"
+     ]
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "count",
+      "keys": [
+       "c0",
+       "c3",
+       "c4"
+      ]
+     },
+     "den": {
+      "op": "roll",
+      "keys": [
+       "c1",
+       "c2",
+       "c3"
+      ],
+      "w": 3600
+     }
+    }
+   ],
+   "decoys": [],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9767070034594325,
+   "model": "",
+   "minutes": 34.6,
+   "tokens": null,
+   "n_proposals": 60,
+   "n_full_tests": 13,
+   "n_dup_total": null,
+   "decoys_proposed": 0,
+   "decoys_screened": 0,
+   "decoys_tested": 0,
+   "accepted_decoys": 0
+  },
+  "R-naive_1": {
+   "arm": "R-naive",
+   "run": 1,
+   "accepted": [
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c3",
+      "h"
+     ],
+     "target": "c4"
+    },
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "c1"
+     ]
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c4"
+     ],
+     "target": "h"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c1",
+      "c4"
+     ],
+     "k": 2,
+     "dir": "next"
+    },
+    {
+     "op": "count",
+     "keys": [
+      "c1",
+      "c3"
+     ]
+    }
+   ],
+   "decoys": [
+    {
+     "idx": 16,
+     "spec": {
+      "op": "roll",
+      "keys": [
+       "c2",
+       "c4"
+      ],
+      "w": 3600
+     },
+     "dev_accepted": false
+    }
+   ],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9763269411281529,
+   "model": "random",
+   "minutes": 25.8,
+   "tokens": null,
+   "n_proposals": 60,
+   "n_full_tests": 9,
+   "n_dup_total": 0,
+   "decoys_proposed": 10,
+   "decoys_screened": 9,
+   "decoys_tested": 1,
+   "accepted_decoys": 0
+  },
+  "R-naive_2": {
+   "arm": "R-naive",
+   "run": 2,
+   "accepted": [
+    {
+     "op": "roll",
+     "keys": [
+      "c1",
+      "c2",
+      "h"
+     ],
+     "w": 60
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c3"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "h"
+     ],
+     "k": 2,
+     "dir": "next"
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c2",
+      "c3"
+     ],
+     "target": "c4"
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "nunique",
+      "keys": [
+       "c4"
+      ],
+      "target": "c2"
+     },
+     "den": {
+      "op": "cumcount",
+      "keys": [
+       "c1",
+       "c2"
+      ]
+     }
+    },
+    {
+     "op": "roll",
+     "keys": [
+      "c0",
+      "h"
+     ],
+     "w": 3600
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c1",
+      "c2"
+     ],
+     "target": "c3"
+    }
+   ],
+   "decoys": [],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9777242093155122,
+   "model": "random",
+   "minutes": 25.0,
+   "tokens": null,
+   "n_proposals": 60,
+   "n_full_tests": 9,
+   "n_dup_total": 0,
+   "decoys_proposed": 15,
+   "decoys_screened": 15,
+   "decoys_tested": 0,
+   "accepted_decoys": 0
+  },
+  "R-naive_3": {
+   "arm": "R-naive",
+   "run": 3,
+   "accepted": [
+    {
+     "op": "lag",
+     "keys": [
+      "c4"
+     ],
+     "k": 1,
+     "dir": "prev"
+    },
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "c3",
+      "c4"
+     ]
+    },
+    {
+     "op": "count",
+     "keys": [
+      "c0"
+     ]
+    },
+    {
+     "op": "roll",
+     "keys": [
+      "c1",
+      "c2",
+      "h"
+     ],
+     "w": 60
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c1"
+     ],
+     "target": "c4"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c1",
+      "c3"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "roll",
+     "keys": [
+      "c1",
+      "c3"
+     ],
+     "w": 3600
+    }
+   ],
+   "decoys": [],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9833297887984201,
+   "model": "random",
+   "minutes": 29.8,
+   "tokens": null,
+   "n_proposals": 60,
+   "n_full_tests": 11,
+   "n_dup_total": 0,
+   "decoys_proposed": 10,
+   "decoys_screened": 10,
+   "decoys_tested": 0,
+   "accepted_decoys": 0
+  },
+  "R-naive_4": {
+   "arm": "R-naive",
+   "run": 4,
+   "accepted": [
+    {
+     "op": "lag",
+     "keys": [
+      "c2"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c1",
+      "c4"
+     ],
+     "target": "h"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "nunique",
+      "keys": [
+       "c2",
+       "c3"
+      ],
+      "target": "c1"
+     },
+     "den": {
+      "op": "nunique",
+      "keys": [
+       "c1",
+       "h"
+      ],
+      "target": "c3"
+     }
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0"
+     ],
+     "target": "c3"
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "count",
+      "keys": [
+       "c1",
+       "c2",
+       "c3",
+       "h"
+      ]
+     },
+     "den": {
+      "op": "roll",
+      "keys": [
+       "c0",
+       "c1",
+       "c3"
+      ],
+      "w": 60
+     }
+    }
+   ],
+   "decoys": [],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9778345680327228,
+   "model": "random",
+   "minutes": 27.6,
+   "tokens": null,
+   "n_proposals": 60,
+   "n_full_tests": 7,
+   "n_dup_total": 0,
+   "decoys_proposed": 16,
+   "decoys_screened": 16,
+   "decoys_tested": 0,
+   "accepted_decoys": 0
+  },
+  "R-naive_5": {
+   "arm": "R-naive",
+   "run": 5,
+   "accepted": [
+    {
+     "op": "lag",
+     "keys": [
+      "c3",
+      "h"
+     ],
+     "k": 3,
+     "dir": "next"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c4"
+     ],
+     "k": 2,
+     "dir": "prev"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c3"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "count",
+     "keys": [
+      "c1",
+      "c3"
+     ]
+    },
+    {
+     "op": "roll",
+     "keys": [
+      "c1",
+      "c2"
+     ],
+     "w": 600
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c3",
+      "h"
+     ],
+     "target": "c1"
+    },
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "c2"
+     ]
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c4"
+     ],
+     "target": "c1"
+    }
+   ],
+   "decoys": [
+    {
+     "idx": 50,
+     "spec": {
+      "op": "roll",
+      "keys": [
+       "c1",
+       "c3",
+       "h"
+      ],
+      "w": 600
+     },
+     "dev_accepted": false
+    },
+    {
+     "idx": 54,
+     "spec": {
+      "op": "nunique",
+      "keys": [
+       "c0",
+       "c3",
+       "c4"
+      ],
+      "target": "h"
+     },
+     "dev_accepted": false
+    }
+   ],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9770117432099807,
+   "model": "random",
+   "minutes": 30.1,
+   "tokens": null,
+   "n_proposals": 60,
+   "n_full_tests": 10,
+   "n_dup_total": 0,
+   "decoys_proposed": 9,
+   "decoys_screened": 7,
+   "decoys_tested": 2,
+   "accepted_decoys": 0
+  },
+  "L-naive_1": {
+   "arm": "L-naive",
+   "run": 1,
+   "accepted": [
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "c1",
+      "c2",
+      "h"
+     ]
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c1",
+      "c3",
+      "c4",
+      "h"
+     ],
+     "target": "c2"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c3",
+      "h"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c2",
+      "c4",
+      "h"
+     ],
+     "target": "c0"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c3",
+      "c4"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "count",
+      "keys": [
+       "c0",
+       "c2",
+       "h"
+      ]
+     },
+     "den": {
+      "op": "nunique",
+      "keys": [
+       "c1",
+       "c3",
+       "h"
+      ],
+      "target": "c4"
+     }
+    }
+   ],
+   "decoys": [],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9775482399873101,
+   "model": "",
+   "minutes": 25.7,
+   "tokens": null,
+   "n_proposals": 60,
+   "n_full_tests": 7,
+   "n_dup_total": null,
+   "decoys_proposed": 0,
+   "decoys_screened": 0,
+   "decoys_tested": 0,
+   "accepted_decoys": 0
+  },
+  "L-naive_2": {
+   "arm": "L-naive",
+   "run": 2,
+   "accepted": [
+    {
+     "op": "nunique",
+     "keys": [
+      "c1",
+      "c3",
+      "c4",
+      "h"
+     ],
+     "target": "c2"
+    },
+    {
+     "op": "cumcount",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ]
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c4",
+      "h"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "count",
+     "keys": [
+      "c2",
+      "c3",
+      "h"
+     ]
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "count",
+      "keys": [
+       "c0",
+       "c3",
+       "h"
+      ]
+     },
+     "den": {
+      "op": "nunique",
+      "keys": [
+       "c0",
+       "c4",
+       "h"
+      ],
+      "target": "c1"
+     }
+    },
+    {
+     "op": "roll",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ],
+     "w": 600
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c1",
+      "c2",
+      "c4",
+      "h"
+     ],
+     "target": "c3"
+    },
+    {
+     "op": "cumcount",
+     "keys": [
+      "c0",
+      "c1",
+      "h"
+     ]
+    }
+   ],
+   "decoys": [],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9758266924606781,
+   "model": "",
+   "minutes": 23.2,
+   "tokens": null,
+   "n_proposals": 60,
+   "n_full_tests": 8,
+   "n_dup_total": null,
+   "decoys_proposed": 0,
+   "decoys_screened": 0,
+   "decoys_tested": 0,
+   "accepted_decoys": 0
+  },
+  "L-naive_3": {
+   "arm": "L-naive",
+   "run": 3,
+   "accepted": [
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "c1",
+      "c2",
+      "h"
+     ]
+    },
+    {
+     "op": "roll",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ],
+     "w": 600
+    },
+    {
+     "op": "count",
+     "keys": [
+      "c1",
+      "c3",
+      "h"
+     ]
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "nunique",
+      "keys": [
+       "c1",
+       "c4",
+       "h"
+      ],
+      "target": "c2"
+     },
+     "den": {
+      "op": "nunique",
+      "keys": [
+       "c0",
+       "c3",
+       "h"
+      ],
+      "target": "c2"
+     }
+    }
+   ],
+   "decoys": [],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9743266629222344,
+   "model": "",
+   "minutes": 19.0,
+   "tokens": null,
+   "n_proposals": 60,
+   "n_full_tests": 4,
+   "n_dup_total": null,
+   "decoys_proposed": 0,
+   "decoys_screened": 0,
+   "decoys_tested": 0,
+   "accepted_decoys": 0
+  },
+  "L-naive_4": {
+   "arm": "L-naive",
+   "run": 4,
+   "accepted": [
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "c1",
+      "c2",
+      "h"
+     ]
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c1",
+      "c3",
+      "c4",
+      "h"
+     ],
+     "target": "c2"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c3",
+      "h"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "count",
+      "keys": [
+       "c0",
+       "c1",
+       "c3",
+       "h"
+      ]
+     },
+     "den": {
+      "op": "count",
+      "keys": [
+       "c2",
+       "c3",
+       "h"
+      ]
+     }
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ],
+     "target": "c4"
+    }
+   ],
+   "decoys": [],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9772599682765515,
+   "model": "",
+   "minutes": 21.1,
+   "tokens": null,
+   "n_proposals": 60,
+   "n_full_tests": 5,
+   "n_dup_total": null,
+   "decoys_proposed": 0,
+   "decoys_screened": 0,
+   "decoys_tested": 0,
+   "accepted_decoys": 0
+  },
+  "L-naive_5": {
+   "arm": "L-naive",
+   "run": 5,
+   "accepted": [
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "c1",
+      "c2",
+      "h"
+     ]
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c1",
+      "c3",
+      "c4",
+      "h"
+     ],
+     "target": "c2"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c3",
+      "h"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "count",
+      "keys": [
+       "c2",
+       "c3",
+       "h"
+      ]
+     },
+     "den": {
+      "op": "count",
+      "keys": [
+       "c1",
+       "c3",
+       "h"
+      ]
+     }
+    },
+    {
+     "op": "cumcount",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ]
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "nunique",
+      "keys": [
+       "c0",
+       "c1",
+       "h"
+      ],
+      "target": "c2"
+     },
+     "den": {
+      "op": "nunique",
+      "keys": [
+       "c3",
+       "c4",
+       "h"
+      ],
+      "target": "c2"
+     }
+    }
+   ],
+   "decoys": [],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9757386483959009,
+   "model": "",
+   "minutes": 23.3,
+   "tokens": null,
+   "n_proposals": 60,
+   "n_full_tests": 6,
+   "n_dup_total": null,
+   "decoys_proposed": 0,
+   "decoys_screened": 0,
+   "decoys_tested": 0,
+   "accepted_decoys": 0
+  },
+  "L-FDR_1": {
+   "arm": "L-FDR",
+   "run": 1,
+   "accepted": [
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "c1",
+      "c2",
+      "h"
+     ]
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c3",
+      "h"
+     ],
+     "target": "c4"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c1",
+      "h"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "count",
+      "keys": [
+       "c1",
+       "c3",
+       "h"
+      ]
+     },
+     "den": {
+      "op": "count",
+      "keys": [
+       "c1",
+       "h"
+      ]
+     }
+    }
+   ],
+   "decoys": [],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9760081593619817,
+   "model": "qwen2.5:7b",
+   "minutes": 31.0,
+   "tokens": {
+    "prompt": 113988,
+    "completion": 2863
+   },
+   "n_proposals": 60,
+   "n_full_tests": 9,
+   "n_dup_total": 60,
+   "decoys_proposed": 10,
+   "decoys_screened": 10,
+   "decoys_tested": 0,
+   "accepted_decoys": 0
+  },
+  "L-FDR_2": {
+   "arm": "L-FDR",
+   "run": 2,
+   "accepted": [
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c2",
+      "c4",
+      "h"
+     ],
+     "target": "c1"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "c1",
+      "h"
+     ]
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c1",
+      "h"
+     ],
+     "k": 1,
+     "dir": "next"
+    }
+   ],
+   "decoys": [
+    {
+     "idx": 4,
+     "spec": {
+      "op": "roll",
+      "keys": [
+       "c0",
+       "c2",
+       "h"
+      ],
+      "w": 3600
+     },
+     "dev_accepted": false
+    },
+    {
+     "idx": 19,
+     "spec": {
+      "op": "nunique",
+      "keys": [
+       "c1",
+       "c3",
+       "c4",
+       "h"
+      ],
+      "target": "c0"
+     },
+     "dev_accepted": false
+    }
+   ],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9750308027043738,
+   "model": "qwen2.5:7b",
+   "minutes": 41.3,
+   "tokens": {
+    "prompt": 219135,
+    "completion": 5625
+   },
+   "n_proposals": 60,
+   "n_full_tests": 20,
+   "n_dup_total": 48,
+   "decoys_proposed": 15,
+   "decoys_screened": 13,
+   "decoys_tested": 2,
+   "accepted_decoys": 0
+  },
+  "L-FDR_3": {
+   "arm": "L-FDR",
+   "run": 3,
+   "accepted": [
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "c1",
+      "c2",
+      "h"
+     ]
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "count",
+      "keys": [
+       "c1",
+       "c2",
+       "h"
+      ]
+     },
+     "den": {
+      "op": "count",
+      "keys": [
+       "c0",
+       "h"
+      ]
+     }
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c3",
+      "h"
+     ],
+     "target": "c4"
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "count",
+      "keys": [
+       "c0",
+       "c3",
+       "h"
+      ]
+     },
+     "den": {
+      "op": "count",
+      "keys": [
+       "c2",
+       "c3",
+       "h"
+      ]
+     }
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ],
+     "target": "c3"
+    }
+   ],
+   "decoys": [
+    {
+     "idx": 53,
+     "spec": {
+      "op": "nunique",
+      "keys": [
+       "c2",
+       "c3",
+       "h"
+      ],
+      "target": "c0"
+     },
+     "dev_accepted": false
+    },
+    {
+     "idx": 58,
+     "spec": {
+      "op": "nunique",
+      "keys": [
+       "c0",
+       "c4",
+       "h"
+      ],
+      "target": "c3"
+     },
+     "dev_accepted": false
+    }
+   ],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9772349675198891,
+   "model": "qwen2.5:7b",
+   "minutes": 42.5,
+   "tokens": {
+    "prompt": 316116,
+    "completion": 8115
+   },
+   "n_proposals": 60,
+   "n_full_tests": 18,
+   "n_dup_total": 46,
+   "decoys_proposed": 10,
+   "decoys_screened": 8,
+   "decoys_tested": 2,
+   "accepted_decoys": 0
+  },
+  "L-FDR_4": {
+   "arm": "L-FDR",
+   "run": 4,
+   "accepted": [
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "c1",
+      "c2",
+      "h"
+     ]
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c3",
+      "h"
+     ],
+     "target": "c4"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c1",
+      "h"
+     ],
+     "k": 1,
+     "dir": "next"
+    }
+   ],
+   "decoys": [],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9754868303392791,
+   "model": "qwen2.5:7b",
+   "minutes": 26.4,
+   "tokens": {
+    "prompt": 430500,
+    "completion": 10759
+   },
+   "n_proposals": 60,
+   "n_full_tests": 5,
+   "n_dup_total": 59,
+   "decoys_proposed": 16,
+   "decoys_screened": 16,
+   "decoys_tested": 0,
+   "accepted_decoys": 0
+  },
+  "L-FDR_5": {
+   "arm": "L-FDR",
+   "run": 5,
+   "accepted": [
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "c1",
+      "c2",
+      "h"
+     ]
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ],
+     "k": 1,
+     "dir": "next"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c1",
+      "c4",
+      "h"
+     ],
+     "k": 1,
+     "dir": "next"
+    }
+   ],
+   "decoys": [
+    {
+     "idx": 38,
+     "spec": {
+      "op": "nunique",
+      "keys": [
+       "c0",
+       "c3",
+       "h"
+      ],
+      "target": "c4"
+     },
+     "dev_accepted": false
+    },
+    {
+     "idx": 41,
+     "spec": {
+      "op": "nunique",
+      "keys": [
+       "c2",
+       "c3",
+       "h"
+      ],
+      "target": "c4"
+     },
+     "dev_accepted": false
+    }
+   ],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9746446352540429,
+   "model": "qwen2.5:7b",
+   "minutes": 32.7,
+   "tokens": {
+    "prompt": 546935,
+    "completion": 13540
+   },
+   "n_proposals": 60,
+   "n_full_tests": 11,
+   "n_dup_total": 59,
+   "decoys_proposed": 9,
+   "decoys_screened": 7,
+   "decoys_tested": 2,
+   "accepted_decoys": 0
+  },
+  "L-FDR-3B_1": {
+   "arm": "L-FDR-3B",
+   "run": 1,
+   "accepted": [
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "h"
+     ]
+    }
+   ],
+   "decoys": [],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.974470620611569,
+   "model": "qwen2.5:3b",
+   "minutes": 34.7,
+   "tokens": {
+    "prompt": 1202150,
+    "completion": 27880
+   },
+   "n_proposals": 60,
+   "n_full_tests": 4,
+   "n_dup_total": 83,
+   "decoys_proposed": 10,
+   "decoys_screened": 10,
+   "decoys_tested": 0,
+   "accepted_decoys": 0
+  },
+  "L-FDR-3B_2": {
+   "arm": "L-FDR-3B",
+   "run": 2,
+   "accepted": [
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "h"
+     ],
+     "target": "c4"
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "count",
+      "keys": [
+       "c0",
+       "c3",
+       "c4"
+      ]
+     },
+     "den": {
+      "op": "count",
+      "keys": [
+       "c0",
+       "h"
+      ]
+     }
+    }
+   ],
+   "decoys": [
+    {
+     "idx": 0,
+     "spec": {
+      "op": "count",
+      "keys": [
+       "c0",
+       "h"
+      ]
+     },
+     "dev_accepted": false
+    }
+   ],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9748470212925056,
+   "model": "qwen2.5:3b",
+   "minutes": 29.7,
+   "tokens": {
+    "prompt": 1659442,
+    "completion": 39678
+   },
+   "n_proposals": 60,
+   "n_full_tests": 7,
+   "n_dup_total": 78,
+   "decoys_proposed": 15,
+   "decoys_screened": 14,
+   "decoys_tested": 1,
+   "accepted_decoys": 0
+  },
+  "L-FDR-3B_3": {
+   "arm": "L-FDR-3B",
+   "run": 3,
+   "accepted": [
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "h"
+     ]
+    }
+   ],
+   "decoys": [],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.974470620611569,
+   "model": "qwen2.5:3b",
+   "minutes": 28.7,
+   "tokens": {
+    "prompt": 2152337,
+    "completion": 53332
+   },
+   "n_proposals": 60,
+   "n_full_tests": 5,
+   "n_dup_total": 54,
+   "decoys_proposed": 10,
+   "decoys_screened": 10,
+   "decoys_tested": 0,
+   "accepted_decoys": 0
+  },
+  "L-FDR-3B_4": {
+   "arm": "L-FDR-3B",
+   "run": 4,
+   "accepted": [
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "h"
+     ]
+    }
+   ],
+   "decoys": [],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.974470620611569,
+   "model": "qwen2.5:3b",
+   "minutes": 33.6,
+   "tokens": {
+    "prompt": 3055572,
+    "completion": 80580
+   },
+   "n_proposals": 60,
+   "n_full_tests": 4,
+   "n_dup_total": 34,
+   "decoys_proposed": 16,
+   "decoys_screened": 16,
+   "decoys_tested": 0,
+   "accepted_decoys": 0
+  },
+  "L-FDR-3B_5": {
+   "arm": "L-FDR-3B",
+   "run": 5,
+   "accepted": [
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "h"
+     ]
+    }
+   ],
+   "decoys": [],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.974470620611569,
+   "model": "qwen2.5:3b",
+   "minutes": 26.0,
+   "tokens": {
+    "prompt": 3683461,
+    "completion": 94687
+   },
+   "n_proposals": 60,
+   "n_full_tests": 2,
+   "n_dup_total": 56,
+   "decoys_proposed": 9,
+   "decoys_screened": 9,
+   "decoys_tested": 0,
+   "accepted_decoys": 0
+  },
+  "L-FDR-14B_1": {
+   "arm": "L-FDR-14B",
+   "run": 1,
+   "accepted": [
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c3",
+      "h"
+     ],
+     "target": "c4"
+    },
+    {
+     "op": "count",
+     "keys": [
+      "c1",
+      "c2",
+      "c4"
+     ]
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c1",
+      "h"
+     ],
+     "target": "c2"
+    },
+    {
+     "op": "ratio",
+     "num": {
+      "op": "nunique",
+      "keys": [
+       "c0",
+       "c2",
+       "h"
+      ],
+      "target": "c4"
+     },
+     "den": {
+      "op": "nunique",
+      "keys": [
+       "c0",
+       "c2",
+       "h"
+      ],
+      "target": "c1"
+     }
+    }
+   ],
+   "decoys": [
+    {
+     "idx": 55,
+     "spec": {
+      "op": "ratio",
+      "num": {
+       "op": "nunique",
+       "keys": [
+        "c1",
+        "c4",
+        "h"
+       ],
+       "target": "c0"
+      },
+      "den": {
+       "op": "nunique",
+       "keys": [
+        "c1",
+        "c4",
+        "h"
+       ],
+       "target": "c2"
+      }
+     },
+     "dev_accepted": false
+    }
+   ],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9751601975126961,
+   "model": "qwen2.5:14b",
+   "minutes": 34.6,
+   "tokens": {
+    "prompt": 72877,
+    "completion": 3214
+   },
+   "n_proposals": 60,
+   "n_full_tests": 15,
+   "n_dup_total": 16,
+   "decoys_proposed": 10,
+   "decoys_screened": 9,
+   "decoys_tested": 1,
+   "accepted_decoys": 0
+  },
+  "L-FDR-14B_2": {
+   "arm": "L-FDR-14B",
+   "run": 2,
+   "accepted": [
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ],
+     "target": "c4"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c1",
+      "h"
+     ],
+     "k": 1,
+     "dir": "next"
+    }
+   ],
+   "decoys": [
+    {
+     "idx": 0,
+     "spec": {
+      "op": "count",
+      "keys": [
+       "c0",
+       "c1",
+       "h"
+      ]
+     },
+     "dev_accepted": false
+    }
+   ],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9758603111850498,
+   "model": "qwen2.5:14b",
+   "minutes": 44.9,
+   "tokens": {
+    "prompt": 368997,
+    "completion": 19724
+   },
+   "n_proposals": 60,
+   "n_full_tests": 9,
+   "n_dup_total": 8,
+   "decoys_proposed": 15,
+   "decoys_screened": 14,
+   "decoys_tested": 1,
+   "accepted_decoys": 0
+  },
+  "L-FDR-14B_3": {
+   "arm": "L-FDR-14B",
+   "run": 3,
+   "accepted": [
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "c1",
+      "h"
+     ]
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ],
+     "target": "c4"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c1",
+      "c4",
+      "h"
+     ],
+     "k": 1,
+     "dir": "prev"
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ],
+     "target": "c3"
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c4",
+      "h"
+     ],
+     "target": "c1"
+    }
+   ],
+   "decoys": [
+    {
+     "idx": 34,
+     "spec": {
+      "op": "roll",
+      "keys": [
+       "c1",
+       "c2",
+       "c3"
+      ],
+      "w": 600
+     },
+     "dev_accepted": false
+    }
+   ],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9763310986429224,
+   "model": "qwen2.5:14b",
+   "minutes": 45.1,
+   "tokens": {
+    "prompt": 470267,
+    "completion": 24254
+   },
+   "n_proposals": 60,
+   "n_full_tests": 20,
+   "n_dup_total": 20,
+   "decoys_proposed": 10,
+   "decoys_screened": 9,
+   "decoys_tested": 1,
+   "accepted_decoys": 0
+  },
+  "L-FDR-14B_4": {
+   "arm": "L-FDR-14B",
+   "run": 4,
+   "accepted": [
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "c1",
+      "h"
+     ]
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ],
+     "target": "c1"
+    },
+    {
+     "op": "count",
+     "keys": [
+      "c1",
+      "c2",
+      "c4"
+     ]
+    }
+   ],
+   "decoys": [
+    {
+     "idx": 21,
+     "spec": {
+      "op": "cumcount",
+      "keys": [
+       "c0",
+       "c3",
+       "h"
+      ]
+     },
+     "dev_accepted": false
+    },
+    {
+     "idx": 23,
+     "spec": {
+      "op": "roll",
+      "keys": [
+       "c0",
+       "c1",
+       "c2"
+      ],
+      "w": 600
+     },
+     "dev_accepted": false
+    },
+    {
+     "idx": 26,
+     "spec": {
+      "op": "nunique",
+      "keys": [
+       "c0",
+       "c3",
+       "c4"
+      ],
+      "target": "c1"
+     },
+     "dev_accepted": false
+    },
+    {
+     "idx": 33,
+     "spec": {
+      "op": "roll",
+      "keys": [
+       "c0",
+       "c1",
+       "c4"
+      ],
+      "w": 60
+     },
+     "dev_accepted": false
+    },
+    {
+     "idx": 44,
+     "spec": {
+      "op": "count",
+      "keys": [
+       "c1",
+       "c2",
+       "c4"
+      ]
+     },
+     "dev_accepted": false
+    },
+    {
+     "idx": 48,
+     "spec": {
+      "op": "roll",
+      "keys": [
+       "c0",
+       "c4",
+       "h"
+      ],
+      "w": 600
+     },
+     "dev_accepted": false
+    },
+    {
+     "idx": 56,
+     "spec": {
+      "op": "count",
+      "keys": [
+       "c1",
+       "c3",
+       "h"
+      ]
+     },
+     "dev_accepted": false
+    }
+   ],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9752795798791413,
+   "model": "qwen2.5:14b",
+   "minutes": 55.2,
+   "tokens": {
+    "prompt": 545393,
+    "completion": 27431
+   },
+   "n_proposals": 60,
+   "n_full_tests": 37,
+   "n_dup_total": 15,
+   "decoys_proposed": 16,
+   "decoys_screened": 9,
+   "decoys_tested": 7,
+   "accepted_decoys": 0
+  },
+  "L-FDR-14B_5": {
+   "arm": "L-FDR-14B",
+   "run": 5,
+   "accepted": [
+    {
+     "op": "count",
+     "keys": [
+      "c0",
+      "c1",
+      "h"
+     ]
+    },
+    {
+     "op": "nunique",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ],
+     "target": "c4"
+    },
+    {
+     "op": "lag",
+     "keys": [
+      "c0",
+      "c2",
+      "h"
+     ],
+     "k": 1,
+     "dir": "prev"
+    },
+    {
+     "op": "count",
+     "keys": [
+      "c1",
+      "c3",
+      "c4"
+     ]
+    },
+    {
+     "op": "cumcount",
+     "keys": [
+      "c1",
+      "c2",
+      "c4"
+     ]
+    }
+   ],
+   "decoys": [
+    {
+     "idx": 19,
+     "spec": {
+      "op": "nunique",
+      "keys": [
+       "c0",
+       "c3",
+       "h"
+      ],
+      "target": "c1"
+     },
+     "dev_accepted": false
+    },
+    {
+     "idx": 21,
+     "spec": {
+      "op": "lag",
+      "keys": [
+       "c0",
+       "c3",
+       "h"
+      ],
+      "k": 1,
+      "dir": "prev"
+     },
+     "dev_accepted": false
+    },
+    {
+     "idx": 49,
+     "spec": {
+      "op": "nunique",
+      "keys": [
+       "c0",
+       "c3",
+       "h"
+      ],
+      "target": "c4"
+     },
+     "dev_accepted": false
+    }
+   ],
+   "dev_baseline": 0.9703504870359172,
+   "dev_final_auc": 0.9761381467425431,
+   "model": "qwen2.5:14b",
+   "minutes": 54.3,
+   "tokens": {
+    "prompt": 758679,
+    "completion": 37777
+   },
+   "n_proposals": 60,
+   "n_full_tests": 27,
+   "n_dup_total": 18,
+   "decoys_proposed": 9,
+   "decoys_screened": 6,
+   "decoys_tested": 3,
+   "accepted_decoys": 0
+  }
+ }
+}

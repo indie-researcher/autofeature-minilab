@@ -1,0 +1,80 @@
+{
+  "frozen_at": "2026-11-17 10:54",
+  "config": {
+    "hours_train": 5,
+    "hours_eval": 2,
+    "es_frac": 0.12,
+    "neg_train": 0.1,
+    "neg_eval": 0.3,
+    "rounds": 500,
+    "early": 40,
+    "spw_full": 10.0,
+    "proxy_mod": 10,
+    "proxy_neg_train": 0.3,
+    "proxy_rho_min": 0.7,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "noise_min": 0.0002
+  },
+  "results": {
+    "DEV": {
+      "baseline": 0.970396967505926,
+      "ceiling": 0.9847143092101822,
+      "fold": {
+        "train": 1424757,
+        "es": 572391,
+        "eval": 2082017,
+        "eval_pos": 16821
+      },
+      "gap": 0.014317341704256248
+    },
+    "SEALED": {
+      "baseline": 0.9742099952759418,
+      "ceiling": 0.985440922359235,
+      "fold": {
+        "train": 1469995,
+        "es": 591583,
+        "eval": 2198357,
+        "eval_pos": 14798
+      },
+      "gap": 0.011230927083293207
+    },
+    "noise": {
+      "ceiling_seed_sd": 0.00010932859238445598,
+      "baseline_seed_sd": 0.0001318446993576296,
+      "materiality_threshold": 0.00021865718476891195
+    },
+    "proxy": {
+      "spearman": 0.792107117688513,
+      "n_features": 44,
+      "passed": true,
+      "min_required": 0.7
+    },
+    "grammar_test": {
+      "real(lag next1, ip-app-dev-os)": 0.00984158938291324,
+      "decoy(permuted)": 0.0007393452533058786
+    },
+    "grammar": {
+      "specs_tested": 53,
+      "ops_covered": [
+        "count",
+        "cumcount",
+        "lag",
+        "nunique",
+        "ratio",
+        "roll"
+      ],
+      "all_finite_mean": 0.9863612602103308,
+      "invalid_rejected": true
+    }
+  },
+  "files": {
+    "bundle": "c8b4bd4b62",
+    "af_core": "c8b4bd4b62",
+    "td_ablation_v2": "c8b4bd4b62",
+    "af_phase0": "c8b4bd4b62"
+  }
+}

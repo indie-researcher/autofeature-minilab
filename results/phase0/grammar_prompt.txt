@@ -1,0 +1,9 @@
+Propose ONE feature as a JSON object. Columns: c0..c4 (anonymous categorical IDs) and h (hour index 0..7).
+Click rows are time-ordered events; the target is whether the click converted. Allowed specs:
+ {"op":"count","keys":[...]}                      rows sharing the same key values (whole window)
+ {"op":"nunique","keys":[...],"target":"cX"}      distinct target values within the key group
+ {"op":"cumcount","keys":[...]}                   running index of the row inside its key group
+ {"op":"lag","keys":[...],"k":1|2|3,"dir":"next"|"prev"}   seconds to the k-th next/previous row of the group
+ {"op":"roll","keys":[...],"w":60|600|3600}       rows of the group in the previous w seconds
+ {"op":"ratio","num":<count|nunique|cumcount|roll spec>,"den":<same>}   num / (den + 1)
+keys: 1-4 distinct names from [c0,c1,c2,c3,c4,h]. Return JSON only.

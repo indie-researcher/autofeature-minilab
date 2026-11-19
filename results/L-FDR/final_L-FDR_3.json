@@ -1,0 +1,129 @@
+{
+  "arm": "L-FDR",
+  "run": 3,
+  "n_proposals": 60,
+  "n_screened": 42,
+  "n_full_tests": 18,
+  "accepted_real": 6,
+  "accepted_decoys": 0,
+  "decoys_tested": 2,
+  "decoy_fpr": 0.0,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.9772349675198891,
+  "dev_gap_closed_pct": 47.92930739776592,
+  "model": "qwen2.5:7b",
+  "decoys_proposed": 10,
+  "decoys_screened": 8,
+  "n_dup_total": 46,
+  "tokens": {
+    "prompt": 316116,
+    "completion": 8115
+  },
+  "accepted": [
+    {
+      "spec": {
+        "op": "count",
+        "keys": [
+          "c0",
+          "c1",
+          "c2",
+          "h"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 3000010,
+      "iter": 1
+    },
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c0",
+          "c2",
+          "h"
+        ],
+        "k": 1,
+        "dir": "next"
+      },
+      "is_decoy": false,
+      "dseed": 3000019,
+      "iter": 10
+    },
+    {
+      "spec": {
+        "op": "ratio",
+        "num": {
+          "op": "count",
+          "keys": [
+            "c1",
+            "c2",
+            "h"
+          ]
+        },
+        "den": {
+          "op": "count",
+          "keys": [
+            "c0",
+            "h"
+          ]
+        }
+      },
+      "is_decoy": false,
+      "dseed": 3000057,
+      "iter": 48
+    },
+    {
+      "spec": {
+        "op": "nunique",
+        "keys": [
+          "c0",
+          "c3",
+          "h"
+        ],
+        "target": "c4"
+      },
+      "is_decoy": false,
+      "dseed": 3000059,
+      "iter": 50
+    },
+    {
+      "spec": {
+        "op": "ratio",
+        "num": {
+          "op": "count",
+          "keys": [
+            "c0",
+            "c3",
+            "h"
+          ]
+        },
+        "den": {
+          "op": "count",
+          "keys": [
+            "c2",
+            "c3",
+            "h"
+          ]
+        }
+      },
+      "is_decoy": false,
+      "dseed": 3000060,
+      "iter": 51
+    },
+    {
+      "spec": {
+        "op": "nunique",
+        "keys": [
+          "c0",
+          "c2",
+          "h"
+        ],
+        "target": "c3"
+      },
+      "is_decoy": false,
+      "dseed": 3000064,
+      "iter": 55
+    }
+  ],
+  "minutes": 42.5
+}
