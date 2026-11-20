@@ -1,0 +1,167 @@
+{
+  "run": {
+    "arm": "R",
+    "run": 1,
+    "final_set_hash": "5a71289bd48358121efc05c25cf70a96f0920dffab5723f25d4442b7cb1f8f65",
+    "n_accepted_real": 4,
+    "n_decoys_tested": 4,
+    "n_decoys_accepted": 0,
+    "decoy_fpr": 0.0,
+    "sealed_baseline": 0.9741439506655306,
+    "sealed_final_auc": 0.9794026561899455,
+    "sealed_gap_closed_pct": 46.5496919616562,
+    "dev_baseline": 0.9703504870359172,
+    "dev_final_auc": 0.9771236787246361,
+    "dev_gap_closed_pct": 47.15452201054212,
+    "optimism_gap": 0.6048300488859155,
+    "model": "",
+    "minutes": 35.9,
+    "tokens_prompt": NaN,
+    "tokens_completion": NaN,
+    "n_proposals": 60,
+    "n_full_tests": 18,
+    "decoys_proposed": 10,
+    "decoys_screened": 6,
+    "dups": NaN,
+    "decoy_counts_source": "derived_from_schedule"
+  },
+  "accepted_real_specs": [
+    {
+      "op": "nunique",
+      "keys": [
+        "c0",
+        "c3",
+        "h"
+      ],
+      "target": "c4"
+    },
+    {
+      "op": "count",
+      "keys": [
+        "c0",
+        "c1"
+      ]
+    },
+    {
+      "op": "ratio",
+      "num": {
+        "op": "nunique",
+        "keys": [
+          "c0"
+        ],
+        "target": "h"
+      },
+      "den": {
+        "op": "count",
+        "keys": [
+          "c4"
+        ]
+      }
+    },
+    {
+      "op": "lag",
+      "keys": [
+        "c0",
+        "c4"
+      ],
+      "k": 1,
+      "dir": "next"
+    }
+  ],
+  "base_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9738878430911491,
+      "iters": 489
+    },
+    {
+      "seed": 101,
+      "auc": 0.9742610731840244,
+      "iters": 498
+    },
+    {
+      "seed": 102,
+      "auc": 0.9742829357214182,
+      "iters": 488
+    }
+  ],
+  "final_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9792179485179463,
+      "iters": 488
+    },
+    {
+      "seed": 101,
+      "auc": 0.9795309740560906,
+      "iters": 493
+    },
+    {
+      "seed": 102,
+      "auc": 0.9794590459957998,
+      "iters": 487
+    }
+  ],
+  "decoys": [
+    {
+      "arm": "R",
+      "run": 1,
+      "decoy_index": 0,
+      "decoy_idx": 49,
+      "spec": "{\"keys\": [\"c0\", \"c1\"], \"op\": \"roll\", \"w\": 3600}",
+      "repermute_seed": 7000000,
+      "sealed_stack_auc": 0.9794026561899455,
+      "sealed_stack_decoy_auc": 0.979129706889733,
+      "delta_auc": -0.00027294930021252534,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[-0.00019650044425456592, -0.00030216435110586026, -0.00032018310527714977]"
+    },
+    {
+      "arm": "R",
+      "run": 1,
+      "decoy_index": 1,
+      "decoy_idx": 51,
+      "spec": "{\"dir\": \"prev\", \"k\": 3, \"keys\": [\"c0\", \"c1\", \"c3\"], \"op\": \"lag\"}",
+      "repermute_seed": 7000001,
+      "sealed_stack_auc": 0.9794026561899455,
+      "sealed_stack_decoy_auc": 0.9788951042077879,
+      "delta_auc": -0.0005075519821576465,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[-0.0001391858411030622, -0.0009166215318967552, -0.00046684857347312203]"
+    },
+    {
+      "arm": "R",
+      "run": 1,
+      "decoy_index": 2,
+      "decoy_idx": 54,
+      "spec": "{\"keys\": [\"c0\", \"c1\", \"c3\"], \"op\": \"cumcount\"}",
+      "repermute_seed": 7000002,
+      "sealed_stack_auc": 0.9794026561899455,
+      "sealed_stack_decoy_auc": 0.9791027942330568,
+      "delta_auc": -0.00029986195688869177,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[-3.690422147462069e-05, -0.00045299283074551333, -0.0004096888184459413]"
+    },
+    {
+      "arm": "R",
+      "run": 1,
+      "decoy_index": 3,
+      "decoy_idx": 57,
+      "spec": "{\"keys\": [\"c1\", \"c2\", \"h\"], \"op\": \"nunique\", \"target\": \"c3\"}",
+      "repermute_seed": 7000003,
+      "sealed_stack_auc": 0.9794026561899455,
+      "sealed_stack_decoy_auc": 0.9789522472870217,
+      "delta_auc": -0.00045040890292387853,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[-0.00019493992425101414, -0.0007825389167778196, -0.0003737478677428019]"
+    }
+  ]
+}

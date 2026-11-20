@@ -1,0 +1,126 @@
+{
+  "run": {
+    "arm": "R",
+    "run": 2,
+    "final_set_hash": "b6e7382360a4ab28db37600f26d8227b0df6bd1466639419077083ef5deafd00",
+    "n_accepted_real": 4,
+    "n_decoys_tested": 1,
+    "n_decoys_accepted": 0,
+    "decoy_fpr": 0.0,
+    "sealed_baseline": 0.9741439506655306,
+    "sealed_final_auc": 0.9789836877026564,
+    "sealed_gap_closed_pct": 42.84101233804922,
+    "dev_baseline": 0.9703504870359172,
+    "dev_final_auc": 0.9768762652562039,
+    "dev_gap_closed_pct": 45.43204546195642,
+    "optimism_gap": 2.591033123907202,
+    "model": "",
+    "minutes": 34.4,
+    "tokens_prompt": NaN,
+    "tokens_completion": NaN,
+    "n_proposals": 60,
+    "n_full_tests": 12,
+    "decoys_proposed": 15,
+    "decoys_screened": 14,
+    "dups": NaN,
+    "decoy_counts_source": "derived_from_schedule"
+  },
+  "accepted_real_specs": [
+    {
+      "op": "lag",
+      "keys": [
+        "c0",
+        "c3"
+      ],
+      "k": 1,
+      "dir": "next"
+    },
+    {
+      "op": "lag",
+      "keys": [
+        "c0",
+        "c2"
+      ],
+      "k": 1,
+      "dir": "next"
+    },
+    {
+      "op": "lag",
+      "keys": [
+        "c1",
+        "c4"
+      ],
+      "k": 1,
+      "dir": "next"
+    },
+    {
+      "op": "ratio",
+      "num": {
+        "op": "nunique",
+        "keys": [
+          "c1",
+          "c3"
+        ],
+        "target": "h"
+      },
+      "den": {
+        "op": "count",
+        "keys": [
+          "c0",
+          "c1"
+        ]
+      }
+    }
+  ],
+  "base_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9738878430911491,
+      "iters": 489
+    },
+    {
+      "seed": 101,
+      "auc": 0.9742610731840244,
+      "iters": 498
+    },
+    {
+      "seed": 102,
+      "auc": 0.9742829357214182,
+      "iters": 488
+    }
+  ],
+  "final_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9790704056131502,
+      "iters": 326
+    },
+    {
+      "seed": 101,
+      "auc": 0.9788538584102907,
+      "iters": 498
+    },
+    {
+      "seed": 102,
+      "auc": 0.9790267990845284,
+      "iters": 446
+    }
+  ],
+  "decoys": [
+    {
+      "arm": "R",
+      "run": 2,
+      "decoy_index": 0,
+      "decoy_idx": 5,
+      "spec": "{\"keys\": [\"c0\", \"c2\"], \"op\": \"count\"}",
+      "repermute_seed": 7001000,
+      "sealed_stack_auc": 0.9789836877026564,
+      "sealed_stack_decoy_auc": 0.978545177109694,
+      "delta_auc": -0.00043851059296233047,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[-0.00042528015379428297, -0.00037953437829163494, -0.0005107172468010734]"
+    }
+  ]
+}

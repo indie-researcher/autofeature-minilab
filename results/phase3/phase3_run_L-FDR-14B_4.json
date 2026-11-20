@@ -1,0 +1,196 @@
+{
+  "run": {
+    "arm": "L-FDR-14B",
+    "run": 4,
+    "final_set_hash": "10cc060cb51369d5c5ed793330ccec6ff1bcc32dc9abf2f18815ef8db079caed",
+    "n_accepted_real": 3,
+    "n_decoys_tested": 7,
+    "n_decoys_accepted": 0,
+    "decoy_fpr": 0.0,
+    "sealed_baseline": 0.9741439506655306,
+    "sealed_final_auc": 0.9786348638787529,
+    "sealed_gap_closed_pct": 39.753248348183256,
+    "dev_baseline": 0.9703504870359172,
+    "dev_final_auc": 0.9752795798791413,
+    "dev_gap_closed_pct": 34.316025243303926,
+    "optimism_gap": -5.43722310487933,
+    "model": "qwen2.5:14b",
+    "minutes": 55.2,
+    "tokens_prompt": 545393,
+    "tokens_completion": 27431,
+    "n_proposals": 60,
+    "n_full_tests": 37,
+    "decoys_proposed": 16,
+    "decoys_screened": 9,
+    "dups": 15,
+    "decoy_counts_source": "embedded"
+  },
+  "accepted_real_specs": [
+    {
+      "op": "count",
+      "keys": [
+        "c0",
+        "c1",
+        "h"
+      ]
+    },
+    {
+      "op": "nunique",
+      "keys": [
+        "c0",
+        "c2",
+        "h"
+      ],
+      "target": "c1"
+    },
+    {
+      "op": "count",
+      "keys": [
+        "c1",
+        "c2",
+        "c4"
+      ]
+    }
+  ],
+  "base_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9738878430911491,
+      "iters": 489
+    },
+    {
+      "seed": 101,
+      "auc": 0.9742610731840244,
+      "iters": 498
+    },
+    {
+      "seed": 102,
+      "auc": 0.9742829357214182,
+      "iters": 488
+    }
+  ],
+  "final_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9785410668077864,
+      "iters": 362
+    },
+    {
+      "seed": 101,
+      "auc": 0.9786682889407274,
+      "iters": 316
+    },
+    {
+      "seed": 102,
+      "auc": 0.9786952358877445,
+      "iters": 257
+    }
+  ],
+  "decoys": [
+    {
+      "arm": "L-FDR-14B",
+      "run": 4,
+      "decoy_index": 0,
+      "decoy_idx": 21,
+      "spec": "{\"keys\": [\"c0\", \"c3\", \"h\"], \"op\": \"cumcount\"}",
+      "repermute_seed": 7028000,
+      "sealed_stack_auc": 0.9786348638787529,
+      "sealed_stack_decoy_auc": 0.9783112797988424,
+      "delta_auc": -0.0003235840799105105,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[-0.0004167384700376475, -0.0001750811899852156, -0.00037893257970866845]"
+    },
+    {
+      "arm": "L-FDR-14B",
+      "run": 4,
+      "decoy_index": 1,
+      "decoy_idx": 23,
+      "spec": "{\"keys\": [\"c0\", \"c1\", \"c2\"], \"op\": \"roll\", \"w\": 600}",
+      "repermute_seed": 7028001,
+      "sealed_stack_auc": 0.9786348638787529,
+      "sealed_stack_decoy_auc": 0.978547159460727,
+      "delta_auc": -8.770441802585793e-05,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[-5.6165907672545146e-06, -0.00010840863512195931, -0.00014908802818835998]"
+    },
+    {
+      "arm": "L-FDR-14B",
+      "run": 4,
+      "decoy_index": 2,
+      "decoy_idx": 26,
+      "spec": "{\"keys\": [\"c0\", \"c3\", \"c4\"], \"op\": \"nunique\", \"target\": \"c1\"}",
+      "repermute_seed": 7028002,
+      "sealed_stack_auc": 0.9786348638787529,
+      "sealed_stack_decoy_auc": 0.9786047435845157,
+      "delta_auc": -3.0120294237101497e-05,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[8.486618048986205e-05, -5.283466911198964e-06, -0.00016994359628996758]"
+    },
+    {
+      "arm": "L-FDR-14B",
+      "run": 4,
+      "decoy_index": 3,
+      "decoy_idx": 33,
+      "spec": "{\"keys\": [\"c0\", \"c1\", \"c4\"], \"op\": \"roll\", \"w\": 60}",
+      "repermute_seed": 7028003,
+      "sealed_stack_auc": 0.9786348638787529,
+      "sealed_stack_decoy_auc": 0.9786106077486577,
+      "delta_auc": -2.4256130095120138e-05,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[0.00010861727080335726, -1.1770608356553858e-05, -0.00016961505273216382]"
+    },
+    {
+      "arm": "L-FDR-14B",
+      "run": 4,
+      "decoy_index": 4,
+      "decoy_idx": 44,
+      "spec": "{\"keys\": [\"c1\", \"c2\", \"c4\"], \"op\": \"count\"}",
+      "repermute_seed": 7028004,
+      "sealed_stack_auc": 0.9786348638787529,
+      "sealed_stack_decoy_auc": 0.9783979451854875,
+      "delta_auc": -0.00023691869326517936,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[-0.00011175848888178574, -0.0003178837491181197, -0.0002811138417956327]"
+    },
+    {
+      "arm": "L-FDR-14B",
+      "run": 4,
+      "decoy_index": 5,
+      "decoy_idx": 48,
+      "spec": "{\"keys\": [\"c0\", \"c4\", \"h\"], \"op\": \"roll\", \"w\": 600}",
+      "repermute_seed": 7028005,
+      "sealed_stack_auc": 0.9786348638787529,
+      "sealed_stack_decoy_auc": 0.9784334220250882,
+      "delta_auc": -0.00020144185366451536,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[-0.00010335005157258159, -0.00022492967482912185, -0.0002760458345918426]"
+    },
+    {
+      "arm": "L-FDR-14B",
+      "run": 4,
+      "decoy_index": 6,
+      "decoy_idx": 56,
+      "spec": "{\"keys\": [\"c1\", \"c3\", \"h\"], \"op\": \"count\"}",
+      "repermute_seed": 7028006,
+      "sealed_stack_auc": 0.9786348638787529,
+      "sealed_stack_decoy_auc": 0.9783648562080572,
+      "delta_auc": -0.0002700076706955527,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[-0.0003255153307015757, -0.0002216822897699311, -0.0002628253916151513]"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "status": "complete",
+  "embedded_inputs_sha256": "dd1d6f41cb851536776b3f83cadf2bcbc922c300cbf27a2b3ec6c16e84b68c7e",
+  "script_sha256": "c5d8e730e8849784f7a28b147ebc5b9c029dccbd132060662d032d97ac67c4e6",
+  "started_at_utc": "2026-11-19T22:25:45Z",
+  "runs_done": 30,
+  "decoys_done": 29,
+  "last_run": "L-FDR-14B_5",
+  "completed_at_utc": "2026-11-20T02:09:48Z",
+  "n_runs": 30,
+  "n_arms": 6,
+  "n_decoys_tested": 29,
+  "sealed_baseline_frozen": 0.9742099952759418,
+  "sealed_ceiling_frozen": 0.985440922359235
+}

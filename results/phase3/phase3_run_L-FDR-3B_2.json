@@ -1,0 +1,107 @@
+{
+  "run": {
+    "arm": "L-FDR-3B",
+    "run": 2,
+    "final_set_hash": "3ed5a01fa2dfc107292e7fe90b6ab63502e3906c64fed998f3407b723a23d5ca",
+    "n_accepted_real": 2,
+    "n_decoys_tested": 1,
+    "n_decoys_accepted": 0,
+    "decoy_fpr": 0.0,
+    "sealed_baseline": 0.9741439506655306,
+    "sealed_final_auc": 0.9777442145723566,
+    "sealed_gap_closed_pct": 31.86928324191846,
+    "dev_baseline": 0.9703504870359172,
+    "dev_final_auc": 0.9748470212925056,
+    "dev_gap_closed_pct": 31.304580368897817,
+    "optimism_gap": -0.5647028730206429,
+    "model": "qwen2.5:3b",
+    "minutes": 29.7,
+    "tokens_prompt": 1659442,
+    "tokens_completion": 39678,
+    "n_proposals": 60,
+    "n_full_tests": 7,
+    "decoys_proposed": 15,
+    "decoys_screened": 14,
+    "dups": 78,
+    "decoy_counts_source": "embedded"
+  },
+  "accepted_real_specs": [
+    {
+      "op": "nunique",
+      "keys": [
+        "c0",
+        "h"
+      ],
+      "target": "c4"
+    },
+    {
+      "op": "ratio",
+      "num": {
+        "op": "count",
+        "keys": [
+          "c0",
+          "c3",
+          "c4"
+        ]
+      },
+      "den": {
+        "op": "count",
+        "keys": [
+          "c0",
+          "h"
+        ]
+      }
+    }
+  ],
+  "base_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9738878430911491,
+      "iters": 489
+    },
+    {
+      "seed": 101,
+      "auc": 0.9742610731840244,
+      "iters": 498
+    },
+    {
+      "seed": 102,
+      "auc": 0.9742829357214182,
+      "iters": 488
+    }
+  ],
+  "final_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9776191135765808,
+      "iters": 424
+    },
+    {
+      "seed": 101,
+      "auc": 0.97787127009179,
+      "iters": 472
+    },
+    {
+      "seed": 102,
+      "auc": 0.9777422600486989,
+      "iters": 490
+    }
+  ],
+  "decoys": [
+    {
+      "arm": "L-FDR-3B",
+      "run": 2,
+      "decoy_index": 0,
+      "decoy_idx": 0,
+      "spec": "{\"keys\": [\"c0\", \"h\"], \"op\": \"count\"}",
+      "repermute_seed": 7021000,
+      "sealed_stack_auc": 0.9777442145723566,
+      "sealed_stack_decoy_auc": 0.9775686115997427,
+      "delta_auc": -0.00017560297261380123,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[-0.00014740250936962074, -0.00022257221387300685, -0.00015683419459877612]"
+    }
+  ]
+}

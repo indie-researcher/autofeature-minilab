@@ -1,0 +1,97 @@
+{
+  "run": {
+    "arm": "R",
+    "run": 3,
+    "final_set_hash": "3f26d270f4cac0aee6f43076f9fd3bd7645bf22ebbefb0be029eff6da65802f3",
+    "n_accepted_real": 4,
+    "n_decoys_tested": 0,
+    "n_decoys_accepted": 0,
+    "decoy_fpr": NaN,
+    "sealed_baseline": 0.9741439506655306,
+    "sealed_final_auc": 0.98468135715093,
+    "sealed_gap_closed_pct": 93.27638212346503,
+    "dev_baseline": 0.9703504870359172,
+    "dev_final_auc": 0.9834211046021494,
+    "dev_gap_closed_pct": 90.99679324664842,
+    "optimism_gap": -2.2795888768166037,
+    "model": "",
+    "minutes": 29.2,
+    "tokens_prompt": NaN,
+    "tokens_completion": NaN,
+    "n_proposals": 60,
+    "n_full_tests": 9,
+    "decoys_proposed": 10,
+    "decoys_screened": 10,
+    "dups": NaN,
+    "decoy_counts_source": "derived_from_schedule"
+  },
+  "accepted_real_specs": [
+    {
+      "op": "count",
+      "keys": [
+        "c0"
+      ]
+    },
+    {
+      "op": "lag",
+      "keys": [
+        "c0",
+        "c1",
+        "c3"
+      ],
+      "k": 1,
+      "dir": "next"
+    },
+    {
+      "op": "nunique",
+      "keys": [
+        "c2",
+        "c3"
+      ],
+      "target": "c0"
+    },
+    {
+      "op": "roll",
+      "keys": [
+        "c1",
+        "c3"
+      ],
+      "w": 3600
+    }
+  ],
+  "base_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9738878430911491,
+      "iters": 489
+    },
+    {
+      "seed": 101,
+      "auc": 0.9742610731840244,
+      "iters": 498
+    },
+    {
+      "seed": 102,
+      "auc": 0.9742829357214182,
+      "iters": 488
+    }
+  ],
+  "final_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9845998133733576,
+      "iters": 315
+    },
+    {
+      "seed": 101,
+      "auc": 0.9846578660699136,
+      "iters": 375
+    },
+    {
+      "seed": 102,
+      "auc": 0.9847863920095186,
+      "iters": 362
+    }
+  ],
+  "decoys": []
+}

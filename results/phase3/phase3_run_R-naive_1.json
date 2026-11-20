@@ -1,0 +1,121 @@
+{
+  "run": {
+    "arm": "R-naive",
+    "run": 1,
+    "final_set_hash": "2014ac259c41133fb230ca4c200bd512d774a504535d2864243398870482143a",
+    "n_accepted_real": 5,
+    "n_decoys_tested": 1,
+    "n_decoys_accepted": 0,
+    "decoy_fpr": 0.0,
+    "sealed_baseline": 0.9741439506655306,
+    "sealed_final_auc": 0.9785624436891388,
+    "sealed_gap_closed_pct": 39.1121899160866,
+    "dev_baseline": 0.9703504870359172,
+    "dev_final_auc": 0.9763269411281529,
+    "dev_gap_closed_pct": 41.60768644813366,
+    "optimism_gap": 2.4954965320470635,
+    "model": "random",
+    "minutes": 25.8,
+    "tokens_prompt": NaN,
+    "tokens_completion": NaN,
+    "n_proposals": 60,
+    "n_full_tests": 9,
+    "decoys_proposed": 10,
+    "decoys_screened": 9,
+    "dups": 0,
+    "decoy_counts_source": "embedded"
+  },
+  "accepted_real_specs": [
+    {
+      "op": "nunique",
+      "keys": [
+        "c0",
+        "c3",
+        "h"
+      ],
+      "target": "c4"
+    },
+    {
+      "op": "count",
+      "keys": [
+        "c0",
+        "c1"
+      ]
+    },
+    {
+      "op": "nunique",
+      "keys": [
+        "c0",
+        "c4"
+      ],
+      "target": "h"
+    },
+    {
+      "op": "lag",
+      "keys": [
+        "c1",
+        "c4"
+      ],
+      "k": 2,
+      "dir": "next"
+    },
+    {
+      "op": "count",
+      "keys": [
+        "c1",
+        "c3"
+      ]
+    }
+  ],
+  "base_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9738878430911491,
+      "iters": 489
+    },
+    {
+      "seed": 101,
+      "auc": 0.9742610731840244,
+      "iters": 498
+    },
+    {
+      "seed": 102,
+      "auc": 0.9742829357214182,
+      "iters": 488
+    }
+  ],
+  "final_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9786365086494234,
+      "iters": 438
+    },
+    {
+      "seed": 101,
+      "auc": 0.9784883626152823,
+      "iters": 500
+    },
+    {
+      "seed": 102,
+      "auc": 0.9785624598027106,
+      "iters": 490
+    }
+  ],
+  "decoys": [
+    {
+      "arm": "R-naive",
+      "run": 1,
+      "decoy_index": 0,
+      "decoy_idx": 16,
+      "spec": "{\"keys\": [\"c2\", \"c4\"], \"op\": \"roll\", \"w\": 3600}",
+      "repermute_seed": 7005000,
+      "sealed_stack_auc": 0.9785624436891388,
+      "sealed_stack_decoy_auc": 0.9784218819016735,
+      "delta_auc": -0.00014056178746524317,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[-0.00018001429502589872, -9.957305405083883e-05, -0.00014209801331899197]"
+    }
+  ]
+}

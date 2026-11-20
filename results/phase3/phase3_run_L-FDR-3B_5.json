@@ -1,0 +1,72 @@
+{
+  "run": {
+    "arm": "L-FDR-3B",
+    "run": 5,
+    "final_set_hash": "1d69f713c78384a07fc9efd642d182ae079c00e1c9b9ed3cf45f37359999bbf7",
+    "n_accepted_real": 1,
+    "n_decoys_tested": 0,
+    "n_decoys_accepted": 0,
+    "decoy_fpr": NaN,
+    "sealed_baseline": 0.9741439506655306,
+    "sealed_final_auc": 0.9781402744398937,
+    "sealed_gap_closed_pct": 35.37517737244744,
+    "dev_baseline": 0.9703504870359172,
+    "dev_final_auc": 0.974470620611569,
+    "dev_gap_closed_pct": 28.684103198058406,
+    "optimism_gap": -6.691074174389033,
+    "model": "qwen2.5:3b",
+    "minutes": 26.0,
+    "tokens_prompt": 3683461,
+    "tokens_completion": 94687,
+    "n_proposals": 60,
+    "n_full_tests": 2,
+    "decoys_proposed": 9,
+    "decoys_screened": 9,
+    "dups": 56,
+    "decoy_counts_source": "embedded"
+  },
+  "accepted_real_specs": [
+    {
+      "op": "count",
+      "keys": [
+        "c0",
+        "h"
+      ]
+    }
+  ],
+  "base_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9738878430911491,
+      "iters": 489
+    },
+    {
+      "seed": 101,
+      "auc": 0.9742610731840244,
+      "iters": 498
+    },
+    {
+      "seed": 102,
+      "auc": 0.9742829357214182,
+      "iters": 488
+    }
+  ],
+  "final_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9782134158665895,
+      "iters": 500
+    },
+    {
+      "seed": 101,
+      "auc": 0.978137565755682,
+      "iters": 397
+    },
+    {
+      "seed": 102,
+      "auc": 0.9780698416974097,
+      "iters": 391
+    }
+  ],
+  "decoys": []
+}

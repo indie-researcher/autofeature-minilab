@@ -1,0 +1,148 @@
+{
+  "run": {
+    "arm": "L-naive",
+    "run": 2,
+    "final_set_hash": "791b6d13943709f8200064b432308ff683663c96a0a44344b3170d6552a95beb",
+    "n_accepted_real": 8,
+    "n_decoys_tested": 0,
+    "n_decoys_accepted": 0,
+    "decoy_fpr": NaN,
+    "sealed_baseline": 0.9741439506655306,
+    "sealed_final_auc": 0.9789467030267983,
+    "sealed_gap_closed_pct": 42.51362658493876,
+    "dev_baseline": 0.9703504870359172,
+    "dev_final_auc": 0.9758266924606781,
+    "dev_gap_closed_pct": 38.12498761348051,
+    "optimism_gap": -4.388638971458249,
+    "model": "",
+    "minutes": 23.2,
+    "tokens_prompt": NaN,
+    "tokens_completion": NaN,
+    "n_proposals": 60,
+    "n_full_tests": 8,
+    "decoys_proposed": 15,
+    "decoys_screened": 15,
+    "dups": NaN,
+    "decoy_counts_source": "derived_from_schedule"
+  },
+  "accepted_real_specs": [
+    {
+      "op": "nunique",
+      "keys": [
+        "c1",
+        "c3",
+        "c4",
+        "h"
+      ],
+      "target": "c2"
+    },
+    {
+      "op": "cumcount",
+      "keys": [
+        "c0",
+        "c2",
+        "h"
+      ]
+    },
+    {
+      "op": "lag",
+      "keys": [
+        "c0",
+        "c4",
+        "h"
+      ],
+      "k": 1,
+      "dir": "next"
+    },
+    {
+      "op": "count",
+      "keys": [
+        "c2",
+        "c3",
+        "h"
+      ]
+    },
+    {
+      "op": "ratio",
+      "num": {
+        "op": "count",
+        "keys": [
+          "c0",
+          "c3",
+          "h"
+        ]
+      },
+      "den": {
+        "op": "nunique",
+        "keys": [
+          "c0",
+          "c4",
+          "h"
+        ],
+        "target": "c1"
+      }
+    },
+    {
+      "op": "roll",
+      "keys": [
+        "c0",
+        "c2",
+        "h"
+      ],
+      "w": 600
+    },
+    {
+      "op": "nunique",
+      "keys": [
+        "c1",
+        "c2",
+        "c4",
+        "h"
+      ],
+      "target": "c3"
+    },
+    {
+      "op": "cumcount",
+      "keys": [
+        "c0",
+        "c1",
+        "h"
+      ]
+    }
+  ],
+  "base_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9738878430911491,
+      "iters": 489
+    },
+    {
+      "seed": 101,
+      "auc": 0.9742610731840244,
+      "iters": 498
+    },
+    {
+      "seed": 102,
+      "auc": 0.9742829357214182,
+      "iters": 488
+    }
+  ],
+  "final_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9790581367890372,
+      "iters": 311
+    },
+    {
+      "seed": 101,
+      "auc": 0.9790281299861325,
+      "iters": 215
+    },
+    {
+      "seed": 102,
+      "auc": 0.9787538423052252,
+      "iters": 366
+    }
+  ],
+  "decoys": []
+}

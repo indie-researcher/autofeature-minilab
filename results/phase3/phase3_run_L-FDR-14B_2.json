@@ -1,0 +1,100 @@
+{
+  "run": {
+    "arm": "L-FDR-14B",
+    "run": 2,
+    "final_set_hash": "2bd00626dfe81e7b8b7f90b5b2e7ee27a035bb0267e73cf2cfba385b09736f9e",
+    "n_accepted_real": 2,
+    "n_decoys_tested": 1,
+    "n_decoys_accepted": 0,
+    "decoy_fpr": 0.0,
+    "sealed_baseline": 0.9741439506655306,
+    "sealed_final_auc": 0.9786068612245615,
+    "sealed_gap_closed_pct": 39.50537082002281,
+    "dev_baseline": 0.9703504870359172,
+    "dev_final_auc": 0.9758603111850498,
+    "dev_gap_closed_pct": 38.35903899593163,
+    "optimism_gap": -1.1463318240911846,
+    "model": "qwen2.5:14b",
+    "minutes": 44.9,
+    "tokens_prompt": 368997,
+    "tokens_completion": 19724,
+    "n_proposals": 60,
+    "n_full_tests": 9,
+    "decoys_proposed": 15,
+    "decoys_screened": 14,
+    "dups": 8,
+    "decoy_counts_source": "embedded"
+  },
+  "accepted_real_specs": [
+    {
+      "op": "nunique",
+      "keys": [
+        "c0",
+        "c2",
+        "h"
+      ],
+      "target": "c4"
+    },
+    {
+      "op": "lag",
+      "keys": [
+        "c0",
+        "c1",
+        "h"
+      ],
+      "k": 1,
+      "dir": "next"
+    }
+  ],
+  "base_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9738878430911491,
+      "iters": 489
+    },
+    {
+      "seed": 101,
+      "auc": 0.9742610731840244,
+      "iters": 498
+    },
+    {
+      "seed": 102,
+      "auc": 0.9742829357214182,
+      "iters": 488
+    }
+  ],
+  "final_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9785680421805059,
+      "iters": 500
+    },
+    {
+      "seed": 101,
+      "auc": 0.9785856421778121,
+      "iters": 497
+    },
+    {
+      "seed": 102,
+      "auc": 0.9786668993153665,
+      "iters": 396
+    }
+  ],
+  "decoys": [
+    {
+      "arm": "L-FDR-14B",
+      "run": 2,
+      "decoy_index": 0,
+      "decoy_idx": 0,
+      "spec": "{\"keys\": [\"c0\", \"c1\", \"h\"], \"op\": \"count\"}",
+      "repermute_seed": 7026000,
+      "sealed_stack_auc": 0.9786068612245615,
+      "sealed_stack_decoy_auc": 0.978546810202667,
+      "delta_auc": -6.005102189454714e-05,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[-3.389109700846493e-05, -9.617417872032075e-05, -5.0087789954855744e-05]"
+    }
+  ]
+}

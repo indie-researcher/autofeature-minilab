@@ -1,0 +1,122 @@
+{
+  "run": {
+    "arm": "R-naive",
+    "run": 3,
+    "final_set_hash": "8e8c9a6c6b25e9c76d3d7b37a134e9112065a2a86d0ff9c8bb56c7a66bb2e41c",
+    "n_accepted_real": 7,
+    "n_decoys_tested": 0,
+    "n_decoys_accepted": 0,
+    "decoy_fpr": NaN,
+    "sealed_baseline": 0.9741439506655306,
+    "sealed_final_auc": 0.9843707406124135,
+    "sealed_gap_closed_pct": 90.52682634039091,
+    "dev_baseline": 0.9703504870359172,
+    "dev_final_auc": 0.9833297887984201,
+    "dev_gap_closed_pct": 90.36105853327362,
+    "optimism_gap": -0.165767807117291,
+    "model": "random",
+    "minutes": 29.8,
+    "tokens_prompt": NaN,
+    "tokens_completion": NaN,
+    "n_proposals": 60,
+    "n_full_tests": 11,
+    "decoys_proposed": 10,
+    "decoys_screened": 10,
+    "dups": 0,
+    "decoy_counts_source": "embedded"
+  },
+  "accepted_real_specs": [
+    {
+      "op": "lag",
+      "keys": [
+        "c4"
+      ],
+      "k": 1,
+      "dir": "prev"
+    },
+    {
+      "op": "count",
+      "keys": [
+        "c0",
+        "c3",
+        "c4"
+      ]
+    },
+    {
+      "op": "count",
+      "keys": [
+        "c0"
+      ]
+    },
+    {
+      "op": "roll",
+      "keys": [
+        "c1",
+        "c2",
+        "h"
+      ],
+      "w": 60
+    },
+    {
+      "op": "nunique",
+      "keys": [
+        "c0",
+        "c1"
+      ],
+      "target": "c4"
+    },
+    {
+      "op": "lag",
+      "keys": [
+        "c0",
+        "c1",
+        "c3"
+      ],
+      "k": 1,
+      "dir": "next"
+    },
+    {
+      "op": "roll",
+      "keys": [
+        "c1",
+        "c3"
+      ],
+      "w": 3600
+    }
+  ],
+  "base_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9738878430911491,
+      "iters": 489
+    },
+    {
+      "seed": 101,
+      "auc": 0.9742610731840244,
+      "iters": 498
+    },
+    {
+      "seed": 102,
+      "auc": 0.9742829357214182,
+      "iters": 488
+    }
+  ],
+  "final_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9843197852324674,
+      "iters": 310
+    },
+    {
+      "seed": 101,
+      "auc": 0.9843562922678062,
+      "iters": 306
+    },
+    {
+      "seed": 102,
+      "auc": 0.9844361443369668,
+      "iters": 339
+    }
+  ],
+  "decoys": []
+}

@@ -1,0 +1,128 @@
+{
+  "run": {
+    "arm": "L-FDR-14B",
+    "run": 1,
+    "final_set_hash": "a5a8db70c176f3c5b06683910fb1af5b79cb4a27068f82bd1b773e51681b2ec7",
+    "n_accepted_real": 4,
+    "n_decoys_tested": 1,
+    "n_decoys_accepted": 0,
+    "decoy_fpr": 0.0,
+    "sealed_baseline": 0.9741439506655306,
+    "sealed_final_auc": 0.9787497094680435,
+    "sealed_gap_closed_pct": 40.769853438507134,
+    "dev_baseline": 0.9703504870359172,
+    "dev_final_auc": 0.9751601975126961,
+    "dev_gap_closed_pct": 33.484892937453985,
+    "optimism_gap": -7.284960501053149,
+    "model": "qwen2.5:14b",
+    "minutes": 34.6,
+    "tokens_prompt": 72877,
+    "tokens_completion": 3214,
+    "n_proposals": 60,
+    "n_full_tests": 15,
+    "decoys_proposed": 10,
+    "decoys_screened": 9,
+    "dups": 16,
+    "decoy_counts_source": "embedded"
+  },
+  "accepted_real_specs": [
+    {
+      "op": "nunique",
+      "keys": [
+        "c0",
+        "c3",
+        "h"
+      ],
+      "target": "c4"
+    },
+    {
+      "op": "count",
+      "keys": [
+        "c1",
+        "c2",
+        "c4"
+      ]
+    },
+    {
+      "op": "nunique",
+      "keys": [
+        "c0",
+        "c1",
+        "h"
+      ],
+      "target": "c2"
+    },
+    {
+      "op": "ratio",
+      "num": {
+        "op": "nunique",
+        "keys": [
+          "c0",
+          "c2",
+          "h"
+        ],
+        "target": "c4"
+      },
+      "den": {
+        "op": "nunique",
+        "keys": [
+          "c0",
+          "c2",
+          "h"
+        ],
+        "target": "c1"
+      }
+    }
+  ],
+  "base_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9738878430911491,
+      "iters": 489
+    },
+    {
+      "seed": 101,
+      "auc": 0.9742610731840244,
+      "iters": 498
+    },
+    {
+      "seed": 102,
+      "auc": 0.9742829357214182,
+      "iters": 488
+    }
+  ],
+  "final_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9788505843171406,
+      "iters": 359
+    },
+    {
+      "seed": 101,
+      "auc": 0.9787081106265187,
+      "iters": 286
+    },
+    {
+      "seed": 102,
+      "auc": 0.9786904334604714,
+      "iters": 264
+    }
+  ],
+  "decoys": [
+    {
+      "arm": "L-FDR-14B",
+      "run": 1,
+      "decoy_index": 0,
+      "decoy_idx": 55,
+      "spec": "{\"den\": {\"keys\": [\"c1\", \"c4\", \"h\"], \"op\": \"nunique\", \"target\": \"c2\"}, \"num\": {\"keys\": [\"c1\", \"c4\", \"h\"], \"op\": \"nunique\", \"target\": \"c0\"}, \"op\": \"ratio\"}",
+      "repermute_seed": 7025000,
+      "sealed_stack_auc": 0.9787497094680435,
+      "sealed_stack_decoy_auc": 0.978510012050172,
+      "delta_auc": -0.00023969741787155385,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[-0.0003388105439522393, -0.00019901911314135212, -0.00018126259652107013]"
+    }
+  ]
+}

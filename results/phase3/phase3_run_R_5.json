@@ -1,0 +1,100 @@
+{
+  "run": {
+    "arm": "R",
+    "run": 5,
+    "final_set_hash": "cb2a883ce66fa06d242c425541eaeb14586ed774efa4d65b2ffc82ccbba4076a",
+    "n_accepted_real": 3,
+    "n_decoys_tested": 0,
+    "n_decoys_accepted": 0,
+    "decoy_fpr": NaN,
+    "sealed_baseline": 0.9741439506655306,
+    "sealed_final_auc": 0.9795826776081601,
+    "sealed_gap_closed_pct": 48.14322891204909,
+    "dev_baseline": 0.9703504870359172,
+    "dev_final_auc": 0.9767070034594325,
+    "dev_gap_closed_pct": 44.25365579158995,
+    "optimism_gap": -3.88957312045914,
+    "model": "",
+    "minutes": 34.6,
+    "tokens_prompt": NaN,
+    "tokens_completion": NaN,
+    "n_proposals": 60,
+    "n_full_tests": 13,
+    "decoys_proposed": 9,
+    "decoys_screened": 9,
+    "dups": NaN,
+    "decoy_counts_source": "derived_from_schedule"
+  },
+  "accepted_real_specs": [
+    {
+      "op": "lag",
+      "keys": [
+        "c0",
+        "c4"
+      ],
+      "k": 2,
+      "dir": "prev"
+    },
+    {
+      "op": "count",
+      "keys": [
+        "c0"
+      ]
+    },
+    {
+      "op": "ratio",
+      "num": {
+        "op": "count",
+        "keys": [
+          "c0",
+          "c3",
+          "c4"
+        ]
+      },
+      "den": {
+        "op": "roll",
+        "keys": [
+          "c1",
+          "c2",
+          "c3"
+        ],
+        "w": 3600
+      }
+    }
+  ],
+  "base_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9738878430911491,
+      "iters": 489
+    },
+    {
+      "seed": 101,
+      "auc": 0.9742610731840244,
+      "iters": 498
+    },
+    {
+      "seed": 102,
+      "auc": 0.9742829357214182,
+      "iters": 488
+    }
+  ],
+  "final_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9793995810973456,
+      "iters": 327
+    },
+    {
+      "seed": 101,
+      "auc": 0.9797376561010999,
+      "iters": 402
+    },
+    {
+      "seed": 102,
+      "auc": 0.9796107956260349,
+      "iters": 342
+    }
+  ],
+  "decoys": []
+}

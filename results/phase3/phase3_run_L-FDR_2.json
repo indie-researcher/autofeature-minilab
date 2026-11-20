@@ -1,0 +1,134 @@
+{
+  "run": {
+    "arm": "L-FDR",
+    "run": 2,
+    "final_set_hash": "a388a301c4be42a647c4eb6322071326e8e2cc72a8ae115445269d7867f7f52c",
+    "n_accepted_real": 4,
+    "n_decoys_tested": 2,
+    "n_decoys_accepted": 0,
+    "decoy_fpr": 0.0,
+    "sealed_baseline": 0.9741439506655306,
+    "sealed_final_auc": 0.9771351980173821,
+    "sealed_gap_closed_pct": 26.478311471015736,
+    "dev_baseline": 0.9703504870359172,
+    "dev_final_auc": 0.9750308027043738,
+    "dev_gap_closed_pct": 32.58405465950501,
+    "optimism_gap": 6.105743188489271,
+    "model": "qwen2.5:7b",
+    "minutes": 41.3,
+    "tokens_prompt": 219135,
+    "tokens_completion": 5625,
+    "n_proposals": 60,
+    "n_full_tests": 20,
+    "decoys_proposed": 15,
+    "decoys_screened": 13,
+    "dups": 48,
+    "decoy_counts_source": "embedded"
+  },
+  "accepted_real_specs": [
+    {
+      "op": "nunique",
+      "keys": [
+        "c0",
+        "c2",
+        "c4",
+        "h"
+      ],
+      "target": "c1"
+    },
+    {
+      "op": "lag",
+      "keys": [
+        "c0",
+        "c2",
+        "h"
+      ],
+      "k": 1,
+      "dir": "next"
+    },
+    {
+      "op": "count",
+      "keys": [
+        "c0",
+        "c1",
+        "h"
+      ]
+    },
+    {
+      "op": "lag",
+      "keys": [
+        "c0",
+        "c1",
+        "h"
+      ],
+      "k": 1,
+      "dir": "next"
+    }
+  ],
+  "base_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9738878430911491,
+      "iters": 489
+    },
+    {
+      "seed": 101,
+      "auc": 0.9742610731840244,
+      "iters": 498
+    },
+    {
+      "seed": 102,
+      "auc": 0.9742829357214182,
+      "iters": 488
+    }
+  ],
+  "final_fits": [
+    {
+      "seed": 100,
+      "auc": 0.9774852763014253,
+      "iters": 500
+    },
+    {
+      "seed": 101,
+      "auc": 0.9768987400309436,
+      "iters": 500
+    },
+    {
+      "seed": 102,
+      "auc": 0.9770215777197775,
+      "iters": 500
+    }
+  ],
+  "decoys": [
+    {
+      "arm": "L-FDR",
+      "run": 2,
+      "decoy_index": 0,
+      "decoy_idx": 4,
+      "spec": "{\"keys\": [\"c0\", \"c2\", \"h\"], \"op\": \"roll\", \"w\": 3600}",
+      "repermute_seed": 7016000,
+      "sealed_stack_auc": 0.9771351980173821,
+      "sealed_stack_decoy_auc": 0.9770432164311988,
+      "delta_auc": -9.198158618332435e-05,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[-0.0004810517225404265, 0.00023968307864985494, -3.457611465940147e-05]"
+    },
+    {
+      "arm": "L-FDR",
+      "run": 2,
+      "decoy_index": 1,
+      "decoy_idx": 19,
+      "spec": "{\"keys\": [\"c1\", \"c3\", \"c4\", \"h\"], \"op\": \"nunique\", \"target\": \"c0\"}",
+      "repermute_seed": 7016001,
+      "sealed_stack_auc": 0.9771351980173821,
+      "sealed_stack_decoy_auc": 0.977056391406462,
+      "delta_auc": -7.880661092004211e-05,
+      "naive_pass": false,
+      "materiality_pass": false,
+      "dev_accepted": false,
+      "per_seed_delta": "[-0.00022634317654202096, 5.9132610193524116e-05, -6.92092664116295e-05]"
+    }
+  ]
+}
