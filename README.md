@@ -2,6 +2,8 @@
 
 A small, pre-registered study of **agentic feature search**: when an agent proposes features and a gate decides what to keep, which layer earns the trust: the proposer, the gate, or the sealed holdout day?
 
+**Short answer:** on this task, the sealed day confirmed DEV almost exactly, so the strict gate bought no protection and, with LLM proposals, cost some gap closed. Random search over the same grammar matched or beat the LLM. A boundary-condition result, reported as it came out.
+
 ## Question
 
 1. Does the evaluation harness (proxy screen, statistical gate, sealed day) matter more than the proposer (random vs LLM)?
@@ -12,20 +14,20 @@ Idea worth stealing: **canary decoys**. Insert known-null hypotheses (permuted r
 ## Design
 
 - **Data:** TalkingData AdTracking Fraud Detection. DEV = 2017-11-09, 08:00-16:00 (25.7M rows). SEALED = 2017-11-08, same hours, opened once, at the end.
-- **Task:** agent picks features from a fixed grammar of 6 operations (count, nunique, cumcount, lag, roll, ratio) over keys c0-c4 and h. Selection, not invention.
+- **Task:** the agent picks features from a fixed grammar of 6 operations (count, nunique, cumcount, lag, roll, ratio) over keys c0-c4 and h. Selection, not invention.
 - **Pipeline per proposal:** proxy screen (10% IP subsample, promote if AUC gain >= 0.0005) -> full DEV test -> gate -> stack.
 - **Decoys:** 20% of proposals are permuted-real features (known noise).
 - **Gates:** naive (keep if DEV AUC goes up) vs LORD++ online FDR (alpha 0.10, sign-flip p over 12 blocks, materiality floor 0.000219).
 - **Arms (5 runs x 60 proposals each):** random + FDR, random + naive, Qwen 7B + FDR, Qwen 7B + naive, plus Qwen 3B and 14B with FDR.
 - **Reference points:** baseline (4 raw ID columns) and a human ceiling. DEV 0.97040 / 0.98471, SEALED 0.97421 / 0.98544.
-- **Metric:** gap closed (%) = (AUC - baseline) / (ceiling - baseline). Optimism gap = DEV gap closed minus SEALED gap closed.
+- **Metric:** gap closed (%) = (AUC - baseline) / (ceiling - baseline). Optimism gap = DEV gap closed minus SEALED gap closed. SEALED baseline and final AUC are 3-seed means.
 
-**Hypotheses (frozen before SEALED was opened)**
-- **H1:** the naive gate shows a larger DEV-to-SEALED optimism gap than the FDR gate. (Reframed: the proxy screen removes most decoys before the gate, so H1 is judged on the optimism gap of accepted real features, not on decoy counts.)
+**Hypotheses (frozen before any SEALED result was read)**
+- **H1:** the naive gate shows a larger DEV-to-SEALED optimism gap than the FDR gate. (Reframed before unsealing: the proxy screen removes most decoys before the gate, so H1 is judged on the optimism gap of accepted real features, not on decoy counts.)
 - **H2:** LLM proposals close more of the SEALED gap than random proposals, under this fixed grammar and budget.
 - **H3:** proposer size changes the SEALED gap less than the gate does.
 
-With 5 runs per arm, claims are **descriptive** (mean, median, range). Exact statement used: if all 5 runs of one arm beat all 5 of another, one-sided exact permutation p = 1/252 (about 0.004). Arms with fewer than 5 distinct final feature sets count as that many effective outcomes and are excluded from permutation tests.
+With 5 runs per arm, claims are **descriptive** (mean, median, range). Exact statement allowed: if all 5 runs of one arm beat all 5 of another, one-sided exact permutation p = 1/252 (about 0.004). Arms with fewer than 5 distinct final feature sets count as that many effective outcomes and are excluded from permutation tests.
 
 ## Results
 
@@ -40,52 +42,62 @@ With 5 runs per arm, claims are **descriptive** (mean, median, range). Exact sta
 | Qwen 3B + FDR | 29.2% | 28.7-31.3 | 1.2 | 1 / 0 |
 | Qwen 14B + FDR | 37.6% | 33.5-41.6 | 3.8 | 13 / 0 |
 
-Observations: the proxy screen removes most decoys before any gate sees them (54 of 60 for 7B + FDR), so decoy false-positive rates are undefined or rest on tiny n. Random beat every LLM arm on DEV. One random run (run 3) reached about 91% in both random arms, so medians matter more than means. 3B converged to the same single feature in 4 of 5 runs. 14B wastes far fewer proposals on duplicates (77 vs 272 for 7B, 305 for 3B).
-
 ### SEALED (opened once)
 
-> TODO: fill from `results/phase3/phase3_arms.csv` after the Kaggle run. Replace the placeholders; do not edit the DEV table above.
+| Arm | SEALED gap closed, mean (median) | Range | Optimism gap (mean) | Effective outcomes |
+|---|---|---|---|---|
+| Random + FDR | 56.6 (48.1) | 42.8-93.3 | -1.0 | 5 |
+| Random + naive | 55.3 (47.8) | 39.1-90.5 | +1.0 | 5 |
+| Qwen 7B + FDR | 32.9 (31.3) | 26.5-45.1 | +4.2 | 5 |
+| Qwen 7B + naive | 45.1 (43.7) | 32.4-56.7 | -4.8 | 5 |
+| Qwen 3B + FDR | 34.7 (35.4) | 31.9-35.4 | -5.5 | 2 |
+| Qwen 14B + FDR | 40.1 (39.8) | 39.5-40.8 | -2.5 | 5 |
 
-| Arm | SEALED gap closed (mean / median / range) | Optimism gap | Effective outcomes |
-|---|---|---|---|
-| Random + FDR | | | |
-| Random + naive | | | |
-| Qwen 7B + FDR | | | |
-| Qwen 7B + naive | | | |
-| Qwen 3B + FDR | | | 2 |
-| Qwen 14B + FDR | | | |
+Negative optimism means SEALED did better than DEV. Source: `results/phase3/phase3_runs.csv`, `phase3_arms.csv`.
 
-**Verdicts (rule outcomes from the analysis script):** H1 = TODO, H2 = TODO, H3 = TODO.
+### Verdicts (pre-registered rules)
 
-**Three numbers:** TODO, TODO, TODO.
+- **H1: not supported.** The naive gate did not show a larger optimism gap. For random proposals the two gates are indistinguishable (-1.0 vs +1.0). For 7B the naive arm was better on SEALED (-4.8 vs +4.2). Per the pre-registered fail rule: *the gate was not needed on this task.*
+- **H2: not supported.** Random beat the LLM on means (56.6 vs 32.9 with FDR; 55.3 vs 45.1 with naive). On medians, 7B + naive (43.7) is close to random (47.8-48.1). Random's mean is lifted by one run (93% in one arm, 90% in the other); without that run random sits at 47.4 and 46.5, and 7B + naive at 48.2 (post hoc sensitivity check). Per the fail rule: *grammar + gate carry the result; the LLM adds little here.* Note: R and R-naive share the proposer seed for each run number, so that high run is probably one lucky draw shown twice, not two independent hits.
+- **H3: not supported by the rule, but a near tie.** Size effect (range of means over 3B/7B/14B) = 7.2 points; gate effect (mean |naive - FDR|) = 6.7 points. The gate effect is uneven (about 1 point for random, about 12 for 7B) and size is not monotonic (3B 34.7 > 7B 32.9; 3B is effectively two outcomes). 14B is the best and most stable LLM arm.
+- **No exact permutation claim is available:** in every valid pair the ranges overlap, so no arm beat another 5-against-5. 3B is excluded from permutation tests by rule.
 
-**Post hoc decoy check (descriptive, not a pre-registered FDR replication):** the 29 gate-tested decoys were re-permuted on SEALED and added to each run's final stack. LORD++ was not re-simulated because the trial-level FDR state is not embedded. TODO: counts passing naive / materiality.
+### Three numbers
 
-Figures: `figures/` (design diagram, noise kept and DEV-to-SEALED drop, proposer scaling, cost frontier).
+1. DEV to SEALED optimism is within about 6 points for every arm: the sealed day confirmed DEV.
+2. Naive vs FDR gate with 7B proposals: 45.1% vs 32.9% SEALED gap closed (+12.2 points for the naive gate, with no overfitting penalty).
+3. Canary decoys: 28 of 29 gate-tested decoys lowered SEALED AUC; 0 of 29 passed the materiality floor.
+
+### Post hoc decoy check (descriptive, not a pre-registered FDR replication)
+
+The 29 gate-tested decoys were re-permuted on SEALED (fresh seeds) and added to each run's final stack, comparing 3-seed means with matched seeds. Mean delta AUC was -0.000219 (median -0.000201). One decoy had a positive delta (+0.000134, below the 0.000219 floor); a naive "AUC went up" rule would have accepted 1 of 29 (3.4%), the materiality floor 0 of 29. LORD++ was not re-simulated because the trial-level FDR state is not embedded. Per arm, gate-tested decoys: random + FDR 6, random + naive 3, 7B + FDR 6, 7B + naive 0, 3B 1, 14B 13: too few for a naive-vs-FDR decoy comparison.
+
+Figures: `figures/` (to be added).
 
 ## Honest limits
 
 - One dataset, one DEV/SEALED day pair, 5 runs per arm.
 - The grammar contains the known good operations: this tests selection, not invention.
 - DEV was used for agent feedback, so DEV numbers are optimistic by construction.
+- With about 10 full tests per run on 25M rows, there was little room for winner's curse. The null on H1 may not hold with many more candidates per run.
 - Qwen2.5 family only. Other families are future work.
-- Possible model contamination. The contamination probes (3B, 7B, 14B) named other datasets, which is weak evidence of low contamination.
-- 3B is effectively one outcome (low proposal diversity), so no size trend is claimed from it alone.
+- Possible model contamination. The contamination probes (3B, 7B, 14B) named other datasets (Avazu/KDD Cup, Amazon/Yahoo, Criteo), which is weak evidence of low contamination.
+- 3B is effectively two outcomes (low proposal diversity), so no size trend is claimed from it alone.
 - The 7B proposer saturated in a duplicate loop in one run; a patch (more attempts, temperature ramp, duplicate feedback in the prompt) was applied and all runs then reached 60 proposals. Protocol deviation, disclosed here.
-- Decoy FPR is weak evidence because the proxy screen removes most decoys first (gate-tested decoys: 29 in total).
-- Token counters were cumulative across runs and were converted to per-run deltas. R and L-naive decoy proposal counts are derived from the shared schedule, not logged.
-- The Phase 3 script was committed after the run started and is recorded by md5 (`results/phase3/PUSHED_MD5.txt`). An earlier crash happened before any feature AUC was computed on SEALED.
+- Decoy FPR is weak evidence: the proxy screen removes most decoys first, so only 29 reached the gate.
+- Token counters were cumulative across runs and were converted to per-run deltas (run 1 of each arm taken as-is, unverified). R and L-naive decoy proposal counts are derived from the shared per-run schedule, not logged; R and L-naive have no token or duplicate data.
+- **Provenance timeline (UTC):** spec and DEV results committed (`619cd08`, tag `phase0-freeze-v2`) before the Kaggle SEALED job started at 22:25 on 2026-11-19. The runner script was committed 10-16 minutes after the job started (`e3ff20f`, `3e0bac9`); the lock records its sha256 (`c5d8e730...`). The job finished at 02:09 on 2026-11-20 (`results/phase3/phase3_lock.json`, tag `phase3-sealed`). An earlier invocation crashed on the first run (a parsing bug) before any feature AUC was computed on SEALED, and an earlier skeleton wrote a `started` lock that was archived under `archive/`. No SEALED feature result was read before the final run.
 
 ## Reproduce
 
-Everything runs on Kaggle (CPU for Phase 3; LLM arms need a GPU with Ollama). See `RUN_ORDER.md` for the full order.
+Everything runs on Kaggle (CPU for Phase 3; the LLM arms need a GPU with a local Qwen server). See `RUN_ORDER.md` for the full order.
 
 ```bash
-# Phase 0: freeze references (baseline, ceiling, materiality)        kaggle/phase0_1A
-# Phase 1: random and naive arms                                      kaggle/1B_FDR, kaggle/1C_naive, kaggle/R_naive
-# Phase 2: Qwen 3B / 14B arms                                         kaggle/phase2_3B, kaggle/phase2_14B
+# Phase 0: freeze references (baseline, ceiling, materiality)
+# Phase 1: random and naive arms            kaggle/1B_FDR, kaggle/1C_naive, kaggle/R_naive
+# Phase 2: Qwen 3B / 14B arms               kaggle/phase2_3B, kaggle/phase2_14B
 # Phase 3: open SEALED once, recompute accepted features and decoys
 kaggle kernels push -p kaggle/phase3
 ```
 
-Layout: `code/` (pipeline), `kaggle/` (one folder per notebook), `results/` (all `final_*.json`, trials, summaries, Phase 3 outputs), `figures/`, `docs/PHASE3_BRIEF.md`. Git tags: `phase0-freeze-v2`, `phase3-script-pushed`.
+Layout: `code/` (pipeline), `kaggle/` (one folder per notebook), `results/` (all `final_*.json`, trials, summaries, Phase 3 outputs), `figures/`, `docs/PHASE3_BRIEF.md`, `archive/` (aborted attempts). Git tags: `phase0-freeze-v2`, `phase3-sealed`. Default branch: `master`.
