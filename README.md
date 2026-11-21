@@ -2,7 +2,7 @@
 
 A small, pre-registered study of **agentic feature search**: when an agent proposes features and a gate decides what to keep, which layer earns the trust: the proposer, the gate, or the sealed holdout day?
 
-**Short answer:** on this task, the sealed day confirmed DEV almost exactly, so the strict gate bought no protection and, with LLM proposals, cost some gap closed. Random search over the same grammar matched or beat the LLM. A boundary-condition result, reported as it came out.
+**Short answer:** on this task, the sealed day confirmed DEV almost exactly, so the strict gate bought no protection and, with LLM proposals, cost some gap closed. Random search over the same grammar matched or beat the LLM. A boundary-condition result, reported as it came out. Random's lead traces to a single feature that one random run happened to propose (see Exploratory).
 
 ## Question
 
@@ -58,7 +58,7 @@ Negative optimism means SEALED did better than DEV. Source: `results/phase3/phas
 ### Verdicts (pre-registered rules)
 
 - **H1: not supported.** The naive gate did not show a larger optimism gap. For random proposals the two gates are indistinguishable (-1.0 vs +1.0). For 7B the naive arm was better on SEALED (-4.8 vs +4.2). Per the pre-registered fail rule: *the gate was not needed on this task.*
-- **H2: not supported.** Random beat the LLM on means (56.6 vs 32.9 with FDR; 55.3 vs 45.1 with naive). On medians, 7B + naive (43.7) is close to random (47.8-48.1). Random's mean is lifted by one run (93% in one arm, 90% in the other); without that run random sits at 47.4 and 46.5, and 7B + naive at 48.2 (post hoc sensitivity check). Per the fail rule: *grammar + gate carry the result; the LLM adds little here.* Note: R and R-naive share the proposer seed for each run number, so that high run is probably one lucky draw shown twice, not two independent hits.
+- **H2: not supported.** Random beat the LLM on means (56.6 vs 32.9 with FDR; 55.3 vs 45.1 with naive). On medians, 7B + naive (43.7) is close to random (47.8-48.1). Random's mean is lifted by one run (93% in one arm, 90% in the other); without that run random sits at 47.4 and 46.5, and 7B + naive at 48.2 (post hoc sensitivity check). Per the fail rule: *grammar + gate carry the result; the LLM adds little here.* Note: R and R-naive share the proposer seed for each run number; the trial logs confirm run 3 is the same underlying draw in both arms (same feature, same proposal index), so it is one lucky draw shown twice, not two independent hits.
 - **H3: not supported by the rule, but a near tie.** Size effect (range of means over 3B/7B/14B) = 7.2 points; gate effect (mean |naive - FDR|) = 6.7 points. The gate effect is uneven (about 1 point for random, about 12 for 7B) and size is not monotonic (3B 34.7 > 7B 32.9; 3B is effectively two outcomes). 14B is the best and most stable LLM arm.
 - **No exact permutation claim is available:** in every valid pair the ranges overlap, so no arm beat another 5-against-5. 3B is excluded from permutation tests by rule.
 
@@ -72,7 +72,18 @@ Negative optimism means SEALED did better than DEV. Source: `results/phase3/phas
 
 The 29 gate-tested decoys were re-permuted on SEALED (fresh seeds) and added to each run's final stack, comparing 3-seed means with matched seeds. Mean delta AUC was -0.000219 (median -0.000201). One decoy had a positive delta (+0.000134, below the 0.000219 floor); a naive "AUC went up" rule would have accepted 1 of 29 (3.4%), the materiality floor 0 of 29. LORD++ was not re-simulated because the trial-level FDR state is not embedded. Per arm, gate-tested decoys: random + FDR 6, random + naive 3, 7B + FDR 6, 7B + naive 0, 3B 1, 14B 13: too few for a naive-vs-FDR decoy comparison.
 
-Figures: `figures/` (to be added).
+### Exploratory (post hoc, not pre-registered)
+
+Diagnostics from the trial logs (`results/diagnostics/`, script `code/af_phase3_analyze.py`). These do not change the verdicts above.
+
+- **One feature explains random's lead.** The 93% (and 90% in R-naive) run 3 traces to `lag(c0, c1, c3; k=1, dir=next)`, the largest-gain accepted feature in the best SEALED run (gain +0.0066 when accepted, at proposal 23). Random proposed it in 1 of 5 runs; R and R-naive hit it in the same run number (same draw). The four LLM arms (3B, 7B x 2 gates, 14B; 15 runs, 960 proposals) never proposed it, nor any `next`-lag over those keys with any k. Run-level Fisher exact p = 0.25 (1 of 5 vs 0 of 15, counting R and R-naive as one draw; 0.15 if counted as independent). Descriptive only.
+- **Without that run, random and 7B + naive are about equal** on SEALED (47.4 / 46.5 vs 48.2 gap closed; post hoc exclusion).
+- **The LLMs did explore the lag region, just not that spec.** Lag proposals (non-decoy, 240 per arm): random 56 (28 next / 28 prev), 7B + naive 43 (37 / 6), 7B + FDR 42 (41 / 1), 14B 41 (3 / 38), 3B 4 (0 / 4). Different arms leaned on different directions; none reached the needle's key set.
+- **3B collapsed onto a narrow set of operations** (0.94 bits of operation entropy vs 2.46-2.57 for the other arms; 6 operations would be at most 2.58). 7B and 14B were not narrower than random at the operation level.
+- **LLM arms accept something immediately** (median first accepted proposal index 1, vs 6 for random): fast early gain, then a plateau.
+- Caveats: the needle's gain is conditional on the stack at the time it was accepted, and it is one feature on one dataset. Trial logs record failed proposals unevenly across arms (cross-arm duplicate counts come from the run summaries, not the logs), so per-run unique-spec counts are not reported.
+
+Figures: `figures/` (`fig1_design_diagram`, `fig2_noise_kept_and_sealed_drop`, `fig3_proposer_scaling`, `fig4_cost_frontier`; exploratory: `diag_diversity_needle`, `diag_discovery_curves`).
 
 ## Honest limits
 
@@ -84,6 +95,7 @@ Figures: `figures/` (to be added).
 - Possible model contamination. The contamination probes (3B, 7B, 14B) named other datasets (Avazu/KDD Cup, Amazon/Yahoo, Criteo), which is weak evidence of low contamination.
 - 3B is effectively two outcomes (low proposal diversity), so no size trend is claimed from it alone.
 - The 7B proposer saturated in a duplicate loop in one run; a patch (more attempts, temperature ramp, duplicate feedback in the prompt) was applied and all runs then reached 60 proposals. Protocol deviation, disclosed here.
+- The random-vs-LLM difference rests largely on one feature found once (n = 1 event); a different set of random seeds could have missed it.
 - Decoy FPR is weak evidence: the proxy screen removes most decoys first, so only 29 reached the gate.
 - Token counters were cumulative across runs and were converted to per-run deltas (run 1 of each arm taken as-is, unverified). R and L-naive decoy proposal counts are derived from the shared per-run schedule, not logged; R and L-naive have no token or duplicate data.
 - **Provenance timeline (UTC):** spec and DEV results committed (`619cd08`, tag `phase0-freeze-v2`) before the Kaggle SEALED job started at 22:25 on 2026-11-19. The runner script was committed 10-16 minutes after the job started (`e3ff20f`, `3e0bac9`); the lock records its sha256 (`c5d8e730...`). The job finished at 02:09 on 2026-11-20 (`results/phase3/phase3_lock.json`, tag `phase3-sealed`). An earlier invocation crashed on the first run (a parsing bug) before any feature AUC was computed on SEALED, and an earlier skeleton wrote a `started` lock that was archived under `archive/`. No SEALED feature result was read before the final run.
@@ -98,6 +110,8 @@ Everything runs on Kaggle (CPU for Phase 3; the LLM arms need a GPU with a local
 # Phase 2: Qwen 3B / 14B arms               kaggle/phase2_3B, kaggle/phase2_14B
 # Phase 3: open SEALED once, recompute accepted features and decoys
 kaggle kernels push -p kaggle/phase3
+# Analysis: figures + exploratory diagnostics from the Phase 3 outputs and trial logs
+python3 code/af_phase3_analyze.py
 ```
 
 Layout: `code/` (pipeline), `kaggle/` (one folder per notebook), `results/` (all `final_*.json`, trials, summaries, Phase 3 outputs), `figures/`, `docs/PHASE3_BRIEF.md`, `archive/` (aborted attempts). Git tags: `phase0-freeze-v2`, `phase3-sealed`. Default branch: `master`.

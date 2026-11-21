@@ -1,0 +1,17 @@
+{
+  "arm": "R",
+  "run": 3,
+  "sealed_gap_closed_pct": 93.27638212346504,
+  "spec": {
+    "op": "lag",
+    "keys": [
+      "c0",
+      "c1",
+      "c3"
+    ],
+    "k": 1,
+    "dir": "next"
+  },
+  "d_full": 0.006596,
+  "i": 23
+}
