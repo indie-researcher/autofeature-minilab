@@ -1,0 +1,43 @@
+{
+  "n_candidates": 63,
+  "n_stacks": 17,
+  "sealed_baseline_3seed": 0.9741439506655306,
+  "share_positive": 0.7777777777777778,
+  "share_material": 0.36507936507936506,
+  "median_delta": 0.00015544771045583605,
+  "mean_delta": 0.00018893296678859097,
+  "decoy_n": 29,
+  "decoy_median": -0.00020144185366451536,
+  "decoy_p95": -2.6601795751912695e-05,
+  "decoy_share_positive": 0.034482758620689655,
+  "share_above_decoy_p95": 0.8095238095238095,
+  "prob_cand_gt_decoy": 0.8856048166392994,
+  "by_arm": {
+    "L-FDR": {
+      "n": 12,
+      "median": 0.0003559648699832015,
+      "n_positive": 12,
+      "n_material": 8
+    },
+    "L-FDR-14B": {
+      "n": 33,
+      "median": 0.00010566961159241828,
+      "n_positive": 24,
+      "n_material": 9
+    },
+    "L-FDR-3B": {
+      "n": 4,
+      "median": 0.000515046680907516,
+      "n_positive": 4,
+      "n_material": 4
+    },
+    "R": {
+      "n": 14,
+      "median": 0.00010225292055228893,
+      "n_positive": 9,
+      "n_material": 2
+    }
+  },
+  "rule": "gate discarded real signal if >=50% of candidates have delta>0 AND median candidate delta > decoy p95; else rejections are consistent with noise",
+  "rule_outcome": "discarded real signal"
+}

@@ -1,0 +1,129 @@
+{
+  "rung": 1,
+  "arm": "R-FDR",
+  "run": 1,
+  "n_proposals": 56,
+  "budget_n": 60,
+  "capped": true,
+  "unique_specs": 56,
+  "n_screened": 26,
+  "n_full_tests": 30,
+  "accepted_real": 4,
+  "accepted_decoys": 0,
+  "decoys_proposed": 8,
+  "decoys_screened": 4,
+  "decoys_tested": 4,
+  "decoys_tested_alive": 4,
+  "gate_dead_at_t": null,
+  "decoy_fpr": 0.0,
+  "n_dup_total": 3,
+  "n_attempts_total": 59,
+  "repeat_frac": 0.0508,
+  "needle_first_proposed_i": null,
+  "needle_accepted": false,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.9758026966650039,
+  "dev_gap_closed_pct": 37.9579304375901,
+  "model": "random",
+  "tokens": null,
+  "prop_secs_total": 0.0,
+  "eval_secs_total": 3011.4,
+  "wall_clock_secs": 3011.4,
+  "minutes": 50.19,
+  "canary": false,
+  "stack_sig": "7a42fd98",
+  "first_accepted_spec": {
+    "op": "lag",
+    "keys": [
+      "c0",
+      "c2",
+      "c4"
+    ],
+    "k": 3,
+    "dir": "prev"
+  },
+  "best_d_proxy": 0.00382,
+  "proxy_pass_frac": 0.5357,
+  "accepted_new_axis": 2,
+  "accepted_ops": {
+    "lag": 2,
+    "ratio": 2
+  },
+  "accepted": [
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c0",
+          "c2",
+          "c4"
+        ],
+        "k": 3,
+        "dir": "prev"
+      },
+      "is_decoy": false,
+      "dseed": 1000011,
+      "iter": 8
+    },
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c0",
+          "c2",
+          "m5"
+        ],
+        "k": 1,
+        "dir": "next"
+      },
+      "is_decoy": false,
+      "dseed": 1000021,
+      "iter": 18
+    },
+    {
+      "spec": {
+        "op": "ratio",
+        "num": {
+          "op": "count",
+          "keys": [
+            "c1",
+            "c2",
+            "s10"
+          ]
+        },
+        "den": {
+          "op": "nunique",
+          "keys": [
+            "c0",
+            "m1"
+          ],
+          "target": "c2"
+        }
+      },
+      "is_decoy": false,
+      "dseed": 1000026,
+      "iter": 23
+    },
+    {
+      "spec": {
+        "op": "ratio",
+        "num": {
+          "op": "count",
+          "keys": [
+            "c0"
+          ]
+        },
+        "den": {
+          "op": "roll",
+          "keys": [
+            "c1"
+          ],
+          "w": 600
+        }
+      },
+      "is_decoy": false,
+      "dseed": 1000030,
+      "iter": 27
+    }
+  ]
+}

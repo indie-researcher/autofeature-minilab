@@ -1,0 +1,60 @@
+{
+  "rung": 2,
+  "arm": "C-naive",
+  "run": 11,
+  "n_proposals": 30,
+  "budget_n": 30,
+  "capped": true,
+  "unique_specs": 30,
+  "n_screened": 0,
+  "n_full_tests": 30,
+  "accepted_real": 0,
+  "accepted_decoys": 1,
+  "decoys_proposed": 30,
+  "decoys_screened": 0,
+  "decoys_tested": 30,
+  "decoys_tested_alive": 30,
+  "gate_dead_at_t": null,
+  "decoy_fpr": 0.03333333333333333,
+  "n_dup_total": 0,
+  "n_attempts_total": 30,
+  "repeat_frac": 0.0,
+  "needle_first_proposed_i": null,
+  "needle_accepted": false,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.970767615057957,
+  "dev_gap_closed_pct": 2.9040182827318506,
+  "model": "random",
+  "tokens": null,
+  "prop_secs_total": 0.0,
+  "eval_secs_total": 2979.4,
+  "wall_clock_secs": 2979.4,
+  "minutes": 49.66,
+  "canary": true,
+  "stack_sig": "d7517139",
+  "first_accepted_spec": {
+    "op": "nunique",
+    "keys": [
+      "h"
+    ],
+    "target": "m5"
+  },
+  "best_d_proxy": 0.0,
+  "proxy_pass_frac": 1.0,
+  "accepted_new_axis": 0,
+  "accepted_ops": {},
+  "accepted": [
+    {
+      "spec": {
+        "op": "nunique",
+        "keys": [
+          "h"
+        ],
+        "target": "m5"
+      },
+      "is_decoy": true,
+      "dseed": 11000042,
+      "iter": 9
+    }
+  ]
+}

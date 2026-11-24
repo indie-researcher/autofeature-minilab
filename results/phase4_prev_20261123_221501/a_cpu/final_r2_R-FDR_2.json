@@ -1,0 +1,106 @@
+{
+  "rung": 2,
+  "arm": "R-FDR",
+  "run": 2,
+  "n_proposals": 60,
+  "budget_n": 60,
+  "capped": false,
+  "unique_specs": 60,
+  "n_screened": 55,
+  "n_full_tests": 5,
+  "accepted_real": 3,
+  "accepted_decoys": 0,
+  "decoys_proposed": 15,
+  "decoys_screened": 14,
+  "decoys_tested": 1,
+  "decoys_tested_alive": 1,
+  "gate_dead_at_t": null,
+  "decoy_fpr": 0.0,
+  "n_dup_total": 0,
+  "n_attempts_total": 60,
+  "repeat_frac": 0.0,
+  "needle_first_proposed_i": null,
+  "needle_accepted": false,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.974392776191236,
+  "dev_gap_closed_pct": 28.14215538369146,
+  "model": "random",
+  "tokens": null,
+  "prop_secs_total": 0.0,
+  "eval_secs_total": 1497.0,
+  "wall_clock_secs": 1497.0,
+  "minutes": 24.95,
+  "canary": false,
+  "stack_sig": "3ddf6acf",
+  "first_accepted_spec": {
+    "op": "nunique",
+    "keys": [
+      "c0",
+      "c3",
+      "h"
+    ],
+    "target": "c2"
+  },
+  "best_d_proxy": 0.002267,
+  "proxy_pass_frac": 0.0833,
+  "accepted_new_axis": 2,
+  "accepted_ops": {
+    "nunique": 2,
+    "ratio": 1
+  },
+  "accepted": [
+    {
+      "spec": {
+        "op": "nunique",
+        "keys": [
+          "c0",
+          "c3",
+          "h"
+        ],
+        "target": "c2"
+      },
+      "is_decoy": false,
+      "dseed": 2000013,
+      "iter": 7
+    },
+    {
+      "spec": {
+        "op": "nunique",
+        "keys": [
+          "c1",
+          "c4",
+          "m1"
+        ],
+        "target": "s10"
+      },
+      "is_decoy": false,
+      "dseed": 2000030,
+      "iter": 24
+    },
+    {
+      "spec": {
+        "op": "ratio",
+        "num": {
+          "op": "nunique",
+          "keys": [
+            "c2",
+            "c3",
+            "c4",
+            "s10"
+          ],
+          "target": "c1"
+        },
+        "den": {
+          "op": "count",
+          "keys": [
+            "c0",
+            "m15"
+          ]
+        }
+      },
+      "is_decoy": false,
+      "dseed": 2000051,
+      "iter": 45
+    }
+  ]
+}

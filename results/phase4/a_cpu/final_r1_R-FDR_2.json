@@ -1,0 +1,108 @@
+{
+  "rung": 1,
+  "arm": "R-FDR",
+  "run": 2,
+  "n_proposals": 60,
+  "budget_n": 60,
+  "capped": false,
+  "unique_specs": 59,
+  "n_screened": 46,
+  "n_full_tests": 14,
+  "accepted_real": 3,
+  "accepted_decoys": 0,
+  "decoys_proposed": 15,
+  "decoys_screened": 13,
+  "decoys_tested": 2,
+  "decoys_tested_alive": 2,
+  "gate_dead_at_t": null,
+  "decoy_fpr": 0.0,
+  "n_dup_total": 1,
+  "n_attempts_total": 61,
+  "repeat_frac": 0.0164,
+  "needle_first_proposed_i": null,
+  "needle_accepted": false,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.9751338879261165,
+  "dev_gap_closed_pct": 33.30172729908579,
+  "model": "random",
+  "tokens": null,
+  "prop_secs_total": 0.0,
+  "eval_secs_total": 2225.3,
+  "wall_clock_secs": 2225.3,
+  "minutes": 37.09,
+  "canary": false,
+  "stack_sig": "6c6dbf91",
+  "first_accepted_spec": {
+    "op": "lag",
+    "keys": [
+      "c1",
+      "c2",
+      "c4",
+      "m1"
+    ],
+    "k": 1,
+    "dir": "next"
+  },
+  "best_d_proxy": 0.003575,
+  "proxy_pass_frac": 0.2333,
+  "accepted_new_axis": 1,
+  "accepted_ops": {
+    "lag": 2,
+    "ratio": 1
+  },
+  "accepted": [
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c1",
+          "c2",
+          "c4",
+          "m1"
+        ],
+        "k": 1,
+        "dir": "next"
+      },
+      "is_decoy": false,
+      "dseed": 2000019,
+      "iter": 13
+    },
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c0",
+          "c4"
+        ],
+        "k": 1,
+        "dir": "prev"
+      },
+      "is_decoy": false,
+      "dseed": 2000063,
+      "iter": 57
+    },
+    {
+      "spec": {
+        "op": "ratio",
+        "num": {
+          "op": "nunique",
+          "keys": [
+            "c2",
+            "c3"
+          ],
+          "target": "c4"
+        },
+        "den": {
+          "op": "nunique",
+          "keys": [
+            "c0"
+          ],
+          "target": "c2"
+        }
+      },
+      "is_decoy": false,
+      "dseed": 2000066,
+      "iter": 60
+    }
+  ]
+}

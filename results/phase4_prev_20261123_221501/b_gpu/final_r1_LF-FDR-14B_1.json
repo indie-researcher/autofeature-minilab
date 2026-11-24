@@ -1,0 +1,87 @@
+{
+  "rung": 1,
+  "arm": "LF-FDR-14B",
+  "run": 1,
+  "n_proposals": 60,
+  "budget_n": 60,
+  "capped": false,
+  "unique_specs": 57,
+  "n_screened": 59,
+  "n_full_tests": 1,
+  "accepted_real": 1,
+  "accepted_decoys": 0,
+  "decoys_proposed": 10,
+  "decoys_screened": 10,
+  "decoys_tested": 0,
+  "decoys_tested_alive": 0,
+  "gate_dead_at_t": null,
+  "decoy_fpr": null,
+  "n_dup_total": 5,
+  "n_attempts_total": 65,
+  "repeat_frac": 0.0769,
+  "needle_first_proposed_i": null,
+  "needle_accepted": false,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.9726000682572367,
+  "dev_gap_closed_pct": 15.661438815010756,
+  "model": "qwen2.5:14b",
+  "tokens": {
+    "prompt": 69774,
+    "completion": 4811
+  },
+  "prop_secs_total": 424.1,
+  "eval_secs_total": 731.0,
+  "wall_clock_secs": 1155.1,
+  "minutes": 19.25,
+  "canary": false,
+  "stack_sig": "8eb8c7e6",
+  "first_accepted_spec": {
+    "op": "ratio",
+    "num": {
+      "op": "nunique",
+      "keys": [
+        "c0",
+        "h"
+      ],
+      "target": "c1"
+    },
+    "den": {
+      "op": "count",
+      "keys": [
+        "c0",
+        "m15"
+      ]
+    }
+  },
+  "best_d_proxy": 0.003106,
+  "proxy_pass_frac": 0.0167,
+  "accepted_new_axis": 1,
+  "accepted_ops": {
+    "ratio": 1
+  },
+  "accepted": [
+    {
+      "spec": {
+        "op": "ratio",
+        "num": {
+          "op": "nunique",
+          "keys": [
+            "c0",
+            "h"
+          ],
+          "target": "c1"
+        },
+        "den": {
+          "op": "count",
+          "keys": [
+            "c0",
+            "m15"
+          ]
+        }
+      },
+      "is_decoy": false,
+      "dseed": 1000004,
+      "iter": 1
+    }
+  ]
+}

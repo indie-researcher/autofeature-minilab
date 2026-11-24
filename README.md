@@ -85,6 +85,30 @@ Diagnostics from the trial logs (`results/diagnostics/`, script `code/af_phase3_
 
 Figures: `figures/` (`fig1_design_diagram`, `fig2_noise_kept_and_sealed_drop`, `fig3_proposer_scaling`, `fig4_cost_frontier`; exploratory: `diag_diversity_needle`, `diag_discovery_curves`).
 
+
+## Phase 4a: extended grammar (DEV only, incomplete; sealed day not opened)
+
+**Plan.** Grow the grammar (rung 1: time-bucket keys, 3.8x atomic specs; rung 2: more windows/lags, `quantile`, `burst`, 10.4x) and compare random vs Qwen 14B under a fixed gate (24 blocks, 30-test cap), judged on a fresh sealed day (2017-11-07). See `PHASE4_PLAN.md`.
+
+**Status.** Only the random arm completed (5 runs at each of rungs 1 and 2). The 14B arms finished 1 run (L-FDR-14B, rung 1) and 2 runs (LF-FDR-14B, no operator nudge, rung 1), with 2 further runs incomplete and none at rung 2. The 2017-11-07 day was never opened (no lock file). H4-1 and H4-1b (LLM vs random across rungs) were not tested. H4-3 (FDR false discoveries) is covered by the Phase 4b canary (0/390).
+
+**DEV observations (not comparable to Phase 3: different gate and test cap).** Random mean gap closed: 31.5% at rung 1 (22.1-39.8), 35.0% at rung 2 (28.1-41.9); every random run accepted at least one real feature. L-14B rung 1: 34.0% (n = 1). LF-14B rung 1: 17.9% (15.7-20.2, n = 2). Random accepted a new-axis feature in 3/5 (rung 1) and 4/5 (rung 2) runs; the sealed gain was not measured, so H4-2 is untested.
+
+**Decision.** Not completed: the LLM arms cost about 20+ GPU-hours to finish and Phase 4b suggests a dense grammar where the proposer barely matters. The sealed day stays unopened for future work. Provenance caveat: `PHASE4_PLAN.md` was never committed or tagged before the runs and was revised mid-way (superseded runs kept under `results/phase4_prerevision_nov21` and `results/phase4_prev_20261123_221501`), so Phase 4a is not pre-registered in the git sense and is reported as a pilot.
+
+
+## Phase 4b: gate stress tests (post hoc, CPU only, no new sealed day)
+
+**Canary (tests 1-2).** 13 paired runs x 30 permuted decoys per gate (same decoys per run id; decoys bypass the proxy, so this isolates the gate). Naive accepted exactly one decoy in 13/13 runs; LORD++ accepted none (0/390, Wilson 95% upper bound 1.0%). Run-level Fisher exact p = 1/10,400,600. The accepted noise "closed" 0.1-3.1% of the DEV gap (mean 2.0%). The pooled decoy rate (13/390 = 3.3%) is diluted: in runs 4-13 the first-acceptance hazard was about 13% per decoy (10 of 76 trials), then 0 of 224 later trials were accepted, consistent with a ratchet (mechanism not confirmed). Do not extrapolate 3.3% to other budgets.
+
+**Rejected-candidate audit (test 3; post hoc, sealed day already used).** Of the 63 material candidates LORD++ rejected, 78% had a positive SEALED delta, but only 37% (23/63) cleared the 0.000219 floor. Median +0.000155 vs decoy median -0.000201. Material share by arm: 3B 4/4, 7B 8/12, 14B 9/33, random 2/14. Candidates sit in 17 stacks (not independent), and beating permuted decoys is a low bar, so the floor share is the cost estimate.
+
+**Grammar census (test 4; DEV, relative to the 4-column baseline).** 86% of random proposals clear the proxy floor (83% of ratio specs, 88% of non-ratio). The needle ranks 2 of 796 non-ratio specs and is drawn with p = 0.056% per proposal: about 12% chance that 5 random runs hit it, and an expected 0.4 hits across the 720 LLM proposals (P(0) = 67%). The needle was mostly luck. Ratio-spec rank is unknown (300 of about 211k sampled).
+
+**Reading.** The strict gate is conservative both ways: it blocks noise (naive: about one false acceptance per run once enough decoys are tested) at the price of discarding some real gain. With about 10 full tests per run, only 3 decoys reached a naive gate in Phase 3, so that trade did not pay here. The grammar is dense, so the proposer barely matters. Boundary condition, not a general claim.
+
+**Provenance.** Plan and notebooks frozen at tag `phase4b-freeze` (`8c6b36b`, 2026-11-24). Results and report committed at tag `phase4b-sealed`. Per-job Kaggle start times were not logged (log files carry a collection timestamp of 2026-11-24 23:47 only). No deviations known. Report: `results/p4b/P4B_REPORT.md`.
+
 ## Honest limits
 
 - One dataset, one DEV/SEALED day pair, 5 runs per arm.

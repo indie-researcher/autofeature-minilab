@@ -1,0 +1,3 @@
+rung,arm,runs,decoys_tested,decoys_accepted,fpr,wilson95_low,wilson95_high,mean_dev_gap_from_noise
+2,C-FDR,3,90,0,0.0,0.0,0.04093706842168078,0.0
+2,C-naive,3,90,3,0.03333333333333333,0.011400183632439498,0.09347441356112923,2.319849690352098

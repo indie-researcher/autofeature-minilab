@@ -1,0 +1,96 @@
+{
+  "rung": 1,
+  "arm": "R-FDR",
+  "run": 7,
+  "n_proposals": 60,
+  "unique_specs": 59,
+  "n_screened": 51,
+  "n_full_tests": 9,
+  "accepted_real": 4,
+  "accepted_decoys": 0,
+  "decoys_proposed": 12,
+  "decoys_screened": 11,
+  "decoys_tested": 1,
+  "decoy_fpr": 0.0,
+  "n_dup_total": 2,
+  "n_attempts_total": 62,
+  "repeat_frac": 0.0323,
+  "needle_first_proposed_i": null,
+  "needle_accepted": false,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.9779093367540864,
+  "dev_gap_closed_pct": 52.62422234460727,
+  "model": "random",
+  "tokens": null,
+  "prop_secs_total": 0.0,
+  "eval_secs_total": 1409.0,
+  "wall_clock_secs": 1409.0,
+  "minutes": 23.48,
+  "canary": false,
+  "stack_sig": "479dfe41",
+  "first_accepted_spec": {
+    "op": "count",
+    "keys": [
+      "c0",
+      "c3",
+      "m15"
+    ]
+  },
+  "best_d_proxy": 0.004319,
+  "proxy_pass_frac": 0.15,
+  "accepted_new_axis": 1,
+  "accepted_ops": {
+    "count": 3,
+    "nunique": 1
+  },
+  "accepted": [
+    {
+      "spec": {
+        "op": "count",
+        "keys": [
+          "c0",
+          "c3",
+          "m15"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 7000022,
+      "iter": 1
+    },
+    {
+      "spec": {
+        "op": "count",
+        "keys": [
+          "c1",
+          "c4"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 7000048,
+      "iter": 27
+    },
+    {
+      "spec": {
+        "op": "nunique",
+        "keys": [
+          "c3"
+        ],
+        "target": "c1"
+      },
+      "is_decoy": false,
+      "dseed": 7000060,
+      "iter": 39
+    },
+    {
+      "spec": {
+        "op": "count",
+        "keys": [
+          "c0"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 7000063,
+      "iter": 42
+    }
+  ]
+}

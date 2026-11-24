@@ -12,3 +12,7 @@ __pycache__/
 .phase3_*/
 .kaggle_notebook_inventory/
 *.npz
+out_p4b/
+out_phase4/
+*.bak
+__pycache__/

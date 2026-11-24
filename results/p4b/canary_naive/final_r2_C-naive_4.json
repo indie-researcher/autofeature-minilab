@@ -1,0 +1,64 @@
+{
+  "rung": 2,
+  "arm": "C-naive",
+  "run": 4,
+  "n_proposals": 30,
+  "budget_n": 30,
+  "capped": true,
+  "unique_specs": 30,
+  "n_screened": 0,
+  "n_full_tests": 30,
+  "accepted_real": 0,
+  "accepted_decoys": 1,
+  "decoys_proposed": 30,
+  "decoys_screened": 0,
+  "decoys_tested": 30,
+  "decoys_tested_alive": 30,
+  "gate_dead_at_t": null,
+  "decoy_fpr": 0.03333333333333333,
+  "n_dup_total": 0,
+  "n_attempts_total": 30,
+  "repeat_frac": 0.0,
+  "needle_first_proposed_i": null,
+  "needle_accepted": false,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.9705397471418253,
+  "dev_gap_closed_pct": 1.3176166037980366,
+  "model": "random",
+  "tokens": null,
+  "prop_secs_total": 0.0,
+  "eval_secs_total": 2905.6,
+  "wall_clock_secs": 2905.6,
+  "minutes": 48.43,
+  "canary": true,
+  "stack_sig": "d7517139",
+  "first_accepted_spec": {
+    "op": "lag",
+    "keys": [
+      "c3",
+      "m1"
+    ],
+    "k": 1,
+    "dir": "prev"
+  },
+  "best_d_proxy": 0.0,
+  "proxy_pass_frac": 1.0,
+  "accepted_new_axis": 0,
+  "accepted_ops": {},
+  "accepted": [
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c3",
+          "m1"
+        ],
+        "k": 1,
+        "dir": "prev"
+      },
+      "is_decoy": true,
+      "dseed": 4000020,
+      "iter": 8
+    }
+  ]
+}

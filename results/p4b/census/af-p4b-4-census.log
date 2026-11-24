@@ -1,0 +1,68 @@
+[{"stream_name":"stdout","time":11.317906203,"data":"[09:21:22] window: scanning /kaggle/input/competitions/talkingdata-adtracking-fraud-detection/train.csv from row 125,886,953\n"}
+,{"stream_name":"stdout","time":149.714983084,"data":"[09:23:40] window: 25,733,679 rows, positives 0.2487%\n"}
+,{"stream_name":"stdout","time":198.747736363,"data":"[09:24:29] tracks ready in 3s | full train/ES/eval [1424757, 572391, 2082017] (eval pos 16,821) | proxy [433811, 195969, 731128] (eval pos 1,669)\n"}
+,{"stream_name":"stdout","time":310.890029759,"data":"baseline proxy 0.96459 full 0.97040\n"}
+,{"stream_name":"stdout","time":362.009165381,"data":"non-ratio specs 796 | ratio sample 300 | sampler P(ratio) 0.149\n"}
+,{"stream_name":"stdout","time":1133.360485219,"data":"[50/1096] 19 min\n"}
+,{"stream_name":"stdout","time":1972.215707705,"data":"[100/1096] 33 min\n"}
+,{"stream_name":"stdout","time":2598.117981326,"data":"[150/1096] 43 min\n"}
+,{"stream_name":"stdout","time":3280.553722751,"data":"[200/1096] 54 min\n"}
+,{"stream_name":"stdout","time":3984.170990927,"data":"[250/1096] 66 min\n"}
+,{"stream_name":"stdout","time":4774.096088791,"data":"[300/1096] 79 min\n"}
+,{"stream_name":"stdout","time":5475.425917299,"data":"[350/1096] 91 min\n"}
+,{"stream_name":"stdout","time":6155.930935965,"data":"[400/1096] 102 min\n"}
+,{"stream_name":"stdout","time":6817.139084403,"data":"[450/1096] 113 min\n"}
+,{"stream_name":"stdout","time":7483.962817217,"data":"[500/1096] 125 min\n"}
+,{"stream_name":"stdout","time":8203.858884356,"data":"[550/1096] 137 min\n"}
+,{"stream_name":"stdout","time":8897.328356564,"data":"[600/1096] 148 min\n"}
+,{"stream_name":"stdout","time":9580.087395557,"data":"[650/1096] 159 min\n"}
+,{"stream_name":"stdout","time":10310.602689605,"data":"[700/1096] 172 min\n"}
+,{"stream_name":"stdout","time":11039.967648052,"data":"[750/1096] 184 min\n"}
+,{"stream_name":"stdout","time":11749.648665014,"data":"[800/1096] 196 min\n"}
+,{"stream_name":"stdout","time":12447.225920039,"data":"[850/1096] 207 min\n"}
+,{"stream_name":"stdout","time":13193.631890885,"data":"[900/1096] 220 min\n"}
+,{"stream_name":"stdout","time":13914.90537095,"data":"[950/1096] 232 min\n"}
+,{"stream_name":"stdout","time":14653.028124943,"data":"[1000/1096] 244 min\n"}
+,{"stream_name":"stdout","time":15375.405112436,"data":"[1050/1096] 256 min\n"}
+,{"stream_name":"stdout","time":19594.157952897,"data":"{\n"}
+,{"stream_name":"stdout","time":19594.158083922,"data":"  \"n_nonratio\": 796,\n"}
+,{"stream_name":"stdout","time":19594.158093262,"data":"  \"n_ratio_sampled\": 300,\n"}
+,{"stream_name":"stdout","time":19594.15809925,"data":"  \"proxy_theta\": 0.0005,\n"}
+,{"stream_name":"stdout","time":19594.158104958,"data":"  \"nonratio_good\": 697,\n"}
+,{"stream_name":"stdout","time":19594.158110541,"data":"  \"nonratio_good_share\": 0.8756281407035176,\n"}
+,{"stream_name":"stdout","time":19594.158116307,"data":"  \"ratio_good\": 249,\n"}
+,{"stream_name":"stdout","time":19594.158119995,"data":"  \"ratio_good_share\": 0.83,\n"}
+,{"stream_name":"stdout","time":19594.158124381,"data":"  \"ratio_good_wilson95\": [\n"}
+,{"stream_name":"stdout","time":19594.158129305,"data":"    0.7833848085580865,\n"}
+,{"stream_name":"stdout","time":19594.158134674,"data":"    0.8682705276434078\n"}
+,{"stream_name":"stdout","time":19594.158140173,"data":"  ],\n"}
+,{"stream_name":"stdout","time":19594.158145389,"data":"  \"sampler_p_ratio\": 0.14904666666666666,\n"}
+,{"stream_name":"stdout","time":19594.158150924,"data":"  \"sampler_p_good_nonratio\": 0.7348300000000001,\n"}
+,{"stream_name":"stdout","time":19594.15815642,"data":"  \"sampler_p_good_total\": 0.8585387333333334,\n"}
+,{"stream_name":"stdout","time":19594.158190261,"data":"  \"expected_good_in_48_random_proposals\": 41.209859200000004,\n"}
+,{"stream_name":"stdout","time":19594.158213007,"data":"  \"needle\": {\n"}
+,{"stream_name":"stdout","time":19594.158218461,"data":"    \"found_in_census\": true,\n"}
+,{"stream_name":"stdout","time":19594.158223424,"data":"    \"d_proxy\": 0.008208450345841167,\n"}
+,{"stream_name":"stdout","time":19594.158227919,"data":"    \"rank_proxy_nonratio\": 2,\n"}
+,{"stream_name":"stdout","time":19594.158232666,"data":"    \"sampler_p\": 0.0005566666666666667,\n"}
+,{"stream_name":"stdout","time":19594.158237593,"data":"    \"mc_n\": 300000,\n"}
+,{"stream_name":"stdout","time":19594.158242171,"data":"    \"d_full_single\": 0.005603888600278162\n"}
+,{"stream_name":"stdout","time":19594.158246939,"data":"  },\n"}
+,{"stream_name":"stdout","time":19594.15825121,"data":"  \"good_share_by_op\": {\n"}
+,{"stream_name":"stdout","time":19594.158255527,"data":"    \"count\": 0.9107142857142857,\n"}
+,{"stream_name":"stdout","time":19594.158260077,"data":"    \"cumcount\": 0.6785714285714286,\n"}
+,{"stream_name":"stdout","time":19594.158264726,"data":"    \"lag\": 0.9255952380952381,\n"}
+,{"stream_name":"stdout","time":19594.158269435,"data":"    \"nunique\": 0.9388888888888889,\n"}
+,{"stream_name":"stdout","time":19594.158274166,"data":"    \"ratio\": 0.83,\n"}
+,{"stream_name":"stdout","time":19594.158278795,"data":"    \"roll\": 0.7619047619047619\n"}
+,{"stream_name":"stdout","time":19594.158283505,"data":"  },\n"}
+,{"stream_name":"stdout","time":19594.158287892,"data":"  \"minutes\": 326.4\n"}
+,{"stream_name":"stdout","time":19594.158292589,"data":"}\n"}
+,{"stream_name":"stdout","time":19594.158296984,"data":"CENSUS_DONE\n"}
+,{"stream_name":"stderr","time":19598.449582658,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":19598.449627097,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":19598.800683007,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":19598.800727524,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":19599.893323955,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":19601.672718692,"data":"[NbConvertApp] Writing 565697 bytes to __results__.html\n"}
+]

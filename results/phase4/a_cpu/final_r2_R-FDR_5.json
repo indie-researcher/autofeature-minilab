@@ -1,0 +1,96 @@
+{
+  "rung": 2,
+  "arm": "R-FDR",
+  "run": 5,
+  "n_proposals": 60,
+  "budget_n": 60,
+  "capped": false,
+  "unique_specs": 60,
+  "n_screened": 47,
+  "n_full_tests": 13,
+  "accepted_real": 3,
+  "accepted_decoys": 0,
+  "decoys_proposed": 9,
+  "decoys_screened": 9,
+  "decoys_tested": 0,
+  "decoys_tested_alive": 0,
+  "gate_dead_at_t": null,
+  "decoy_fpr": null,
+  "n_dup_total": 0,
+  "n_attempts_total": 60,
+  "repeat_frac": 0.0,
+  "needle_first_proposed_i": null,
+  "needle_accepted": false,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.9749855529284764,
+  "dev_gap_closed_pct": 32.26902864937768,
+  "model": "random",
+  "tokens": null,
+  "prop_secs_total": 0.0,
+  "eval_secs_total": 1861.1,
+  "wall_clock_secs": 1861.1,
+  "minutes": 31.02,
+  "canary": false,
+  "stack_sig": "6e9c67da",
+  "first_accepted_spec": {
+    "op": "lag",
+    "keys": [
+      "c1",
+      "c4",
+      "m5"
+    ],
+    "k": 3,
+    "dir": "prev"
+  },
+  "best_d_proxy": 0.004378,
+  "proxy_pass_frac": 0.2167,
+  "accepted_new_axis": 1,
+  "accepted_ops": {
+    "lag": 3
+  },
+  "accepted": [
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c1",
+          "c4",
+          "m5"
+        ],
+        "k": 3,
+        "dir": "prev"
+      },
+      "is_decoy": false,
+      "dseed": 5000019,
+      "iter": 4
+    },
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c0"
+        ],
+        "k": 5,
+        "dir": "next"
+      },
+      "is_decoy": false,
+      "dseed": 5000025,
+      "iter": 10
+    },
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c0",
+          "c2",
+          "h"
+        ],
+        "k": 1,
+        "dir": "next"
+      },
+      "is_decoy": false,
+      "dseed": 5000050,
+      "iter": 35
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+[{"stream_name":"stdout","time":15.18924132,"data":"[09:24:03] window: scanning /kaggle/input/competitions/talkingdata-adtracking-fraud-detection/train.csv from row 62,941,878\n"}
+,{"stream_name":"stdout","time":117.576766429,"data":"[09:25:46] window: 26,967,288 rows, positives 0.2232%\n"}
+,{"stream_name":"stdout","time":183.797614934,"data":"[09:26:52] tracks ready in 4s | full train/ES/eval [1469995, 591583, 2198357] (eval pos 14,798) | proxy [453371, 204912, 758061] (eval pos 1,560)\n"}
+,{"stream_name":"stdout","time":549.687597831,"data":"SEALED baseline seed0 0.9742100 | frozen 0.9742100 | 3-seed mean 0.9741440\n"}
+,{"stream_name":"stdout","time":1079.348224233,"data":"[1/63] L-FDR#1 i=12 sealed_delta=+0.000440 | 18 min\n"}
+,{"stream_name":"stdout","time":1646.427806437,"data":"[2/63] L-FDR#2 i=4 sealed_delta=+0.000663 | 27 min\n"}
+,{"stream_name":"stdout","time":1884.734838144,"data":"[3/63] L-FDR#2 i=7 sealed_delta=+0.000681 | 31 min\n"}
+,{"stream_name":"stdout","time":2108.885291935,"data":"[4/63] L-FDR#2 i=21 sealed_delta=+0.001148 | 35 min\n"}
+,{"stream_name":"stdout","time":2364.695290979,"data":"[5/63] L-FDR#2 i=31 sealed_delta=+0.000742 | 39 min\n"}
+,{"stream_name":"stdout","time":2616.716887065,"data":"[6/63] L-FDR#2 i=34 sealed_delta=+0.000199 | 43 min\n"}
+,{"stream_name":"stdout","time":3122.192269942,"data":"[7/63] L-FDR#3 i=18 sealed_delta=+0.000115 | 52 min\n"}
+,{"stream_name":"stdout","time":3354.318416128,"data":"[8/63] L-FDR#3 i=29 sealed_delta=+0.000199 | 56 min\n"}
+,{"stream_name":"stdout","time":3595.440258064,"data":"[9/63] L-FDR#3 i=52 sealed_delta=+0.000113 | 60 min\n"}
+,{"stream_name":"stdout","time":4154.225215621,"data":"[10/63] L-FDR#4 i=24 sealed_delta=+0.000571 | 69 min\n"}
+,{"stream_name":"stdout","time":4645.724754904,"data":"[11/63] L-FDR#5 i=19 sealed_delta=+0.000262 | 77 min\n"}
+,{"stream_name":"stdout","time":4895.223112752,"data":"[12/63] L-FDR#5 i=46 sealed_delta=+0.000272 | 81 min\n"}
+,{"stream_name":"stdout","time":5314.357232357,"data":"[13/63] L-FDR-14B#1 i=3 sealed_delta=+0.000106 | 88 min\n"}
+,{"stream_name":"stdout","time":5574.659896615,"data":"[14/63] L-FDR-14B#1 i=4 sealed_delta=+0.000017 | 93 min\n"}
+,{"stream_name":"stdout","time":5774.67787558,"data":"[15/63] L-FDR-14B#1 i=11 sealed_delta=+0.000106 | 96 min\n"}
+,{"stream_name":"stdout","time":5943.277996513,"data":"[16/63] L-FDR-14B#1 i=48 sealed_delta=+0.000783 | 99 min\n"}
+,{"stream_name":"stdout","time":6157.638484764,"data":"[17/63] L-FDR-14B#1 i=56 sealed_delta=+0.000689 | 102 min\n"}
+,{"stream_name":"stdout","time":6575.175126506,"data":"[18/63] L-FDR-14B#2 i=7 sealed_delta=+0.000412 | 109 min\n"}
+,{"stream_name":"stdout","time":6751.514740693,"data":"[19/63] L-FDR-14B#2 i=29 sealed_delta=+0.000173 | 112 min\n"}
+,{"stream_name":"stdout","time":6943.143608534,"data":"[20/63] L-FDR-14B#2 i=47 sealed_delta=+0.000300 | 115 min\n"}
+,{"stream_name":"stdout","time":7141.21622931,"data":"[21/63] L-FDR-14B#2 i=48 sealed_delta=+0.000611 | 119 min\n"}
+,{"stream_name":"stdout","time":7622.217253764,"data":"[22/63] L-FDR-14B#3 i=3 sealed_delta=+0.000074 | 127 min\n"}
+,{"stream_name":"stdout","time":7868.912302019,"data":"[23/63] L-FDR-14B#3 i=10 sealed_delta=+0.000162 | 131 min\n"}
+,{"stream_name":"stdout","time":8118.338215804,"data":"[24/63] L-FDR-14B#3 i=19 sealed_delta=+0.000149 | 135 min\n"}
+,{"stream_name":"stdout","time":8355.856746187,"data":"[25/63] L-FDR-14B#3 i=31 sealed_delta=+0.000186 | 139 min\n"}
+,{"stream_name":"stdout","time":8591.222841222,"data":"[26/63] L-FDR-14B#3 i=51 sealed_delta=+0.000357 | 143 min\n"}
+,{"stream_name":"stdout","time":8798.956249963,"data":"[27/63] L-FDR-14B#3 i=58 sealed_delta=+0.000304 | 146 min\n"}
+,{"stream_name":"stdout","time":9162.715923643,"data":"[28/63] L-FDR-14B#4 i=4 sealed_delta=+0.000087 | 152 min\n"}
+,{"stream_name":"stdout","time":9328.147957885,"data":"[29/63] L-FDR-14B#4 i=19 sealed_delta=+0.000148 | 155 min\n"}
+,{"stream_name":"stdout","time":9498.949676557,"data":"[30/63] L-FDR-14B#4 i=33 sealed_delta=+0.000353 | 158 min\n"}
+,{"stream_name":"stdout","time":9685.598560214,"data":"[31/63] L-FDR-14B#4 i=42 sealed_delta=+0.000155 | 161 min\n"}
+,{"stream_name":"stdout","time":9889.470220711,"data":"[32/63] L-FDR-14B#4 i=44 sealed_delta=+0.000003 | 165 min\n"}
+,{"stream_name":"stdout","time":10087.681180749,"data":"[33/63] L-FDR-14B#4 i=46 sealed_delta=-0.000036 | 168 min\n"}
+,{"stream_name":"stdout","time":10309.251936357,"data":"[34/63] L-FDR-14B#4 i=52 sealed_delta=+0.000079 | 172 min\n"}
+,{"stream_name":"stdout","time":10499.136644224,"data":"[35/63] L-FDR-14B#4 i=54 sealed_delta=-0.000186 | 175 min\n"}
+,{"stream_name":"stdout","time":10698.166654027,"data":"[36/63] L-FDR-14B#4 i=56 sealed_delta=+0.000074 | 178 min\n"}
+,{"stream_name":"stdout","time":10883.453009393,"data":"[37/63] L-FDR-14B#4 i=58 sealed_delta=+0.000475 | 181 min\n"}
+,{"stream_name":"stdout","time":11049.455895345,"data":"[38/63] L-FDR-14B#4 i=59 sealed_delta=+0.000007 | 184 min\n"}
+,{"stream_name":"stdout","time":11427.827968834,"data":"[39/63] L-FDR-14B#5 i=3 sealed_delta=-0.000388 | 190 min\n"}
+,{"stream_name":"stdout","time":11594.840327654,"data":"[40/63] L-FDR-14B#5 i=7 sealed_delta=-0.000403 | 193 min\n"}
+,{"stream_name":"stdout","time":11785.40872163,"data":"[41/63] L-FDR-14B#5 i=18 sealed_delta=-0.000297 | 196 min\n"}
+,{"stream_name":"stdout","time":11957.060664025,"data":"[42/63] L-FDR-14B#5 i=37 sealed_delta=-0.000267 | 199 min\n"}
+,{"stream_name":"stdout","time":12159.463677923,"data":"[43/63] L-FDR-14B#5 i=45 sealed_delta=-0.000197 | 202 min\n"}
+,{"stream_name":"stdout","time":12339.929256369,"data":"[44/63] L-FDR-14B#5 i=49 sealed_delta=-0.000197 | 205 min\n"}
+,{"stream_name":"stdout","time":12514.304468533,"data":"[45/63] L-FDR-14B#5 i=50 sealed_delta=-0.000102 | 208 min\n"}
+,{"stream_name":"stdout","time":12997.172791152,"data":"[46/63] L-FDR-3B#1 i=32 sealed_delta=+0.000515 | 216 min\n"}
+,{"stream_name":"stdout","time":13491.537056351,"data":"[47/63] L-FDR-3B#2 i=29 sealed_delta=+0.000330 | 225 min\n"}
+,{"stream_name":"stdout","time":13707.12076022,"data":"[48/63] L-FDR-3B#2 i=53 sealed_delta=+0.000549 | 228 min\n"}
+,{"stream_name":"stdout","time":13942.739371682,"data":"[49/63] L-FDR-3B#5 i=34 sealed_delta=+0.000515 | 232 min\n"}
+,{"stream_name":"stdout","time":14450.27164215,"data":"[50/63] R#1 i=42 sealed_delta=+0.000237 | 241 min\n"}
+,{"stream_name":"stdout","time":14707.887561038,"data":"[51/63] R#1 i=56 sealed_delta=+0.000663 | 245 min\n"}
+,{"stream_name":"stdout","time":15187.948511975,"data":"[52/63] R#2 i=3 sealed_delta=+0.000041 | 253 min\n"}
+,{"stream_name":"stdout","time":15406.482919324,"data":"[53/63] R#2 i=7 sealed_delta=+0.000110 | 257 min\n"}
+,{"stream_name":"stdout","time":15650.113175039,"data":"[54/63] R#2 i=8 sealed_delta=+0.000158 | 261 min\n"}
+,{"stream_name":"stdout","time":16063.626879664,"data":"[55/63] R#3 i=3 sealed_delta=+0.000161 | 267 min\n"}
+,{"stream_name":"stdout","time":16221.757748077,"data":"[56/63] R#3 i=4 sealed_delta=+0.000095 | 270 min\n"}
+,{"stream_name":"stdout","time":16387.260409332,"data":"[57/63] R#3 i=5 sealed_delta=-0.000102 | 273 min\n"}
+,{"stream_name":"stdout","time":16571.192301228,"data":"[58/63] R#3 i=8 sealed_delta=-0.000016 | 276 min\n"}
+,{"stream_name":"stdout","time":17059.197046988,"data":"[59/63] R#4 i=2 sealed_delta=+0.000190 | 284 min\n"}
+,{"stream_name":"stdout","time":17303.630012833,"data":"[60/63] R#4 i=6 sealed_delta=+0.000109 | 288 min\n"}
+,{"stream_name":"stdout","time":17749.011204285,"data":"[61/63] R#5 i=4 sealed_delta=-0.000026 | 296 min\n"}
+,{"stream_name":"stdout","time":17924.199826136,"data":"[62/63] R#5 i=15 sealed_delta=-0.000433 | 298 min\n"}
+,{"stream_name":"stdout","time":18108.665306356,"data":"[63/63] R#5 i=16 sealed_delta=-0.000333 | 302 min\n"}
+,{"stream_name":"stdout","time":18108.738568556,"data":"{\n"}
+,{"stream_name":"stdout","time":18108.738603306,"data":"  \"n_candidates\": 63,\n"}
+,{"stream_name":"stdout","time":18108.73860813,"data":"  \"n_stacks\": 17,\n"}
+,{"stream_name":"stdout","time":18108.738611841,"data":"  \"sealed_baseline_3seed\": 0.9741439506655306,\n"}
+,{"stream_name":"stdout","time":18108.73861521,"data":"  \"share_positive\": 0.7777777777777778,\n"}
+,{"stream_name":"stdout","time":18108.738618502,"data":"  \"share_material\": 0.36507936507936506,\n"}
+,{"stream_name":"stdout","time":18108.738622642,"data":"  \"median_delta\": 0.00015544771045583605,\n"}
+,{"stream_name":"stdout","time":18108.738627536,"data":"  \"mean_delta\": 0.00018893296678859097,\n"}
+,{"stream_name":"stdout","time":18108.738632595,"data":"  \"decoy_n\": 29,\n"}
+,{"stream_name":"stdout","time":18108.73863706,"data":"  \"decoy_median\": -0.00020144185366451536,\n"}
+,{"stream_name":"stdout","time":18108.738642023,"data":"  \"decoy_p95\": -2.6601795751912695e-05,\n"}
+,{"stream_name":"stdout","time":18108.738647382,"data":"  \"decoy_share_positive\": 0.034482758620689655,\n"}
+,{"stream_name":"stdout","time":18108.738652712,"data":"  \"share_above_decoy_p95\": 0.8095238095238095,\n"}
+,{"stream_name":"stdout","time":18108.738657989,"data":"  \"prob_cand_gt_decoy\": 0.8856048166392994,\n"}
+,{"stream_name":"stdout","time":18108.738663095,"data":"  \"by_arm\": {\n"}
+,{"stream_name":"stdout","time":18108.738668102,"data":"    \"L-FDR\": {\n"}
+,{"stream_name":"stdout","time":18108.738673857,"data":"      \"n\": 12,\n"}
+,{"stream_name":"stdout","time":18108.738677262,"data":"      \"median\": 0.0003559648699832015,\n"}
+,{"stream_name":"stdout","time":18108.738680602,"data":"      \"n_positive\": 12,\n"}
+,{"stream_name":"stdout","time":18108.738683897,"data":"      \"n_material\": 8\n"}
+,{"stream_name":"stdout","time":18108.738686977,"data":"    },\n"}
+,{"stream_name":"stdout","time":18108.738690276,"data":"    \"L-FDR-14B\": {\n"}
+,{"stream_name":"stdout","time":18108.738693467,"data":"      \"n\": 33,\n"}
+,{"stream_name":"stdout","time":18108.738696495,"data":"      \"median\": 0.00010566961159241828,\n"}
+,{"stream_name":"stdout","time":18108.738699525,"data":"      \"n_positive\": 24,\n"}
+,{"stream_name":"stdout","time":18108.738707199,"data":"      \"n_material\": 9\n"}
+,{"stream_name":"stdout","time":18108.73871057,"data":"    },\n"}
+,{"stream_name":"stdout","time":18108.738713529,"data":"    \"L-FDR-3B\": {\n"}
+,{"stream_name":"stdout","time":18108.738716633,"data":"      \"n\": 4,\n"}
+,{"stream_name":"stdout","time":18108.738720824,"data":"      \"median\": 0.000515046680907516,\n"}
+,{"stream_name":"stdout","time":18108.738723919,"data":"      \"n_positive\": 4,\n"}
+,{"stream_name":"stdout","time":18108.73872713,"data":"      \"n_material\": 4\n"}
+,{"stream_name":"stdout","time":18108.73873903,"data":"    },\n"}
+,{"stream_name":"stdout","time":18108.738744365,"data":"    \"R\": {\n"}
+,{"stream_name":"stdout","time":18108.738749252,"data":"      \"n\": 14,\n"}
+,{"stream_name":"stdout","time":18108.738759475,"data":"      \"median\": 0.00010225292055228893,\n"}
+,{"stream_name":"stdout","time":18108.738764621,"data":"      \"n_positive\": 9,\n"}
+,{"stream_name":"stdout","time":18108.738945361,"data":"      \"n_material\": 2\n"}
+,{"stream_name":"stdout","time":18108.738967937,"data":"    }\n"}
+,{"stream_name":"stdout","time":18108.738994443,"data":"  },\n"}
+,{"stream_name":"stdout","time":18108.73899895,"data":"  \"rule\": \"gate discarded real signal if \u003e=50% of candidates have delta\u003e0 AND median candidate delta \u003e decoy p95; else rejections are consistent with noise\",\n"}
+,{"stream_name":"stdout","time":18108.739004627,"data":"  \"rule_outcome\": \"discarded real signal\"\n"}
+,{"stream_name":"stdout","time":18108.739009248,"data":"}\n"}
+,{"stream_name":"stdout","time":18108.739013172,"data":"AUDIT_DONE\n"}
+,{"stream_name":"stderr","time":18114.30238293,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":18114.302442239,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":18114.844858806,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":18114.844906385,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":18116.221960879,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":18118.642929839,"data":"[NbConvertApp] Writing 575821 bytes to __results__.html\n"}
+]
