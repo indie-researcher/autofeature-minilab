@@ -1,0 +1,93 @@
+{
+  "arm": "L-FDR-14B",
+  "run": 5,
+  "n_proposals": 60,
+  "n_screened": 33,
+  "n_full_tests": 27,
+  "accepted_real": 5,
+  "accepted_decoys": 0,
+  "decoys_tested": 3,
+  "decoy_fpr": 0.0,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.9761381467425431,
+  "dev_gap_closed_pct": 40.29331215889978,
+  "model": "qwen2.5:14b",
+  "decoys_proposed": 9,
+  "decoys_screened": 6,
+  "n_dup_total": 18,
+  "tokens": {
+    "prompt": 758679,
+    "completion": 37777
+  },
+  "accepted": [
+    {
+      "spec": {
+        "op": "count",
+        "keys": [
+          "c0",
+          "c1",
+          "h"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 5000016,
+      "iter": 1
+    },
+    {
+      "spec": {
+        "op": "nunique",
+        "keys": [
+          "c0",
+          "c2",
+          "h"
+        ],
+        "target": "c4"
+      },
+      "is_decoy": false,
+      "dseed": 5000017,
+      "iter": 2
+    },
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c0",
+          "c2",
+          "h"
+        ],
+        "k": 1,
+        "dir": "prev"
+      },
+      "is_decoy": false,
+      "dseed": 5000025,
+      "iter": 10
+    },
+    {
+      "spec": {
+        "op": "count",
+        "keys": [
+          "c1",
+          "c3",
+          "c4"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 5000046,
+      "iter": 31
+    },
+    {
+      "spec": {
+        "op": "cumcount",
+        "keys": [
+          "c1",
+          "c2",
+          "c4"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 5000071,
+      "iter": 56
+    }
+  ],
+  "minutes": 54.3
+}

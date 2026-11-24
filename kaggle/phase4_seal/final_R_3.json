@@ -1,0 +1,69 @@
+{
+  "arm": "R",
+  "run": 3,
+  "n_proposals": 60,
+  "n_screened": 51,
+  "n_full_tests": 9,
+  "accepted_real": 4,
+  "accepted_decoys": 0,
+  "decoys_tested": 0,
+  "decoy_fpr": null,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.9834211046021494,
+  "dev_gap_closed_pct": 90.99679324664842,
+  "accepted": [
+    {
+      "spec": {
+        "op": "count",
+        "keys": [
+          "c0"
+        ]
+      },
+      "is_decoy": false,
+      "dseed": 3000015,
+      "iter": 6
+    },
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c0",
+          "c1",
+          "c3"
+        ],
+        "k": 1,
+        "dir": "next"
+      },
+      "is_decoy": false,
+      "dseed": 3000032,
+      "iter": 23
+    },
+    {
+      "spec": {
+        "op": "nunique",
+        "keys": [
+          "c2",
+          "c3"
+        ],
+        "target": "c0"
+      },
+      "is_decoy": false,
+      "dseed": 3000033,
+      "iter": 24
+    },
+    {
+      "spec": {
+        "op": "roll",
+        "keys": [
+          "c1",
+          "c3"
+        ],
+        "w": 3600
+      },
+      "is_decoy": false,
+      "dseed": 3000046,
+      "iter": 37
+    }
+  ],
+  "minutes": 29.2
+}

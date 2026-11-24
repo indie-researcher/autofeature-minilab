@@ -1,0 +1,82 @@
+{
+  "arm": "R",
+  "run": 2,
+  "n_proposals": 60,
+  "n_screened": 48,
+  "n_full_tests": 12,
+  "accepted_real": 4,
+  "accepted_decoys": 0,
+  "decoys_tested": 1,
+  "decoy_fpr": 0.0,
+  "dev_baseline_remeasured": 0.9703504870359172,
+  "dev_final_auc": 0.9768762652562039,
+  "dev_gap_closed_pct": 45.43204546195642,
+  "accepted": [
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c0",
+          "c3"
+        ],
+        "k": 1,
+        "dir": "next"
+      },
+      "is_decoy": false,
+      "dseed": 2000015,
+      "iter": 9
+    },
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c0",
+          "c2"
+        ],
+        "k": 1,
+        "dir": "next"
+      },
+      "is_decoy": false,
+      "dseed": 2000017,
+      "iter": 11
+    },
+    {
+      "spec": {
+        "op": "lag",
+        "keys": [
+          "c1",
+          "c4"
+        ],
+        "k": 1,
+        "dir": "next"
+      },
+      "is_decoy": false,
+      "dseed": 2000019,
+      "iter": 13
+    },
+    {
+      "spec": {
+        "op": "ratio",
+        "num": {
+          "op": "nunique",
+          "keys": [
+            "c1",
+            "c3"
+          ],
+          "target": "h"
+        },
+        "den": {
+          "op": "count",
+          "keys": [
+            "c0",
+            "c1"
+          ]
+        }
+      },
+      "is_decoy": false,
+      "dseed": 2000066,
+      "iter": 60
+    }
+  ],
+  "minutes": 34.4
+}
