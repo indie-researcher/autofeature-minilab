@@ -1,8 +1,8 @@
 # AutoFeature Mini-Lab
 
-A small, pre-registered study of **agentic feature search**: when an agent proposes features and a gate decides what to keep, which layer earns the trust: the proposer, the gate, or the sealed holdout day?
+A small study (Phases 0-3 pre-registered; Phase 4 is a pilot plus post hoc audits) of **agentic feature search**: when an agent proposes features and a gate decides what to keep, which layer earns the trust: the proposer, the gate, or the sealed holdout day?
 
-**Short answer:** on this task, the sealed day confirmed DEV almost exactly, so the strict gate bought no protection and, with LLM proposals, cost some gap closed. Random search over the same grammar matched or beat the LLM. A boundary-condition result, reported as it came out. Random's lead traces to a single feature that one random run happened to propose (see Exploratory).
+**Short answer:** on this task the sealed day confirmed DEV almost exactly (within about 6 points for every arm), so overfitting was not a problem at about 10 full tests per run. The gate still matters for noise: in a gate-only canary (Phase 4b), a keep-if-better gate accepted a pure-noise feature in 13/13 runs and LORD++ in 0/13, though the noise cost only about 2% of the gap. In the full pipeline the proxy screen removed most decoys before the gate. Random search matched or beat the LLM, and random's lead traces to one feature that one random run happened to propose (about a 12% draw). The grammar is dense (86% of random proposals clear the floor), so the proposer barely matters. A boundary-condition result, reported as it came out. Phase 4a (larger grammar, LLM vs random) was left incomplete.
 
 ## Question
 
@@ -99,7 +99,7 @@ Figures: `figures/` (`fig1_design_diagram`, `fig2_noise_kept_and_sealed_drop`, `
 
 ## Phase 4b: gate stress tests (post hoc, CPU only, no new sealed day)
 
-**Canary (tests 1-2).** 13 paired runs x 30 permuted decoys per gate (same decoys per run id; decoys bypass the proxy, so this isolates the gate). Naive accepted exactly one decoy in 13/13 runs; LORD++ accepted none (0/390, Wilson 95% upper bound 1.0%). Run-level Fisher exact p = 1/10,400,600. The accepted noise "closed" 0.1-3.1% of the DEV gap (mean 2.0%). The pooled decoy rate (13/390 = 3.3%) is diluted: in runs 4-13 the first-acceptance hazard was about 13% per decoy (10 of 76 trials), then 0 of 224 later trials were accepted, consistent with a ratchet (mechanism not confirmed). Do not extrapolate 3.3% to other budgets.
+**Canary (tests 1-2).** 13 paired runs x 30 permuted decoys per gate (same decoys per run id; decoys bypass the proxy, so this isolates the gate). Naive accepted exactly one decoy in 13/13 runs; LORD++ accepted none (0/390, Wilson 95% upper bound 1.0%). Paired sign test over 13 runs: p = 2^-13 = 1.2e-4 (decoys are shared per run id, so runs are paired, not independent). The accepted noise "closed" 0.1-3.1% of the DEV gap (mean 2.0%). The pooled decoy rate (13/390 = 3.3%) is diluted: in runs 4-13 the first-acceptance hazard was about 13% per decoy (10 of 76 trials), then 0 of 224 later trials were accepted, consistent with a ratchet (mechanism not confirmed). Do not extrapolate 3.3% to other budgets.
 
 **Rejected-candidate audit (test 3; post hoc, sealed day already used).** Of the 63 material candidates LORD++ rejected, 78% had a positive SEALED delta, but only 37% (23/63) cleared the 0.000219 floor. Median +0.000155 vs decoy median -0.000201. Material share by arm: 3B 4/4, 7B 8/12, 14B 9/33, random 2/14. Candidates sit in 17 stacks (not independent), and beating permuted decoys is a low bar, so the floor share is the cost estimate.
 
@@ -121,7 +121,7 @@ Figures: `figures/` (`fig1_design_diagram`, `fig2_noise_kept_and_sealed_drop`, `
 - The 7B proposer saturated in a duplicate loop in one run; a patch (more attempts, temperature ramp, duplicate feedback in the prompt) was applied and all runs then reached 60 proposals. Protocol deviation, disclosed here.
 - The random-vs-LLM difference rests largely on one feature found once (n = 1 event); a different set of random seeds could have missed it.
 - Post hoc, DEV only: across the four FDR arms, 63 non-decoy candidates cleared the materiality floor but were rejected by LORD++ (51 with nominal p <= 0.05; 12 for 7B, 14 for random, 33 for 14B, 4 for 3B). None of the 29 gate-tested decoys did both (0/29, Wilson 95% upper bound 11.7%), so the near-misses are more consistent with real marginal signal than with noise. The strict gate probably cost some real gain, which may contribute to the naive-over-FDR gap for 7B; it does not explain why the same gate cost random proposals about 1 point. The gate never died (0 of 258 tests had alpha_t below 2^-12).
-- Decoy FPR is weak evidence: the proxy screen removes most decoys first, so only 29 reached the gate.
+- Decoy FPR in Phase 3 is weak evidence: the proxy screen removes most decoys first, so only 29 reached the gate. The Phase 4b canary bypasses the proxy to measure the gate alone.
 - Token counters were cumulative across runs and were converted to per-run deltas (run 1 of each arm taken as-is, unverified). R and L-naive decoy proposal counts are derived from the shared per-run schedule, not logged; R and L-naive have no token or duplicate data.
 - **Provenance timeline (UTC):** spec and DEV results committed (`619cd08`, tag `phase0-freeze-v2`) before the Kaggle SEALED job started at 22:25 on 2026-11-19. The runner script was committed 10-16 minutes after the job started (`e3ff20f`, `3e0bac9`); the lock records its sha256 (`c5d8e730...`). The job finished at 02:09 on 2026-11-20 (`results/phase3/phase3_lock.json`, tag `phase3-sealed`). An earlier invocation crashed on the first run (a parsing bug) before any feature AUC was computed on SEALED, and an earlier skeleton wrote a `started` lock that was archived under `archive/`. No SEALED feature result was read before the final run.
 
@@ -137,6 +137,8 @@ Everything runs on Kaggle (CPU for Phase 3; the LLM arms need a GPU with a local
 kaggle kernels push -p kaggle/phase3
 # Analysis: figures + exploratory diagnostics from the Phase 3 outputs and trial logs
 python3 code/af_phase3_analyze.py
+# Phase 4a (pilot, DEV only):   kaggle/phase4_a_cpu, phase4_a_gpu, phase4_b_gpu
+# Phase 4b (CPU):               kaggle/p4b_1_canary_naive, p4b_2_canary_fdr, p4b_3_audit, p4b_4_census; p4b_collect.sh builds results/p4b/P4B_REPORT.md
 ```
 
-Layout: `code/` (pipeline), `kaggle/` (one folder per notebook), `results/` (all `final_*.json`, trials, summaries, Phase 3 outputs), `figures/`, `docs/PHASE3_BRIEF.md`, `archive/` (aborted attempts). Git tags: `phase0-freeze-v2`, `phase3-sealed`. Default branch: `master`.
+Layout: `code/` (pipeline), `kaggle/` (one folder per notebook), `results/` (all `final_*.json`, trials, summaries, Phase 3 outputs), `figures/`, `docs/PHASE3_BRIEF.md`, `archive/` (aborted attempts). Git tags: `phase0-freeze-v2`, `phase3-sealed`, `phase4b-freeze`, `phase4b-sealed`. Default branch: `master`.
