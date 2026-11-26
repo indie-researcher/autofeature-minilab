@@ -1,144 +1,136 @@
 # AutoFeature Mini-Lab
 
-A small study (Phases 0-3 pre-registered; Phase 4 is a pilot plus post hoc audits) of **agentic feature search**: when an agent proposes features and a gate decides what to keep, which layer earns the trust: the proposer, the gate, or the sealed holdout day?
+**An evaluation-hygiene case study of agentic feature search.** When an agent proposes features and a gate decides what to keep, does the gate (and a sealed holdout day) matter more than the proposer? Pre-registered hypotheses, a sealed day opened once, planted decoys as canaries, TalkingData AdTracking, CPU-scale compute.
 
-**Short answer:** on this task the sealed day confirmed DEV almost exactly (within about 6 points for every arm), so overfitting was not a problem at about 10 full tests per run. The gate still matters for noise: in a gate-only canary (Phase 4b), a keep-if-better gate accepted a pure-noise feature in 13/13 runs and LORD++ in 0/13, though the noise cost only about 2% of the gap. In the full pipeline the proxy screen removed most decoys before the gate. Random search matched or beat the LLM, and random's lead traces to one feature that one random run happened to propose (about a 12% draw). The grammar is dense (86% of random proposals clear the floor), so the proposer barely matters. A boundary-condition result, reported as it came out. Phase 4a (larger grammar, LLM vs random) was left incomplete.
+## TL;DR
 
-## Question
+1. **Phase 3 (pre-registered):** the sealed day confirmed DEV almost exactly. The naive keep-if-better gate did not overfit; random proposals matched or beat Qwen 3B/7B/14B under a fixed grammar. H1, H2 and H3 all failed their own rules.
+2. **Both sides of the gate were measured.** Keep-if-better accepted 13 of 390 planted decoys (3.3%; one phantom feature in every one of 13 canary runs); LORD++ accepted 0 of 390. But 78% of the 63 candidates LORD++ rejected had a positive sealed delta, against 3% of decoys.
+3. **Regime map (Phases 5, 5b):** from 7k to 712k training rows, no gate we tried beats keep-if-better on net holdout gain. Strict online-FDR gates starve (even with 24 blocks and the gate alive); a decoy-calibrated gate ties keep-if-better at 144k and 712k rows with about 2.7x fewer accepted decoys.
+4. **The random-vs-LLM gap traces to one rare feature** that one random run happened to propose. The grammar census shows it is a lucky draw, not LLM inferiority.
 
-1. Does the evaluation harness (proxy screen, statistical gate, sealed day) matter more than the proposer (random vs LLM)?
-2. Does LLM size (Qwen2.5 3B / 7B / 14B) change the result much?
+This is a descriptive case study, not a method paper. Read the limits first.
 
-Idea worth stealing: **canary decoys**. Insert known-null hypotheses (permuted real features) into the agent's queue and count how many it "discovers". That is a live estimate of the pipeline's false-discovery rate. (Same family as Boruta shadow features and knockoffs. No novelty claimed on online FDR; this is a controlled empirical case study.)
+## Read this first: scope and limits
 
-## Design
+- One dataset (TalkingData), one fixed grammar that contains the good operations (selection, not invention), one DEV/SEALED day pair.
+- Phases 5 and 5b use a random proposer and a holdout day (2017-11-08) that Phase 3 had already used for its verdicts: not a fresh holdout. 2017-11-07 stays unopened.
+- 5-10 runs per cell (4 in the 712k-row cell). Eight gate-vs-naive contrasts in Phase 5b are not corrected for multiplicity; the optimism result at 144k rows is one of them.
+- "Tied" is not "equivalent": no equivalence margin was pre-registered.
+- No novelty is claimed on online FDR, decoy/knockoff-style nulls, or reusable holdouts (see Related work). The contribution is a controlled empirical calibration in an agentic setting.
+- Qwen2.5 family only. Contamination probes named other datasets (weak evidence of low contamination).
+- Decoy checks on SEALED use the 29 gate-tested decoys of Phase 3; the audit reference class is therefore small.
 
-- **Data:** TalkingData AdTracking Fraud Detection. DEV = 2017-11-09, 08:00-16:00 (25.7M rows). SEALED = 2017-11-08, same hours, opened once, at the end.
-- **Task:** the agent picks features from a fixed grammar of 6 operations (count, nunique, cumcount, lag, roll, ratio) over keys c0-c4 and h. Selection, not invention.
-- **Pipeline per proposal:** proxy screen (10% IP subsample, promote if AUC gain >= 0.0005) -> full DEV test -> gate -> stack.
-- **Decoys:** 20% of proposals are permuted-real features (known noise).
-- **Gates:** naive (keep if DEV AUC goes up) vs LORD++ online FDR (alpha 0.10, sign-flip p over 12 blocks, materiality floor 0.000219).
-- **Arms (5 runs x 60 proposals each):** random + FDR, random + naive, Qwen 7B + FDR, Qwen 7B + naive, plus Qwen 3B and 14B with FDR.
-- **Reference points:** baseline (4 raw ID columns) and a human ceiling. DEV 0.97040 / 0.98471, SEALED 0.97421 / 0.98544.
-- **Metric:** gap closed (%) = (AUC - baseline) / (ceiling - baseline). Optimism gap = DEV gap closed minus SEALED gap closed. SEALED baseline and final AUC are 3-seed means.
+## Design (Phase 3)
 
-**Hypotheses (frozen before any SEALED result was read)**
-- **H1:** the naive gate shows a larger DEV-to-SEALED optimism gap than the FDR gate. (Reframed before unsealing: the proxy screen removes most decoys before the gate, so H1 is judged on the optimism gap of accepted real features, not on decoy counts.)
-- **H2:** LLM proposals close more of the SEALED gap than random proposals, under this fixed grammar and budget.
-- **H3:** proposer size changes the SEALED gap less than the gate does.
+- **Data:** DEV = 2017-11-09 08:00-16:00 (25.7M rows); SEALED = 2017-11-08, same hours, opened once, at the end. Baseline (4 raw ID columns) and human ceiling: DEV 0.97040 / 0.98471, SEALED 0.97421 / 0.98544.
+- **Grammar:** 6 operations (count, nunique, cumcount, lag, roll, ratio) over keys c0-c4 and h.
+- **Pipeline:** proxy screen (10% IP subsample, gain >= 0.0005) -> full DEV test -> gate -> stack. 20% of proposals are permuted-real decoys.
+- **Gates:** naive (keep if DEV AUC rises) vs LORD++ (alpha 0.10, sign-flip p over 12 blocks, materiality floor 0.000219).
+- **Arms (5 runs x 60 proposals):** random + FDR, random + naive, Qwen 7B + FDR / naive, Qwen 3B + FDR, Qwen 14B + FDR.
+- **Metric:** gap closed (%) = (AUC - baseline) / (ceiling - baseline); optimism = DEV gap closed minus SEALED gap closed.
+- **Hypotheses (frozen before any SEALED result):** H1 the naive gate shows a larger optimism gap; H2 LLM proposals close more of the SEALED gap than random; H3 proposer size matters less than the gate. Descriptive statistics only; exact permutation p = 1/252 is allowed only if all 5 runs of one arm beat all 5 of another.
 
-With 5 runs per arm, claims are **descriptive** (mean, median, range). Exact statement allowed: if all 5 runs of one arm beat all 5 of another, one-sided exact permutation p = 1/252 (about 0.004). Arms with fewer than 5 distinct final feature sets count as that many effective outcomes and are excluded from permutation tests.
+## Results: Phase 3 (SEALED opened once)
 
-## Results
+| Arm | SEALED gap closed, mean (median) | Range | DEV mean | Optimism | Effective outcomes |
+|---|---|---|---|---|---|
+| Random + FDR | 56.6 (48.1) | 42.8-93.3 | 55.6 | -1.0 | 5 |
+| Random + naive | 55.3 (47.8) | 39.1-90.5 | 56.4 | +1.0 | 5 |
+| Qwen 7B + FDR | 32.9 (31.3) | 26.5-45.1 | 37.1 | +4.2 | 5 |
+| Qwen 7B + naive | 45.1 (43.7) | 32.4-56.7 | 40.3 | -4.8 | 5 |
+| Qwen 3B + FDR | 34.7 (35.4) | 31.9-35.4 | 29.2 | -5.5 | 2 |
+| Qwen 14B + FDR | 40.1 (39.8) | 39.5-40.8 | 37.6 | -2.5 | 5 |
 
-### DEV (agent feedback, so optimistic)
+Negative optimism = SEALED did better than DEV. Source: `results/phase3/`.
 
-| Arm | Mean gap closed | Range | Real accepted | Decoys gate-tested / accepted |
+**Verdicts (pre-registered rules)**
+- **H1 not supported:** the naive gate showed no larger optimism gap (random -1.0 vs +1.0; 7B naive is better on SEALED, -4.8 vs +4.2). Rule outcome: *the gate was not needed on this task.*
+- **H2 not supported:** random beats the LLM on means; 7B + naive is close to random on medians. Rule outcome: *grammar + gate carry the result; the LLM adds little here.* R and R-naive share the proposer seed, so their high run 3 is one lucky draw shown twice.
+- **H3 not supported by the rule, near tie:** size effect 7.2 points vs gate effect 6.7; 3B is effectively two outcomes.
+- No exact-permutation claim is available (ranges overlap in every valid pair).
+
+**Post hoc decoy check (Phase 3 sealed window):** 28 of 29 re-permuted decoys lowered SEALED AUC (mean delta -0.000219); 0 of 29 passed the materiality floor. LORD++ was not re-simulated (trial-level state not embedded).
+
+![design](figures/fig1_design_diagram.png)
+![sealed drop](figures/fig2_noise_kept_and_sealed_drop.png)
+
+## Exploratory (post hoc): the "needle"
+
+Random's high SEALED runs trace to one feature, `lag(c0, c1, c3; k=1, dir=next)` (gain +0.0066 when accepted). It was proposed in 1 of 5 random runs (same draw in R and R-naive) and by none of the 15 Qwen runs. Without that run, random and 7B + naive are equal (about 47-48% SEALED gap closed).
+
+**The grammar census (Phase 4b, DEV, descriptive) says this is luck.** The feature ranks 2nd of 796 non-ratio specs by single-feature proxy gain, but the random sampler proposes it with probability 5.6e-4 per proposal: about 0.13 expected hits in the 240 distinct random draws (P(at least one) is about 12%), and about 0.5 expected hits had the 960 LLM proposals been drawn like random ones. Not proposing it is unremarkable. The LLMs did explore the lag region (the two 7B arms proposed 85 lags, 78 of them `next`), just never that key set.
+
+## Phase 4b: both errors of the gate (CPU, pre-registered rules, `docs/PHASE4B_PLAN.md`)
+
+| Test | Result |
+|---|---|
+| **Canary (gate only, proxy bypassed; 13 runs x 30 decoys per gate, paired decoys)** | Keep-if-better accepted **13 / 390** (3.3%, Wilson 2.0-5.6%); LORD++ accepted **0 / 390** (upper bound 1.0%). Fisher p = 0.0001; naive accepted noise while FDR did not in 13 of 13 paired runs. Accepted noise "closed" about 2% of the DEV gap. |
+| **Audit of FDR-rejected candidates (63 material DEV candidates scored on the Phase 3 sealed window; post hoc)** | 78% had a positive sealed delta vs 3% of the 29 decoys; 81% beat the decoy 95th percentile; P(candidate > decoy) = 0.89. By arm: 7B 12/12 positive, 3B 4/4, 14B 24/33, random 9/14 (2 material). Rule outcome: *the gate discarded real signal.* |
+| **Grammar census (descriptive)** | 88% of non-ratio specs and 83% of sampled ratio specs add proxy gain on their own (single-feature gain over the raw baseline, not marginal gain given a stack): the grammar is saturated with weakly useful features, which is why random is a strong baseline. |
+
+A phantom feature costs about -0.0002 AUC on the sealed window (decoy median), a rejected real feature adds about +0.00016 (median). Keep-if-better wins as long as true accepts outnumber phantom accepts.
+
+![canary and audit](figures/final_canary_audit.png)
+
+## Phases 5 and 5b: when does a gate pay off? (`docs/PHASE5_PLAN.md`, `docs/PHASE5B_PLAN.md`)
+
+Random proposals from the Phase 3 grammar, identical sequence under every gate (paired), no proxy screen; training size varied by IP subsample; optimism = DEV gain (3 fresh seeds) minus the holdout gain of the same final stack; holdout 2017-11-08.
+
+**Phase 5: keep-if-better vs LORD++ (12 blocks)**
+
+| Training rows | Proposals | Naive optimism [95% CI] | Naive holdout gain | LORD++ holdout gain | LORD++ real accepts per run | LORD++ tests dead |
+|---|---|---|---|---|---|---|
+| 7k | 120 | +0.0207 [0.0045, 0.0375] | 0.0150 | 0.0035 | 0.1 | 93% |
+| 27k | 30 / 120 | +0.0062 / +0.0052 | 0.0052 / 0.0115 | 0 / 0 | 0 / 0 | 77% / 94% |
+| 144k | 30 / 120 | +0.0009 / +0.0025 | 0.0074 / 0.0089 | 0 / 0.0018 | 0 / 0.4 | 77% / 91% |
+| 712k | 60 | +0.0012 [0.0008, 0.0015] | 0.0063 | 0.0023 | 1.75 | 45% |
+
+H5-1 (naive's excess optimism grows as n shrinks) is supported by the rule (Spearman -0.97), but trivially: LORD++ accepts almost nothing, so its optimism is about 0. H5-2 (LORD++ has the higher net holdout gain at the smallest n) fails in every cell: naive minus LORD++ holdout gain is positive with a 95% CI excluding 0 in all six cells.
+
+**Phase 5b: do better gates pay off?** (24-block exact LORD++, and a decoy-null gate that accepts a candidate whose gain is in the top 5% of a rolling null of the last 40 decoy gains, after a 20-decoy warm-up). Naive replication matches Phase 5 exactly (max difference 0.000000 over 20 pairs).
+
+| Training rows | keep-if-better | decoy-null gate (vs naive, 95% CI) | LORD++ 24 blocks | LORD++ 12 blocks |
 |---|---|---|---|---|
-| Random + FDR | 55.6% | 44.3-91.0 | 4.0 | 6 / 0 |
-| Random + naive | 56.4% | 41.6-90.4 | 6.6 | 3 / 0 |
-| Qwen 7B + FDR | 37.1% | 29.9-47.9 | 4.4 | 6 / 0 |
-| Qwen 7B + naive | 40.3% | 27.7-50.1 | 5.8 | 0 / 0 |
-| Qwen 3B + FDR | 29.2% | 28.7-31.3 | 1.2 | 1 / 0 |
-| Qwen 14B + FDR | 37.6% | 33.5-41.6 | 3.8 | 13 / 0 |
+| 7k | 0.0150 | 0.0117 (-0.0033 [-0.0099, 0.0040]) | 0.0013 | 0.0035 |
+| 27k | 0.0115 | 0.0079 (-0.0036 [-0.0060, -0.0013]) | 0.0042 | 0 |
+| 144k | 0.0089 | 0.0086 (-0.0004 [-0.0017, 0.0017]) | 0.0049 | 0.0018 |
+| 712k (60 proposals) | 0.0063 | 0.0058 (-0.0005 [-0.0010, 0.0001]) | 0.0037 | 0.0023 |
 
-### SEALED (opened once)
+Primary pre-registered rule (a gate wins if the paired CI of net holdout gain vs naive has a lower bound above 0 in any cell): **no gate wins.** Planted decoys accepted across the four cells (720 tested per gate): keep-if-better 43 (6.0%), decoy-null gate 16 (2.2%), both LORD++ variants 0 (upper bound 0.53%). The 24-block gate was never dead (alpha_t never below its floor) yet still accepted only 0.1-2.5 real features per run, against 9-16 for naive: the starvation is intrinsic to alpha-investing at this evidence level, not only to a low p-value floor.
 
-| Arm | SEALED gap closed, mean (median) | Range | Optimism gap (mean) | Effective outcomes |
-|---|---|---|---|---|
-| Random + FDR | 56.6 (48.1) | 42.8-93.3 | -1.0 | 5 |
-| Random + naive | 55.3 (47.8) | 39.1-90.5 | +1.0 | 5 |
-| Qwen 7B + FDR | 32.9 (31.3) | 26.5-45.1 | +4.2 | 5 |
-| Qwen 7B + naive | 45.1 (43.7) | 32.4-56.7 | -4.8 | 5 |
-| Qwen 3B + FDR | 34.7 (35.4) | 31.9-35.4 | -5.5 | 2 |
-| Qwen 14B + FDR | 40.1 (39.8) | 39.5-40.8 | -2.5 | 5 |
+![net holdout by gate](figures/final_net_holdout_by_gate.png)
+![power curve](figures/final_power_curve.png)
 
-Negative optimism means SEALED did better than DEV. Source: `results/phase3/phase3_runs.csv`, `phase3_arms.csv`.
+## What this adds (and what it does not)
 
-### Verdicts (pre-registered rules)
+- **Adds:** the two error types of a gate measured in one pipeline with planted nulls (keep-if-better passes about 3% of noise per test; strict gates reject real signal and starve below about 700k rows); a quantitative regime map; a decoy-calibrated gate that ties keep-if-better at 144k+ rows with fewer false accepts; a fully pre-registered, sealed-day protocol whose nulls were reported as such.
+- **Does not claim:** novelty on online FDR or decoy/knockoff nulls; any statement about LLM versus random beyond this fixed grammar; generalization beyond this dataset; that keep-if-better is optimal (below about 1M rows it is simply hard to beat here).
+- **Answer to the original question** ("does the harness matter more than the proposer?"): on this task, not by much. The sealed day mostly confirmed DEV, strict gates cost more than they saved at the sizes tested, and proposer differences reduced to one rare feature found once.
 
-- **H1: not supported.** The naive gate did not show a larger optimism gap. For random proposals the two gates are indistinguishable (-1.0 vs +1.0). For 7B the naive arm was better on SEALED (-4.8 vs +4.2). Per the pre-registered fail rule: *the gate was not needed on this task.*
-- **H2: not supported.** Random beat the LLM on means (56.6 vs 32.9 with FDR; 55.3 vs 45.1 with naive). On medians, 7B + naive (43.7) is close to random (47.8-48.1). Random's mean is lifted by one run (93% in one arm, 90% in the other); without that run random sits at 47.4 and 46.5, and 7B + naive at 48.2 (post hoc sensitivity check). Per the fail rule: *grammar + gate carry the result; the LLM adds little here.* Note: R and R-naive share the proposer seed for each run number; the trial logs confirm run 3 is the same underlying draw in both arms (same feature, same proposal index), so it is one lucky draw shown twice, not two independent hits.
-- **H3: not supported by the rule, but a near tie.** Size effect (range of means over 3B/7B/14B) = 7.2 points; gate effect (mean |naive - FDR|) = 6.7 points. The gate effect is uneven (about 1 point for random, about 12 for 7B) and size is not monotonic (3B 34.7 > 7B 32.9; 3B is effectively two outcomes). 14B is the best and most stable LLM arm.
-- **No exact permutation claim is available:** in every valid pair the ranges overlap, so no arm beat another 5-against-5. 3B is excluded from permutation tests by rule.
+## Related work (verify citations before any submission)
 
-### Three numbers
+Online FDR and alpha-investing (Foster and Stine; Javanmard and Montanari; Ramdas et al., LORD++); reusable holdout and Ladder (Dwork et al.; Blum and Hardt); shadow/decoy features and knockoffs (Boruta; Barber and Candes); LLM-driven feature engineering (e.g. LLM-FE, SymboLLM-FE), which rely on validation-set feedback. I read only abstracts for the last group; the claim that they lack false-discovery control is an open question, not a finding. A Thresholdout baseline is the obvious missing comparison.
 
-1. DEV to SEALED optimism is within about 6 points for every arm: the sealed day confirmed DEV.
-2. Naive vs FDR gate with 7B proposals: 45.1% vs 32.9% SEALED gap closed (+12.2 points for the naive gate, with no overfitting penalty).
-3. Canary decoys: 28 of 29 gate-tested decoys lowered SEALED AUC; 0 of 29 passed the materiality floor.
+## Phase 4 (pilots only)
 
-### Post hoc decoy check (descriptive, not a pre-registered FDR replication)
+Phase 4 (rung 1-2 grammars, GPU arms, fresh sealed day) was closed early; see `docs/PHASE4_PLAN.md`. Its random runs (rung 1: 31.5% DEV gap closed; rung 2: 35.0%) and a canary pilot are exploratory; the headline hypothesis H4-1 was not tested.
 
-The 29 gate-tested decoys were re-permuted on SEALED (fresh seeds) and added to each run's final stack, comparing 3-seed means with matched seeds. Mean delta AUC was -0.000219 (median -0.000201). One decoy had a positive delta (+0.000134, below the 0.000219 floor); a naive "AUC went up" rule would have accepted 1 of 29 (3.4%), the materiality floor 0 of 29. LORD++ was not re-simulated because the trial-level FDR state is not embedded. Per arm, gate-tested decoys: random + FDR 6, random + naive 3, 7B + FDR 6, 7B + naive 0, 3B 1, 14B 13: too few for a naive-vs-FDR decoy comparison.
+## Provenance (UTC)
 
-### Exploratory (post hoc, not pre-registered)
-
-Diagnostics from the trial logs (`results/diagnostics/`, script `code/af_phase3_analyze.py`). These do not change the verdicts above.
-
-- **One feature explains random's lead.** The 93% (and 90% in R-naive) run 3 traces to `lag(c0, c1, c3; k=1, dir=next)`, the largest-gain accepted feature in the best SEALED run (gain +0.0066 when accepted, at proposal 23). Random proposed it in 1 of 5 runs; R and R-naive hit it in the same run number (same draw). The four LLM arms (3B, 7B x 2 gates, 14B; 15 runs, 960 proposals) never proposed it, nor any `next`-lag over those keys with any k. Run-level Fisher exact p = 0.25 (1 of 5 vs 0 of 15, counting R and R-naive as one draw; 0.15 if counted as independent). Descriptive only.
-- **Without that run, random and 7B + naive are about equal** on SEALED (47.4 / 46.5 vs 48.2 gap closed; post hoc exclusion).
-- **The LLMs did explore the lag region, just not that spec.** Lag proposals (non-decoy, 240 per arm): random 56 (28 next / 28 prev), 7B + naive 43 (37 / 6), 7B + FDR 42 (41 / 1), 14B 41 (3 / 38), 3B 4 (0 / 4). Different arms leaned on different directions; none reached the needle's key set.
-- **3B collapsed onto a narrow set of operations** (0.94 bits of operation entropy vs 2.46-2.57 for the other arms; 6 operations would be at most 2.58). 7B and 14B were not narrower than random at the operation level.
-- **LLM arms accept something immediately** (median first accepted proposal index 1, vs 6 for random): fast early gain, then a plateau.
-- Caveats: the needle's gain is conditional on the stack at the time it was accepted, and it is one feature on one dataset. Trial logs record failed proposals unevenly across arms (cross-arm duplicate counts come from the run summaries, not the logs), so per-run unique-spec counts are not reported.
-
-Figures: `figures/` (`fig1_design_diagram`, `fig2_noise_kept_and_sealed_drop`, `fig3_proposer_scaling`, `fig4_cost_frontier`; exploratory: `diag_diversity_needle`, `diag_discovery_curves`).
-
-
-## Phase 4a: extended grammar (DEV only, incomplete; sealed day not opened)
-
-**Plan.** Grow the grammar (rung 1: time-bucket keys, 3.8x atomic specs; rung 2: more windows/lags, `quantile`, `burst`, 10.4x) and compare random vs Qwen 14B under a fixed gate (24 blocks, 30-test cap), judged on a fresh sealed day (2017-11-07). See `PHASE4_PLAN.md`.
-
-**Status.** Only the random arm completed (5 runs at each of rungs 1 and 2). The 14B arms finished 1 run (L-FDR-14B, rung 1) and 2 runs (LF-FDR-14B, no operator nudge, rung 1), with 2 further runs incomplete and none at rung 2. The 2017-11-07 day was never opened (no lock file). H4-1 and H4-1b (LLM vs random across rungs) were not tested. H4-3 (FDR false discoveries) is covered by the Phase 4b canary (0/390).
-
-**DEV observations (not comparable to Phase 3: different gate and test cap).** Random mean gap closed: 31.5% at rung 1 (22.1-39.8), 35.0% at rung 2 (28.1-41.9); every random run accepted at least one real feature. L-14B rung 1: 34.0% (n = 1). LF-14B rung 1: 17.9% (15.7-20.2, n = 2). Random accepted a new-axis feature in 3/5 (rung 1) and 4/5 (rung 2) runs; the sealed gain was not measured, so H4-2 is untested.
-
-**Decision.** Not completed: the LLM arms cost about 20+ GPU-hours to finish and Phase 4b suggests a dense grammar where the proposer barely matters. The sealed day stays unopened for future work. Provenance caveat: `PHASE4_PLAN.md` was never committed or tagged before the runs and was revised mid-way (superseded runs kept under `results/phase4_prerevision_nov21` and `results/phase4_prev_20261123_221501`), so Phase 4a is not pre-registered in the git sense and is reported as a pilot.
-
-
-## Phase 4b: gate stress tests (post hoc, CPU only, no new sealed day)
-
-**Canary (tests 1-2).** 13 paired runs x 30 permuted decoys per gate (same decoys per run id; decoys bypass the proxy, so this isolates the gate). Naive accepted exactly one decoy in 13/13 runs; LORD++ accepted none (0/390, Wilson 95% upper bound 1.0%). Paired sign test over 13 runs: p = 2^-13 = 1.2e-4 (decoys are shared per run id, so runs are paired, not independent). The accepted noise "closed" 0.1-3.1% of the DEV gap (mean 2.0%). The pooled decoy rate (13/390 = 3.3%) is diluted by a ratchet. On a clean stack 16% of decoys raised DEV AUC (48/300, FDR-canary logs, runs 4-13; 13% before the first naive acceptance, 10/76). After the first noise acceptance, 0 of 224 decoys did, and their mean delta AUC fell from -0.00036 to -0.00141, so the reference AUC appears inflated by the lucky win (winner's curse; consistent with, not proven). The floor alone is not enough: 5% of clean-stack decoys (15/300) clear 0.000219, yet LORD++ accepted none. Per-test false acceptance for keep-if-better is about 13-16% on a clean stack; do not use 3.3%.
-
-**Rejected-candidate audit (test 3; post hoc, sealed day already used).** Of the 63 material candidates LORD++ rejected, 78% had a positive SEALED delta, but only 37% (23/63) cleared the 0.000219 floor. Median +0.000155 vs decoy median -0.000201. Material share by arm: 3B 4/4, 7B 8/12, 14B 9/33, random 2/14. Candidates sit in 17 stacks (not independent), and beating permuted decoys is a low bar, so the floor share is the cost estimate.
-
-**Grammar census (test 4; DEV, relative to the 4-column baseline).** 86% of random proposals clear the proxy floor (83% of ratio specs, 88% of non-ratio). The needle ranks 2 of 796 non-ratio specs and is drawn with p = 0.056% per proposal: about 12% chance that 5 random runs hit it, and an expected 0.4 hits across the 720 LLM proposals (P(0) = 67%). The needle was mostly luck. Ratio-spec rank is unknown (300 of about 211k sampled).
-
-**Reading.** The strict gate is conservative both ways: it blocks noise (naive: about one false acceptance per run once enough decoys are tested) at the price of discarding some real gain. With about 10 full tests per run, only 3 decoys reached a naive gate in Phase 3, so that trade did not pay here. The grammar is dense, so the proposer barely matters. Boundary condition, not a general claim.
-
-**Provenance.** Plan and notebooks frozen at tag `phase4b-freeze` (`8c6b36b`, 2026-11-24). Results and report committed at tag `phase4b-sealed`. Per-job Kaggle start times were not logged (log files carry a collection timestamp of 2026-11-24 23:47 only). No deviations known. Report: `results/p4b/P4B_REPORT.md`.
-
-## Honest limits
-
-- One dataset, one DEV/SEALED day pair, 5 runs per arm.
-- The grammar contains the known good operations: this tests selection, not invention.
-- DEV was used for agent feedback, so DEV numbers are optimistic by construction.
-- With about 10 full tests per run on 25M rows, there was little room for winner's curse. The null on H1 may not hold with many more candidates per run.
-- Qwen2.5 family only. Other families are future work.
-- Possible model contamination. The contamination probes (3B, 7B, 14B) named other datasets (Avazu/KDD Cup, Amazon/Yahoo, Criteo), which is weak evidence of low contamination.
-- 3B is effectively two outcomes (low proposal diversity), so no size trend is claimed from it alone.
-- The 7B proposer saturated in a duplicate loop in one run; a patch (more attempts, temperature ramp, duplicate feedback in the prompt) was applied and all runs then reached 60 proposals. Protocol deviation, disclosed here.
-- The random-vs-LLM difference rests largely on one feature found once (n = 1 event); a different set of random seeds could have missed it.
-- Post hoc, DEV only: across the four FDR arms, 63 non-decoy candidates cleared the materiality floor but were rejected by LORD++ (51 with nominal p <= 0.05; 12 for 7B, 14 for random, 33 for 14B, 4 for 3B). None of the 29 gate-tested decoys did both (0/29, Wilson 95% upper bound 11.7%), so the near-misses are more consistent with real marginal signal than with noise. The strict gate probably cost some real gain, which may contribute to the naive-over-FDR gap for 7B; it does not explain why the same gate cost random proposals about 1 point. The gate never died (0 of 258 tests had alpha_t below 2^-12).
-- Decoy FPR in Phase 3 is weak evidence: the proxy screen removes most decoys first, so only 29 reached the gate. The Phase 4b canary bypasses the proxy to measure the gate alone.
-- Token counters were cumulative across runs and were converted to per-run deltas (run 1 of each arm taken as-is, unverified). R and L-naive decoy proposal counts are derived from the shared per-run schedule, not logged; R and L-naive have no token or duplicate data.
-- **Provenance timeline (UTC):** spec and DEV results committed (`619cd08`, tag `phase0-freeze-v2`) before the Kaggle SEALED job started at 22:25 on 2026-11-19. The runner script was committed 10-16 minutes after the job started (`e3ff20f`, `3e0bac9`); the lock records its sha256 (`c5d8e730...`). The job finished at 02:09 on 2026-11-20 (`results/phase3/phase3_lock.json`, tag `phase3-sealed`). An earlier invocation crashed on the first run (a parsing bug) before any feature AUC was computed on SEALED, and an earlier skeleton wrote a `started` lock that was archived under `archive/`. No SEALED feature result was read before the final run.
+Spec and DEV results committed (`619cd08`, tag `phase0-freeze-v2`) before the Kaggle SEALED job started on 2026-11-19 22:25; the runner script was committed 10-16 minutes after the job started (`e3ff20f`, `3e0bac9`) and its sha256 (`c5d8e730...`) is recorded in `results/phase3/phase3_lock.json`; the job finished 2026-11-20 02:09 (tag `phase3-sealed`). An earlier invocation crashed on a parsing bug before any feature AUC was computed on SEALED, and an earlier skeleton wrote a `started` lock that was archived. No SEALED feature result was read before the final run. Plans for Phases 4b, 5 and 5b were frozen and tagged before their runs (`phase4b-freeze`, `phase5-freeze`, `phase5b-freeze`); Phase 5, 5b and the audit reuse the Phase 3 sealed day as a holdout and say so.
 
 ## Reproduce
 
-Everything runs on Kaggle (CPU for Phase 3; the LLM arms need a GPU with a local Qwen server). See `RUN_ORDER.md` for the full order.
+Everything runs on Kaggle CPU (Phases 3, 4b, 5, 5b); the LLM arms of Phases 1-2 need a GPU with a local Qwen server. See `RUN_ORDER.md` and `docs/REPO_MAP.md`.
 
 ```bash
-# Phase 0: freeze references (baseline, ceiling, materiality)
-# Phase 1: random and naive arms            kaggle/1B_FDR, kaggle/1C_naive, kaggle/R_naive
-# Phase 2: Qwen 3B / 14B arms               kaggle/phase2_3B, kaggle/phase2_14B
-# Phase 3: open SEALED once, recompute accepted features and decoys
-kaggle kernels push -p kaggle/phase3
-# Analysis: figures + exploratory diagnostics from the Phase 3 outputs and trial logs
-python3 code/af_phase3_analyze.py
-# Phase 4a (pilot, DEV only):   kaggle/phase4_a_cpu, phase4_a_gpu, phase4_b_gpu
-# Phase 4b (CPU):               kaggle/p4b_1_canary_naive, p4b_2_canary_fdr, p4b_3_audit, p4b_4_census; p4b_collect.sh builds results/p4b/P4B_REPORT.md
+kaggle kernels push -p kaggle/phase3                 # Phase 3: the one-shot sealed run
+bash scripts/p4b_prepare.sh && bash scripts/p4b_push.sh      # Phase 4b notebooks
+bash scripts/p5_prepare.sh  && bash scripts/p5_run.sh push   # Phase 5 regime map
+bash scripts/p5b_prepare.sh && bash scripts/p5b_run.sh push  # Phase 5b gates
+python3 code/af_phase3_analyze.py                    # Phase 3 figures + diagnostics
+python3 code/af_final_figures.py                     # final figures from existing results
 ```
 
-Layout: `code/` (pipeline), `kaggle/` (one folder per notebook), `results/` (all `final_*.json`, trials, summaries, Phase 3 outputs), `figures/`, `docs/PHASE3_BRIEF.md`, `archive/` (aborted attempts). Git tags: `phase0-freeze-v2`, `phase3-sealed`, `phase4b-freeze`, `phase4b-sealed`. Default branch: `master`.
+Layout: `code/` pipeline, `kaggle/` notebooks, `scripts/` shell tooling, `results/` all outputs (`results/INDEX.md`), `figures/`, `docs/` plans frozen before runs, `archive/` aborted attempts. Git tags: `phase0-freeze-v2`, `phase3-sealed`, `phase4b-freeze`, `phase5-freeze`, `phase5-results`, `phase5b-freeze`, `phase5b-results`. Default branch: `master`.
