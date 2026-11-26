@@ -1,0 +1,493 @@
+
+==================== 0. where am I / environment ====================
+/home/jonathan/AAA_GHUB/autofeature_repo
+2026-11-24T00:53:11Z
+3.12.2
+numpy 1.26.4 pandas 3.0.3
+lightgbm 4.7.0
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+
+==================== 1. code/ and kaggle/ layout ====================
+total 313
+drwxr-xr-x  3 yoka jonathan    17 Nov 23 22:14 .
+drwxr-xr-x 13 yoka jonathan    22 Nov 24 02:53 ..
+-rw-r--r--  1 yoka jonathan 50018 Nov 20 20:23 af_ph4.py
+-rw-r--r--  1 yoka jonathan 34819 Nov 17 11:00 af_phase0.py
+-rw-r--r--  1 yoka jonathan 39145 Nov 17 23:23 af_phase1A.py
+-rw-r--r--  1 yoka jonathan 39145 Nov 17 23:23 af_phase1A_random.py
+-rw-r--r--  1 yoka jonathan 40599 Nov 18 15:38 af_phase1B_FDR.py
+-rw-r--r--  1 yoka jonathan 39151 Nov 18 12:11 af_phase1C_naive.py
+-rw-r--r--  1 yoka jonathan 40712 Nov 18 19:16 af_phase1_R_naive.py
+-rw-r--r--  1 yoka jonathan   304 Nov 18 23:26 af_phase2_L-FDR-14B.py
+-rw-r--r--  1 yoka jonathan   304 Nov 18 23:26 af_phase2_L-FDR-3B.py
+-rw-r--r--  1 yoka jonathan 14211 Nov 20 15:50 af_phase3_analyze.py
+-rw-r--r--  1 yoka jonathan 97526 Nov 20 00:14 af_phase3_sealed_combined.py
+-rw-r--r--  1 yoka jonathan 67268 Nov 22 13:11 af_phase4.py
+-rw-r--r--  1 yoka jonathan 13521 Nov 23 22:14 af_phase4_report.py
+-rw-r--r--  1 yoka jonathan  5073 Nov 23 22:13 af_phase4_summarize.py
+drwxr-xr-x  2 yoka jonathan     7 Nov 21 02:52 __pycache__
+1B_FDR
+1C_naive
+phase0_1A
+phase2_14B
+phase2_3B
+phase3
+phase4_14B
+phase4_a_cpu
+phase4_a_gpu
+phase4_b_cpu
+phase4_b_gpu
+phase4_c_cpu
+phase4_R
+phase4_seal
+R_naive
+-- kaggle/1B_FDR/
+kernel-metadata.json
+-- kaggle/1C_naive/
+kernel-metadata.json
+-- kaggle/phase0_1A/
+kernel-metadata.json
+-- kaggle/phase2_14B/
+af_phase2_L-FDR-14B.py
+kernel-metadata.json
+__pycache__
+-- kaggle/phase2_3B/
+af_phase2_L-FDR-3B.py
+kernel-metadata.json
+__pycache__
+-- kaggle/phase3/
+af_phase3_sealed_combined.py
+kernel-metadata.json
+-- kaggle/phase4_14B/
+af_phase4.py
+kernel-metadata.json
+-- kaggle/phase4_a_cpu/
+kernel-metadata.json
+__pycache__
+run.py
+-- kaggle/phase4_a_gpu/
+kernel-metadata.json
+__pycache__
+run.py
+-- kaggle/phase4_b_cpu/
+kernel-metadata.json
+__pycache__
+run.py
+-- kaggle/phase4_b_gpu/
+kernel-metadata.json
+__pycache__
+run.py
+-- kaggle/phase4_c_cpu/
+kernel-metadata.json
+__pycache__
+run.py
+-- kaggle/phase4_R/
+af_phase4.py
+kernel-metadata.json
+-- kaggle/phase4_seal/
+final_L-FDR-14B_1.json
+final_L-FDR-14B_2.json
+final_L-FDR-14B_3.json
+final_L-FDR-14B_4.json
+final_L-FDR-14B_5.json
+final_L-FDR_1.json
+final_L-FDR_2.json
+final_L-FDR-3B_1.json
+-- kaggle/R_naive/
+kernel-metadata.json
+
+==================== 2. existing push / run scripts (what the Phase 4 notebooks used) ====================
+----- push_phase4.sh (68 lines)
+#!/usr/bin/env bash
+# AutoFeature Phase 4 -> Kaggle.  Run from the repo root (finds af_phase4.py in ./ or code/).
+#
+#   ./push_phase4.sh <notebook> [--dry]        (KUSER defaults to yoka33)
+#
+# notebooks   a_cpu  random, FDR gate, rungs 1+2 x 5 runs                (CPU)  <- headline
+#             a_gpu  Qwen-14B (Phase 3 prompt, operator nudge), rungs 1+2 (GPU)  <- headline
+#             b_gpu  Qwen-14B WITHOUT the operator nudge, rungs 1+2        (GPU)
+#             c_cpu  canary arms (all decoys, proxy bypassed), rung 2      (CPU, 30 tests x 3 runs x 2 gates)
+#             seal   ONE-SHOT: opens fresh sealed day 2017-11-07 on every finished stack
+# defaults in the script: 24 sign-flip blocks, max 30 full tests per run (wall-clock guard 620 min; resume via KSRC)
+#
+# optional env:  KSRC="user/af-phase4-a-cpu,user/af-phase4-a-gpu,..."   kernel outputs to attach
+#                                                   (seal: all finished notebooks; resume: the notebook itself)
+#                P3DATA="user/af-phase3-results"    dataset holding Phase 3 results/final_*.json (rung-0 bridge)
+#                WCACHE="user/af-w-dev"             dataset holding W_DEV.npz (skips the ~10 min CSV scan)
+set -euo pipefail
+KUSER=${KUSER:-yoka33}
+NB=${1:?usage: ./push_phase4.sh <a_cpu|a_gpu|b_gpu|c_cpu|seal> [--dry]}
+DRY=${2:-}
+if [ -z "${SRC:-}" ]; then if [ -f code/af_phase4.py ]; then SRC=code/af_phase4.py; else SRC=af_phase4.py; fi; fi
+[ -f "$SRC" ] || { echo "missing $SRC"; exit 1; }
+
+case "$NB" in
+  a_cpu) GPU=false; NET=false; RUNGS="1,2"; JOBS="R-FDR:1-5";               N=60; MODE=run  ;;
+  a_gpu) GPU=true;  NET=true;  RUNGS="1,2"; JOBS="L-FDR-14B:1-5";           N=60; MODE=run  ;;
+  b_gpu) GPU=true;  NET=true;  RUNGS="1,2"; JOBS="LF-FDR-14B:1-5";          N=60; MODE=run  ;;
+  c_cpu) GPU=false; NET=false; RUNGS="2";   JOBS="C-naive:1-3,C-FDR:1-3";   N=30; MODE=run  ;;
+  seal)  GPU=false; NET=false; RUNGS="1,2"; JOBS="R-FDR:1-5";               N=60; MODE=seal ;;
+  *) echo "unknown notebook $NB"; exit 1 ;;
+esac
+
+SLUG="af-phase4-${NB//_/-}"
+D="kaggle/phase4_${NB}"
+mkdir -p "$D"
+sed -e "s|^DEFAULT_RUNGS = .*|DEFAULT_RUNGS = \"$RUNGS\"|" \
+    -e "s|^DEFAULT_JOBS = .*|DEFAULT_JOBS = \"$JOBS\"|" \
+    -e "s|^DEFAULT_N = .*|DEFAULT_N = $N|" \
+    -e "s|^DEFAULT_MODE = .*|DEFAULT_MODE = \"$MODE\"   # run \| seal \| report|" \
+    "$SRC" > "$D/run.py"
+grep -q "^DEFAULT_JOBS = \"$JOBS\"" "$D/run.py" || { echo "sed failed to set DEFAULT_JOBS"; exit 1; }
+python3 -m py_compile "$D/run.py"
+
+DS="[]"; KS="[]"
+[ -n "${WCACHE:-}" ] && DS="[\"$WCACHE\"]"
+if [ "$NB" = "seal" ] && [ -n "${P3DATA:-}" ]; then DS="[\"${WCACHE:-}\",\"$P3DATA\"]"; DS=${DS/\"\",/}; fi
+[ -n "${KSRC:-}" ] && KS="[\"${KSRC//,/\",\"}\"]"
+
+cat > "$D/kernel-metadata.json" <<JSON
+{
+  "id": "$KUSER/$SLUG",
+  "title": "$SLUG",
+  "code_file": "run.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "$GPU",
+  "enable_internet": "$NET",
+  "dataset_sources": $DS,
+  "competition_sources": ["talkingdata-adtracking-fraud-detection"],
+  "kernel_sources": $KS
+}
+JSON
+echo "built $D  (rungs=$RUNGS jobs=$JOBS n=$N mode=$MODE gpu=$GPU internet=$NET)"
+if [ "$DRY" = "--dry" ]; then echo "dry run: not pushed"; exit 0; fi
+kaggle kernels push -p "$D"
+echo "status:  kaggle kernels status $KUSER/$SLUG"
+echo "output:  kaggle kernels output $KUSER/$SLUG -p out/$NB"
+----- run_phase4.sh (114 lines)
+#!/usr/bin/env bash
+# One command: pre-flight checks, then push the four Phase 4 notebooks
+# (a_cpu, a_gpu, b_gpu, c_cpu).
+#
+#   ./run_phase4.sh --dry      build + check everything, push nothing
+#   ./run_phase4.sh            push all four
+#
+# The one-shot seal notebook is NOT pushed here; run it last.
+
+set -euo pipefail
+
+export KUSER="${KUSER:-yoka33}"
+DRY="${1:-}"
+
+cd "$(dirname "$0")"
+chmod +x push_phase4.sh
+
+echo "== pre-flight =="
+
+# Locate the Phase 4 source script
+SRCF="af_phase4.py"
+[ -f "$SRCF" ] || SRCF="code/af_phase4.py"
+[ -f "$SRCF" ] || {
+  echo "MISSING af_phase4.py (put it in the repo root or code/)"
+  exit 1
+}
+
+[ -f "push_phase4.sh" ] || {
+  echo "MISSING push_phase4.sh"
+  exit 1
+}
+
+if [ "$DRY" != "--dry" ]; then
+  command -v kaggle >/dev/null || {
+    echo "kaggle CLI not found: pip install kaggle"
+    exit 1
+  }
+
+  # Do not fail merely because ~/.kaggle/kaggle.json is absent.
+  # The Kaggle CLI may use another config location or environment variables.
+  # Test authentication with a lightweight API call instead.
+  if kaggle kernels list --mine --page-size 1 >/dev/null 2>&1; then
+    echo "kaggle authentication OK"
+  else
+    echo "Kaggle authentication failed."
+    echo "Check one of these:"
+    echo "  1. kaggle.json in ~/.kaggle/"
+    echo "  2. KAGGLE_USERNAME and KAGGLE_KEY environment variables"
+    echo "  3. KAGGLE_CONFIG_DIR pointing to a directory containing kaggle.json"
+    echo "  4. Run: kaggle configure"
+    exit 1
+  fi
+
+  # Competition access is useful but should not block a kernel push
+  # if the competition rules have already been accepted in the browser.
+  if kaggle competitions files talkingdata-adtracking-fraud-detection >/dev/null 2>&1; then
+    echo "competition access OK"
+  else
+    echo "WARNING: could not list competition files."
+    echo "If kernel pushes work, this is usually harmless."
+    echo "If needed, accept the rules at:"
+    echo "  https://www.kaggle.com/c/talkingdata-adtracking-fraud-detection/rules"
+  fi
+
+  echo "kaggle OK; user $KUSER"
+fi
+
+echo
+echo "== local sanity (grammar, about 10 seconds) =="
+
+python3 "$SRCF" --dry-run --n 60 2>&1 |
+  grep -oE "dry-run rung=[0-9]: grammar_ok=[A-Za-z]+|effective_atomic': [0-9]+|total_effective': [0-9]+" |
+  paste -sd' ' |
+  sed 's/dry-run/\n dry-run/g'
+
+echo
+echo "== building and pushing notebooks =="
+
+for nb in a_cpu a_gpu b_gpu c_cpu; do
+  echo
+  echo "== $nb =="
+  ./push_phase4.sh "$nb" $DRY
+done
+
+cat <<EOF
+
+== next ==
+
+status:
+  for n in a-cpu a-gpu b-gpu c-cpu; do
+    kaggle kernels status $KUSER/af-phase4-\$n
+  done
+
+outputs:
+  kaggle kernels output $KUSER/af-phase4-a-cpu -p out_phase4/af-phase4-a-cpu
+  kaggle kernels output $KUSER/af-phase4-a-gpu -p out_phase4/af-phase4-a-gpu
+  kaggle kernels output $KUSER/af-phase4-b-gpu -p out_phase4/af-phase4-b-gpu
+  kaggle kernels output $KUSER/af-phase4-c-cpu -p out_phase4/af-phase4-c-cpu
+
+resume:
+  If a notebook stops at the time guard, attach its own previous output
+  and re-push it:
+
+  KSRC=$KUSER/af-phase4-a-cpu ./push_phase4.sh a_cpu
+  KSRC=$KUSER/af-phase4-a-gpu ./push_phase4.sh a_gpu
+  KSRC=$KUSER/af-phase4-b-gpu ./push_phase4.sh b_gpu
+  KSRC=$KUSER/af-phase4-c-cpu ./push_phase4.sh c_cpu
+
+LAST, once all four are done and the plan is committed:
+
+  KSRC=$KUSER/af-phase4-a-cpu,$KUSER/af-phase4-a-gpu,$KUSER/af-phase4-b-gpu,$KUSER/af-phase4-c-cpu \
+  P3DATA=$KUSER/af-phase3-results \
+  ./push_phase4.sh seal
+EOF
+
+==================== 3. kernel-metadata examples (Phase 3 CPU and one Phase 4 notebook) ====================
+----- kaggle/phase3/kernel-metadata.json
+{
+  "id": "yoka33/af-minilab-phase3-sealed",
+  "title": "af-minilab-phase3-sealed",
+  "code_file": "af_phase3_sealed_combined.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [
+    "talkingdata-adtracking-fraud-detection"
+  ],
+  "kernel_sources": []
+}
+----- kaggle/phase4_14B/kernel-metadata.json
+{
+  "id": "yoka33/af-p4-14b",
+  "title": "af-p4-14b",
+  "code_file": "af_phase4.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [
+    "talkingdata-adtracking-fraud-detection"
+  ],
+  "kernel_sources": []
+}
+
+----- kaggle/phase4_a_cpu/kernel-metadata.json
+{
+  "id": "yoka33/af-phase4-a-cpu",
+  "title": "af-phase4-a-cpu",
+  "code_file": "run.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "false",
+  "enable_internet": "false",
+  "dataset_sources": [],
+  "competition_sources": ["talkingdata-adtracking-fraud-detection"],
+  "kernel_sources": []
+}
+
+kaggle/phase4_14B
+kaggle/phase4_a_cpu
+kaggle/phase4_a_cpu
+kaggle/phase4_a_gpu
+kaggle/phase4_b_cpu
+kaggle/phase4_b_gpu
+kaggle/phase4_c_cpu
+kaggle/phase4_c_cpu
+kaggle/phase4_R
+kaggle/phase4_seal
+--- Kaggle username / my phase 4 kernels
+- username: yoka33
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ref                     title            author  lastRunTime                 totalVotes  
+----------------------  ---------------  ------  --------------------------  ----------  
+yoka33/af-phase4-c-cpu  af-phase4-c-cpu  Yoka    2026-11-22 11:14:10.397000           0  
+yoka33/af-phase4-b-cpu  af-phase4-b-cpu  Yoka    2026-11-21 01:07:44.623000           0  
+yoka33/af-phase4-a-cpu  af-phase4-a-cpu  Yoka    2026-11-22 11:14:02.480000           0  
+yoka33/af-phase4-b-gpu  af-phase4-b-gpu  Yoka    2026-11-22 11:14:06.970000           0  
+yoka33/af-phase4-a-gpu  af-phase4-a-gpu  Yoka    2026-11-22 17:47:57.840000           0  
+
+==================== 4. the Phase 4 runner: which file, CLI, canary logic ====================
+candidates: code/af_ph4.py
+code/af_phase4.py
+code/af_phase4_report.py
+----- code/af_ph4.py: 1179 lines
+--- argparse flags
+1102:    ap.add_argument("--rung", type=int, default=DEFAULT_RUNG, choices=[0, 1, 2], help="grammar scale rung (0, 1, 2)")
+1103:    ap.add_argument("--jobs", default="", help='e.g. "R-naive:1-5" or "L-naive-14B:1-10"')
+1104:    ap.add_argument("--n", type=int, default=60, help="evaluated proposals per run (default: 60)")
+1105:    ap.add_argument("--work-dir", default="", help="default: /kaggle/working/af_lab_r{rung}")
+1106:    ap.add_argument("--cache-dir", default="/tmp/af_cache" if kaggle else "./af_cache")
+1107:    ap.add_argument("--model", default="", help="override Ollama model (default: inferred per arm)")
+1108:    ap.add_argument("--ollama-url", default="http://127.0.0.1:11434")
+1109:    ap.add_argument("--start-ollama", action="store_true", default=kaggle)
+1110:    ap.add_argument("--install-ollama", action="store_true", default=kaggle)
+1111:    ap.add_argument("--mock-llm", action="store_true", help="LLM arms use random sampler (smoke tests only)")
+1112:    ap.add_argument("--max-mins", type=float, default=700.0)
+1113:    ap.add_argument("--report", action="store_true")
+1114:    ap.add_argument("--dry-run", action="store_true")
+--- --help
+usage: af_ph4.py [-h] [--rung {0,1,2}] [--jobs JOBS] [--n N]
+                 [--work-dir WORK_DIR] [--cache-dir CACHE_DIR] [--model MODEL]
+                 [--ollama-url OLLAMA_URL] [--start-ollama] [--install-ollama]
+                 [--mock-llm] [--max-mins MAX_MINS] [--report] [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --rung {0,1,2}        grammar scale rung (0, 1, 2)
+  --jobs JOBS           e.g. "R-naive:1-5" or "L-naive-14B:1-10"
+  --n N                 evaluated proposals per run (default: 60)
+  --work-dir WORK_DIR   default: /kaggle/working/af_lab_r{rung}
+  --cache-dir CACHE_DIR
+  --model MODEL         override Ollama model (default: inferred per arm)
+  --ollama-url OLLAMA_URL
+  --start-ollama
+  --install-ollama
+  --mock-llm            LLM arms use random sampler (smoke tests only)
+  --max-mins MAX_MINS
+  --report
+  --dry-run
+--- canary / arm names
+--- budget guards / env vars
+49:TEST = os.environ.get("AF_TEST") == "1"
+110:    roots = [Path(os.environ.get("TD_INPUT", "/kaggle/input")), Path("."), Path("data")]
+681:            env = os.environ.copy()
+1100:    kaggle = Path("/kaggle/working").exists()
+1105:    ap.add_argument("--work-dir", default="", help="default: /kaggle/working/af_lab_r{rung}")
+1117:    default_work = f"/kaggle/working/af_lab_r{a.rung}" if kaggle else f"./af_lab_r{a.rung}"
+1133:    jobs_str = a.jobs or os.environ.get("AF_JOBS") or DEFAULT_JOBS
+
+==================== 5. Phase 3 inputs for tests 3 and 4 (rejected-candidate audit, census) ====================
+phase3_arms.csv
+phase3_arms.md
+phase3_decoys.csv
+phase3_lock.json
+PHASE3_METHOD_NOTES.md
+phase3_run_L-FDR-14B_1.json
+phase3_run_L-FDR-14B_2.json
+phase3_run_L-FDR-14B_3.json
+phase3_run_L-FDR-14B_4.json
+phase3_run_L-FDR-14B_5.json
+phase3_run_L-FDR_1.json
+phase3_run_L-FDR_2.json
+phase3_run_L-FDR-3B_1.json
+phase3_run_L-FDR-3B_2.json
+phase3_run_L-FDR-3B_3.json
+phase3_run_L-FDR-3B_4.json
+phase3_run_L-FDR-3B_5.json
+phase3_run_L-FDR_3.json
+phase3_run_L-FDR_4.json
+phase3_run_L-FDR_5.json
+phase3_run_L-naive_1.json
+phase3_run_L-naive_2.json
+phase3_run_L-naive_3.json
+phase3_run_L-naive_4.json
+phase3_run_L-naive_5.json
+phase3_run_R_1.json
+phase3_run_R_2.json
+phase3_run_R_3.json
+phase3_run_R_4.json
+phase3_run_R_5.json
+phase3_run_R-naive_1.json
+phase3_run_R-naive_2.json
+phase3_run_R-naive_3.json
+phase3_run_R-naive_4.json
+phase3_run_R-naive_5.json
+phase3_runs.csv
+phase3_runs.json
+phase3_summary.json
+PUSHED_MD5.txt
+phase3_run_*.json count: 30
+keys: ['run', 'accepted_real_specs', 'base_fits', 'final_fits', 'decoys']
+accepted_real_specs sample: [{'op': 'nunique', 'keys': ['c0', 'c3', 'h'], 'target': 'c4'}, {'op': 'count', 'keys': ['c1', 'c2', 'c4']}, {'op': 'nunique', 'keys': ['c0', 'c1', 'h'], 'target': 'c2'}, {'op': 'ratio', 'num': {'op': 
+embedded-data markers in the combined Phase 3 script:
+51:F = dict(
+103:def load_dev_window() -> pd.DataFrame:
+146:def get_window(cache_dir: Path) -> Dict[str, np.ndarray]:
+322:def sample_spec(rng) -> dict:
+360:class Track:
+542:class Lab:
+860:EMBEDDED_INPUTS = json.loads(r'''
+3187:EMBEDDED_SPEC_FREEZE = json.loads(r'''
+3272:# ===================== PHASE 3: SEALED EVALUATION =====================
+--- candidate counts for the audit (material but rejected, non-decoy; trial logs)
+R: material-but-rejected 14 | p<=0.05 13 | with spec 14
+R-naive: material-but-rejected 0 | p<=0.05 0 | with spec 0
+L-naive: material-but-rejected 0 | p<=0.05 0 | with spec 0
+L-FDR: material-but-rejected 12 | p<=0.05 8 | with spec 12
+L-FDR-3B: material-but-rejected 4 | p<=0.05 4 | with spec 4
+L-FDR-14B: material-but-rejected 33 | p<=0.05 26 | with spec 33
+total 63
+
+==================== 6. data paths and sizes ====================
+code/af_phase3_sealed_combined.py:90:    roots = [Path(os.environ.get("TD_INPUT", "/kaggle/input")), Path("."), Path("data")]
+code/af_ph4.py:110:    roots = [Path(os.environ.get("TD_INPUT", "/kaggle/input")), Path("."), Path("data")]
+1.9M	results
+668K	out_phase4
+41K	code/af_phase3_sealed_combined.py
+25K	code/af_ph4.py
+
+==================== 7. git state ====================
+## master...origin/master
+?? PHASE4_PLAN.md
+?? code/af_phase4.py
+?? code/af_phase4_report.py
+?? code/af_phase4_summarize.py
+?? gather_phase4_results.sh
+?? kaggle/phase4_a_cpu/
+?? kaggle/phase4_a_gpu/
+phase0-freeze-v2
+phase3-sealed
+cf54025 upfdated Readme after phase 3
+ee5c2bc README: SEALED results, verdicts, decoy check, provenance timeline
+b254109 Phase 3: SEALED outputs (Kaggle run 2026-11-19T22:25Z to 2026-11-20T02:09Z)
+3e0bac9 Freeze: spec, results (SEALED unopened), Phase 3 runner as pushed
+
+==================== DONE - paste p4b_gather.txt back (about 200-300 lines) ====================

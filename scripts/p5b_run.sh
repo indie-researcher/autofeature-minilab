@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # p5b_run.sh - bash p5b_run.sh --dry | push | status | collect | collect-local   (requires git tag phase5b-freeze for push; FORCE=1 overrides)
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 KUSER="${KUSER:-yoka33}"; MODE="${1:-}"
 NBS=(p5b_a_gates:af-p5b-a-gates p5b_b_gates:af-p5b-b-gates p5b_c_gates:af-p5b-c-gates)
 case "$MODE" in

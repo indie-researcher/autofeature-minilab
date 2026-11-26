@@ -5,7 +5,7 @@
 #   bash p4b_push.sh --status   status of the four kernels
 # Kaggle allows several concurrent CPU sessions; if a push is refused for quota, wait for a slot and push the missing one by name.
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 KUSER="${KUSER:-yoka33}"
 MODE="${1:-}"
 NBS=(p4b_1_canary_naive:af-p4b-1-canary-naive p4b_2_canary_fdr:af-p4b-2-canary-fdr p4b_3_audit:af-p4b-3-audit p4b_4_census:af-p4b-4-census)

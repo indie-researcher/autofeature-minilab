@@ -4,7 +4,7 @@
 #   bash p4b_collect.sh --local    report only (no download)
 # Canary runs are pooled with the pilot runs in results/phase4/c_cpu when present (same arms, run ids 1-3).
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 KUSER="${KUSER:-yoka33}"
 RAW=out_p4b; RES=results/p4b
 SLUGS=(af-p4b-1-canary-naive af-p4b-2-canary-fdr af-p4b-3-audit af-p4b-4-census)

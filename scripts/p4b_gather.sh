@@ -3,7 +3,7 @@
 # Run from the repo root:  bash p4b_gather.sh   -> writes p4b_gather.txt (paste its contents back).
 # It prints no credentials (never reads kaggle.json). Output is capped, so it is safe to paste.
 set +e
-cd "$(dirname "$0")" || exit 1
+cd "$(dirname "$0")/.." || exit 1
 OUT=p4b_gather.txt
 exec > >(tee "$OUT") 2>&1
 sec() { printf '\n==================== %s ====================\n' "$1"; }

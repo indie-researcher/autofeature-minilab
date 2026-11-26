@@ -3,7 +3,7 @@
 # Usage: ./gather_phase4_results.sh            (set KUSER if your Kaggle username differs)
 set -euo pipefail
 KUSER="${KUSER:-yoka33}"
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 OUT_ROOT="out_phase4"
 mkdir -p "$OUT_ROOT"
 

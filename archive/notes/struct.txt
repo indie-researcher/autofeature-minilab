@@ -1,0 +1,932 @@
+.
+├── af_lab_r1
+├── af_lab_r2
+├── archive
+│   ├── aborted
+│   │   ├── contamination_probe_answer.json
+│   │   ├── phase3_attempts
+│   │   │   ├── af_phase3_sealed_combined.py.bak
+│   │   │   ├── af_phase3_sealed.py
+│   │   │   ├── make_phase3_runner.py
+│   │   │   ├── ph3
+│   │   │   │   ├── af_phase1_R_naive.py
+│   │   │   │   ├── af_phase3_sealed.py
+│   │   │   │   ├── af_phase3_unseal.py
+│   │   │   │   ├── make_phase3_inputs.py
+│   │   │   │   └── __pycache__
+│   │   │   │       ├── af_phase1_R_naive.cpython-312.pyc
+│   │   │   │       └── af_phase3_sealed.cpython-312.pyc
+│   │   │   ├── phase3_inputs.json
+│   │   │   ├── phase3_results
+│   │   │   └── PHASE3_TASK.md
+│   │   ├── phase3_lock_skeleton_started_20261119.json
+│   │   └── trials_L-FDR_1_prepatch.jsonl
+│   └── stale_metadata
+│       ├── code-kernel-metadata-.bak
+│       ├── code-kernel-metadata.json.bak
+│       ├── code-kernel-metadata-phase3.json.bak
+│       └── root-kernel-metadata.json
+├── code
+│   ├── af_ph4.py
+│   ├── af_phase0.py
+│   ├── af_phase1A.py
+│   ├── af_phase1A_random.py
+│   ├── af_phase1B_FDR.py
+│   ├── af_phase1C_naive.py
+│   ├── af_phase1_R_naive.py
+│   ├── af_phase2_L-FDR-14B.py
+│   ├── af_phase2_L-FDR-3B.py
+│   ├── af_phase3_analyze.py
+│   ├── af_phase3_sealed_combined.py
+│   ├── af_phase4.py
+│   ├── af_phase4_report.py
+│   ├── af_phase4_summarize.py
+│   ├── af_phase5_analyze.py
+│   ├── af_phase5b_analyze.py
+│   ├── af_phase5b_regime.py
+│   ├── af_phase5_calibration.py
+│   ├── af_phase5_regime.py
+│   └── __pycache__
+│       ├── af_phase0.cpython-312.pyc
+│       ├── af_phase1_R_naive.cpython-312.pyc
+│       ├── af_phase3_sealed_combined.cpython-312.pyc
+│       ├── af_phase3_sealed.cpython-312.pyc
+│       ├── af_phase4.cpython-312.pyc
+│       ├── af_phase5_analyze.cpython-312.pyc
+│       ├── af_phase5b_analyze.cpython-312.pyc
+│       ├── af_phase5b_regime.cpython-312.pyc
+│       ├── af_phase5_calibration.cpython-312.pyc
+│       └── af_phase5_regime.cpython-312.pyc
+├── docs
+│   ├── PHASE3_BRIEF.md
+│   ├── PHASE4B_PLAN.md
+│   ├── PHASE5B_PLAN.md
+│   └── PHASE5_PLAN.md
+├── figures
+│   ├── diag_discovery_curves.png
+│   ├── diag_diversity_needle.png
+│   ├── fig1_design_diagram.png
+│   ├── fig2_noise_kept_and_sealed_drop.png
+│   ├── fig3_proposer_scaling.png
+│   ├── fig4_cost_frontier.png
+│   └── linkedin_canary.png
+├── gather_phase4_results.sh
+├── kaggle
+│   ├── 1B_FDR
+│   │   └── kernel-metadata.json
+│   ├── 1C_naive
+│   │   └── kernel-metadata.json
+│   ├── p4b_1_canary_naive
+│   │   ├── kernel-metadata.json
+│   │   ├── __pycache__
+│   │   │   └── run.cpython-312.pyc
+│   │   └── run.py
+│   ├── p4b_2_canary_fdr
+│   │   ├── kernel-metadata.json
+│   │   ├── __pycache__
+│   │   │   └── run.cpython-312.pyc
+│   │   └── run.py
+│   ├── p4b_3_audit
+│   │   ├── audit_data.json
+│   │   ├── kernel-metadata.json
+│   │   ├── __pycache__
+│   │   │   └── run.cpython-312.pyc
+│   │   └── run.py
+│   ├── p4b_4_census
+│   │   ├── kernel-metadata.json
+│   │   ├── __pycache__
+│   │   │   └── run.cpython-312.pyc
+│   │   └── run.py
+│   ├── p5_a_regime
+│   │   ├── kernel-metadata.json
+│   │   ├── __pycache__
+│   │   │   └── run.cpython-312.pyc
+│   │   └── run.py
+│   ├── p5b_a_gates
+│   │   ├── kernel-metadata.json
+│   │   ├── __pycache__
+│   │   │   └── run.cpython-312.pyc
+│   │   └── run.py
+│   ├── p5b_b_gates
+│   │   ├── kernel-metadata.json
+│   │   ├── __pycache__
+│   │   │   └── run.cpython-312.pyc
+│   │   └── run.py
+│   ├── p5b_c_gates
+│   │   ├── kernel-metadata.json
+│   │   ├── __pycache__
+│   │   │   └── run.cpython-312.pyc
+│   │   └── run.py
+│   ├── p5_b_regime
+│   │   ├── kernel-metadata.json
+│   │   ├── __pycache__
+│   │   │   └── run.cpython-312.pyc
+│   │   └── run.py
+│   ├── p5_c_regime
+│   │   ├── kernel-metadata.json
+│   │   ├── __pycache__
+│   │   │   └── run.cpython-312.pyc
+│   │   └── run.py
+│   ├── phase0_1A
+│   │   └── kernel-metadata.json
+│   ├── phase2_14B
+│   │   ├── af_phase2_L-FDR-14B.py
+│   │   ├── kernel-metadata.json
+│   │   └── __pycache__
+│   │       └── af_phase2_L-FDR-14B.cpython-312.pyc
+│   ├── phase2_3B
+│   │   ├── af_phase2_L-FDR-3B.py
+│   │   ├── kernel-metadata.json
+│   │   └── __pycache__
+│   │       └── af_phase2_L-FDR-3B.cpython-312.pyc
+│   ├── phase3
+│   │   ├── af_phase3_sealed_combined.py
+│   │   └── kernel-metadata.json
+│   ├── phase4_14B
+│   │   ├── af_phase4.py
+│   │   └── kernel-metadata.json
+│   ├── phase4_a_cpu
+│   │   ├── kernel-metadata.json
+│   │   ├── __pycache__
+│   │   │   └── run.cpython-312.pyc
+│   │   └── run.py
+│   ├── phase4_a_gpu
+│   │   ├── kernel-metadata.json
+│   │   ├── __pycache__
+│   │   │   └── run.cpython-312.pyc
+│   │   └── run.py
+│   ├── phase4_b_cpu
+│   │   ├── kernel-metadata.json
+│   │   ├── __pycache__
+│   │   │   └── run.cpython-312.pyc
+│   │   └── run.py
+│   ├── phase4_b_gpu
+│   │   ├── kernel-metadata.json
+│   │   ├── __pycache__
+│   │   │   └── run.cpython-312.pyc
+│   │   └── run.py
+│   ├── phase4_c_cpu
+│   │   ├── kernel-metadata.json
+│   │   ├── __pycache__
+│   │   │   └── run.cpython-312.pyc
+│   │   └── run.py
+│   ├── phase4_R
+│   │   ├── af_phase4.py
+│   │   └── kernel-metadata.json
+│   ├── phase4_seal
+│   │   ├── final_L-FDR-14B_1.json
+│   │   ├── final_L-FDR-14B_2.json
+│   │   ├── final_L-FDR-14B_3.json
+│   │   ├── final_L-FDR-14B_4.json
+│   │   ├── final_L-FDR-14B_5.json
+│   │   ├── final_L-FDR_1.json
+│   │   ├── final_L-FDR_2.json
+│   │   ├── final_L-FDR-3B_1.json
+│   │   ├── final_L-FDR-3B_2.json
+│   │   ├── final_L-FDR-3B_3.json
+│   │   ├── final_L-FDR-3B_4.json
+│   │   ├── final_L-FDR-3B_5.json
+│   │   ├── final_L-FDR_3.json
+│   │   ├── final_L-FDR_4.json
+│   │   ├── final_L-FDR_5.json
+│   │   ├── final_L-naive_1.json
+│   │   ├── final_L-naive_2.json
+│   │   ├── final_L-naive_3.json
+│   │   ├── final_L-naive_4.json
+│   │   ├── final_L-naive_5.json
+│   │   ├── final_R_1.json
+│   │   ├── final_R_2.json
+│   │   ├── final_R_3.json
+│   │   ├── final_R_4.json
+│   │   ├── final_R_5.json
+│   │   ├── final_R-naive_1.json
+│   │   ├── final_R-naive_2.json
+│   │   ├── final_R-naive_3.json
+│   │   ├── final_R-naive_4.json
+│   │   ├── final_R-naive_5.json
+│   │   ├── kernel-metadata.json
+│   │   ├── __pycache__
+│   │   │   └── run.cpython-312.pyc
+│   │   └── run.py
+│   └── R_naive
+│       └── kernel-metadata.json
+├── out_p4b
+│   ├── af-p4b-1-canary-naive
+│   │   ├── af_lab_r2
+│   │   │   ├── final_r2_C-naive_10.json
+│   │   │   ├── final_r2_C-naive_11.json
+│   │   │   ├── final_r2_C-naive_12.json
+│   │   │   ├── final_r2_C-naive_13.json
+│   │   │   ├── final_r2_C-naive_4.json
+│   │   │   ├── final_r2_C-naive_5.json
+│   │   │   ├── final_r2_C-naive_6.json
+│   │   │   ├── final_r2_C-naive_7.json
+│   │   │   ├── final_r2_C-naive_8.json
+│   │   │   ├── final_r2_C-naive_9.json
+│   │   │   ├── summary_arms.md
+│   │   │   ├── summary_runs.csv
+│   │   │   ├── trials_r2_C-naive_10.jsonl
+│   │   │   ├── trials_r2_C-naive_11.jsonl
+│   │   │   ├── trials_r2_C-naive_12.jsonl
+│   │   │   ├── trials_r2_C-naive_13.jsonl
+│   │   │   ├── trials_r2_C-naive_4.jsonl
+│   │   │   ├── trials_r2_C-naive_5.jsonl
+│   │   │   ├── trials_r2_C-naive_6.jsonl
+│   │   │   ├── trials_r2_C-naive_7.jsonl
+│   │   │   ├── trials_r2_C-naive_8.jsonl
+│   │   │   └── trials_r2_C-naive_9.jsonl
+│   │   └── af-p4b-1-canary-naive.log
+│   ├── af-p4b-2-canary-fdr
+│   │   ├── af_lab_r2
+│   │   │   ├── final_r2_C-FDR_10.json
+│   │   │   ├── final_r2_C-FDR_11.json
+│   │   │   ├── final_r2_C-FDR_12.json
+│   │   │   ├── final_r2_C-FDR_13.json
+│   │   │   ├── final_r2_C-FDR_4.json
+│   │   │   ├── final_r2_C-FDR_5.json
+│   │   │   ├── final_r2_C-FDR_6.json
+│   │   │   ├── final_r2_C-FDR_7.json
+│   │   │   ├── final_r2_C-FDR_8.json
+│   │   │   ├── final_r2_C-FDR_9.json
+│   │   │   ├── summary_arms.md
+│   │   │   ├── summary_runs.csv
+│   │   │   ├── trials_r2_C-FDR_10.jsonl
+│   │   │   ├── trials_r2_C-FDR_11.jsonl
+│   │   │   ├── trials_r2_C-FDR_12.jsonl
+│   │   │   ├── trials_r2_C-FDR_13.jsonl
+│   │   │   ├── trials_r2_C-FDR_4.jsonl
+│   │   │   ├── trials_r2_C-FDR_5.jsonl
+│   │   │   ├── trials_r2_C-FDR_6.jsonl
+│   │   │   ├── trials_r2_C-FDR_7.jsonl
+│   │   │   ├── trials_r2_C-FDR_8.jsonl
+│   │   │   └── trials_r2_C-FDR_9.jsonl
+│   │   └── af-p4b-2-canary-fdr.log
+│   ├── af-p4b-3-audit
+│   │   ├── af-p4b-3-audit.log
+│   │   └── audit
+│   │       ├── audit_candidates.csv
+│   │       ├── audit_candidates.jsonl
+│   │       └── audit_summary.json
+│   └── af-p4b-4-census
+│       ├── af-p4b-4-census.log
+│       └── census
+│           ├── census_proxy.csv
+│           ├── census_proxy.jsonl
+│           ├── census_summary.json
+│           └── census_top_full.csv
+├── out_p5
+│   ├── af-p5-a-regime
+│   │   ├── af-p5-a-regime.log
+│   │   └── p5
+│   │       ├── p5_run_K200_B120_fdr_10.json
+│   │       ├── p5_run_K200_B120_fdr_1.json
+│   │       ├── p5_run_K200_B120_fdr_2.json
+│   │       ├── p5_run_K200_B120_fdr_3.json
+│   │       ├── p5_run_K200_B120_fdr_4.json
+│   │       ├── p5_run_K200_B120_fdr_5.json
+│   │       ├── p5_run_K200_B120_fdr_6.json
+│   │       ├── p5_run_K200_B120_fdr_7.json
+│   │       ├── p5_run_K200_B120_fdr_8.json
+│   │       ├── p5_run_K200_B120_fdr_9.json
+│   │       ├── p5_run_K200_B120_naive_10.json
+│   │       ├── p5_run_K200_B120_naive_1.json
+│   │       ├── p5_run_K200_B120_naive_2.json
+│   │       ├── p5_run_K200_B120_naive_3.json
+│   │       ├── p5_run_K200_B120_naive_4.json
+│   │       ├── p5_run_K200_B120_naive_5.json
+│   │       ├── p5_run_K200_B120_naive_6.json
+│   │       ├── p5_run_K200_B120_naive_7.json
+│   │       ├── p5_run_K200_B120_naive_8.json
+│   │       ├── p5_run_K200_B120_naive_9.json
+│   │       ├── p5_run_K50_B120_fdr_10.json
+│   │       ├── p5_run_K50_B120_fdr_1.json
+│   │       ├── p5_run_K50_B120_fdr_2.json
+│   │       ├── p5_run_K50_B120_fdr_3.json
+│   │       ├── p5_run_K50_B120_fdr_4.json
+│   │       ├── p5_run_K50_B120_fdr_5.json
+│   │       ├── p5_run_K50_B120_fdr_6.json
+│   │       ├── p5_run_K50_B120_fdr_7.json
+│   │       ├── p5_run_K50_B120_fdr_8.json
+│   │       ├── p5_run_K50_B120_fdr_9.json
+│   │       ├── p5_run_K50_B120_naive_10.json
+│   │       ├── p5_run_K50_B120_naive_1.json
+│   │       ├── p5_run_K50_B120_naive_2.json
+│   │       ├── p5_run_K50_B120_naive_3.json
+│   │       ├── p5_run_K50_B120_naive_4.json
+│   │       ├── p5_run_K50_B120_naive_5.json
+│   │       ├── p5_run_K50_B120_naive_6.json
+│   │       ├── p5_run_K50_B120_naive_7.json
+│   │       ├── p5_run_K50_B120_naive_8.json
+│   │       ├── p5_run_K50_B120_naive_9.json
+│   │       ├── p5_run_K50_B30_fdr_10.json
+│   │       ├── p5_run_K50_B30_fdr_1.json
+│   │       ├── p5_run_K50_B30_fdr_2.json
+│   │       ├── p5_run_K50_B30_fdr_3.json
+│   │       ├── p5_run_K50_B30_fdr_4.json
+│   │       ├── p5_run_K50_B30_fdr_5.json
+│   │       ├── p5_run_K50_B30_fdr_6.json
+│   │       ├── p5_run_K50_B30_fdr_7.json
+│   │       ├── p5_run_K50_B30_fdr_8.json
+│   │       ├── p5_run_K50_B30_fdr_9.json
+│   │       ├── p5_run_K50_B30_naive_10.json
+│   │       ├── p5_run_K50_B30_naive_1.json
+│   │       ├── p5_run_K50_B30_naive_2.json
+│   │       ├── p5_run_K50_B30_naive_3.json
+│   │       ├── p5_run_K50_B30_naive_4.json
+│   │       ├── p5_run_K50_B30_naive_5.json
+│   │       ├── p5_run_K50_B30_naive_6.json
+│   │       ├── p5_run_K50_B30_naive_7.json
+│   │       ├── p5_run_K50_B30_naive_8.json
+│   │       ├── p5_run_K50_B30_naive_9.json
+│   │       └── p5_runs.csv
+│   ├── af-p5-b-regime
+│   │   ├── af-p5-b-regime.log
+│   │   └── p5
+│   │       ├── p5_run_K10_B120_fdr_1.json
+│   │       ├── p5_run_K10_B120_fdr_2.json
+│   │       ├── p5_run_K10_B120_fdr_3.json
+│   │       ├── p5_run_K10_B120_fdr_4.json
+│   │       ├── p5_run_K10_B120_fdr_5.json
+│   │       ├── p5_run_K10_B120_fdr_6.json
+│   │       ├── p5_run_K10_B120_fdr_7.json
+│   │       ├── p5_run_K10_B120_fdr_8.json
+│   │       ├── p5_run_K10_B120_naive_1.json
+│   │       ├── p5_run_K10_B120_naive_2.json
+│   │       ├── p5_run_K10_B120_naive_3.json
+│   │       ├── p5_run_K10_B120_naive_4.json
+│   │       ├── p5_run_K10_B120_naive_5.json
+│   │       ├── p5_run_K10_B120_naive_6.json
+│   │       ├── p5_run_K10_B120_naive_7.json
+│   │       ├── p5_run_K10_B120_naive_8.json
+│   │       ├── p5_run_K10_B30_fdr_1.json
+│   │       ├── p5_run_K10_B30_fdr_2.json
+│   │       ├── p5_run_K10_B30_fdr_3.json
+│   │       ├── p5_run_K10_B30_fdr_4.json
+│   │       ├── p5_run_K10_B30_fdr_5.json
+│   │       ├── p5_run_K10_B30_fdr_6.json
+│   │       ├── p5_run_K10_B30_fdr_7.json
+│   │       ├── p5_run_K10_B30_fdr_8.json
+│   │       ├── p5_run_K10_B30_naive_1.json
+│   │       ├── p5_run_K10_B30_naive_2.json
+│   │       ├── p5_run_K10_B30_naive_3.json
+│   │       ├── p5_run_K10_B30_naive_4.json
+│   │       ├── p5_run_K10_B30_naive_5.json
+│   │       ├── p5_run_K10_B30_naive_6.json
+│   │       ├── p5_run_K10_B30_naive_7.json
+│   │       ├── p5_run_K10_B30_naive_8.json
+│   │       └── p5_runs.csv
+│   └── af-p5-c-regime
+│       ├── af-p5-c-regime.log
+│       └── p5
+│           ├── p5_run_K2_B60_fdr_1.json
+│           ├── p5_run_K2_B60_fdr_2.json
+│           ├── p5_run_K2_B60_fdr_3.json
+│           ├── p5_run_K2_B60_fdr_4.json
+│           ├── p5_run_K2_B60_naive_1.json
+│           ├── p5_run_K2_B60_naive_2.json
+│           ├── p5_run_K2_B60_naive_3.json
+│           ├── p5_run_K2_B60_naive_4.json
+│           └── p5_runs.csv
+├── out_phase4
+│   ├── af-phase4-a-cpu
+│   │   ├── af_lab_r1
+│   │   │   ├── final_r1_R-FDR_1.json
+│   │   │   ├── final_r1_R-FDR_2.json
+│   │   │   ├── final_r1_R-FDR_3.json
+│   │   │   ├── final_r1_R-FDR_4.json
+│   │   │   ├── final_r1_R-FDR_5.json
+│   │   │   ├── summary_arms.md
+│   │   │   ├── summary_runs.csv
+│   │   │   ├── trials_r1_R-FDR_1.jsonl
+│   │   │   ├── trials_r1_R-FDR_2.jsonl
+│   │   │   ├── trials_r1_R-FDR_3.jsonl
+│   │   │   ├── trials_r1_R-FDR_4.jsonl
+│   │   │   └── trials_r1_R-FDR_5.jsonl
+│   │   ├── af_lab_r2
+│   │   │   ├── final_r2_R-FDR_1.json
+│   │   │   ├── final_r2_R-FDR_2.json
+│   │   │   ├── final_r2_R-FDR_3.json
+│   │   │   ├── final_r2_R-FDR_4.json
+│   │   │   ├── final_r2_R-FDR_5.json
+│   │   │   ├── summary_arms.md
+│   │   │   ├── summary_runs.csv
+│   │   │   ├── trials_r2_R-FDR_1.jsonl
+│   │   │   ├── trials_r2_R-FDR_2.jsonl
+│   │   │   ├── trials_r2_R-FDR_3.jsonl
+│   │   │   ├── trials_r2_R-FDR_4.jsonl
+│   │   │   └── trials_r2_R-FDR_5.jsonl
+│   │   └── af-phase4-a-cpu.log
+│   ├── af-phase4-a-gpu
+│   │   ├── af_lab_r1
+│   │   │   ├── contamination_probe_qwen2.5_14b.json
+│   │   │   ├── final_r1_L-FDR-14B_1.json
+│   │   │   ├── summary_arms.md
+│   │   │   ├── summary_runs.csv
+│   │   │   ├── trials_r1_L-FDR-14B_1.jsonl
+│   │   │   └── trials_r1_L-FDR-14B_2.jsonl
+│   │   └── af-phase4-a-gpu.log
+│   ├── af-phase4-b-cpu
+│   │   ├── af_lab_r2
+│   │   │   ├── final_r2_R-FDR_101.json
+│   │   │   ├── final_r2_R-FDR_102.json
+│   │   │   ├── summary_arms.md
+│   │   │   ├── summary_runs.csv
+│   │   │   ├── trials_r2_R-FDR_101.jsonl
+│   │   │   ├── trials_r2_R-FDR_102.jsonl
+│   │   │   └── trials_r2_R-FDR_103.jsonl
+│   │   └── af-phase4-b-cpu.log
+│   ├── af-phase4-b-gpu
+│   │   ├── af_lab_r1
+│   │   │   ├── contamination_probe_qwen2.5_14b.json
+│   │   │   ├── final_r1_LF-FDR-14B_1.json
+│   │   │   ├── final_r1_LF-FDR-14B_2.json
+│   │   │   ├── summary_arms.md
+│   │   │   ├── summary_runs.csv
+│   │   │   ├── trials_r1_LF-FDR-14B_1.jsonl
+│   │   │   ├── trials_r1_LF-FDR-14B_2.jsonl
+│   │   │   └── trials_r1_LF-FDR-14B_3.jsonl
+│   │   └── af-phase4-b-gpu.log
+│   └── af-phase4-c-cpu
+│       ├── af_lab_r2
+│       │   ├── final_r2_C-FDR_1.json
+│       │   ├── final_r2_C-FDR_2.json
+│       │   ├── final_r2_C-FDR_3.json
+│       │   ├── final_r2_C-naive_1.json
+│       │   ├── final_r2_C-naive_2.json
+│       │   ├── final_r2_C-naive_3.json
+│       │   ├── summary_arms.md
+│       │   ├── summary_runs.csv
+│       │   ├── trials_r2_C-FDR_1.jsonl
+│       │   ├── trials_r2_C-FDR_2.jsonl
+│       │   ├── trials_r2_C-FDR_3.jsonl
+│       │   ├── trials_r2_C-naive_1.jsonl
+│       │   ├── trials_r2_C-naive_2.jsonl
+│       │   └── trials_r2_C-naive_3.jsonl
+│       └── af-phase4-c-cpu.log
+├── p4b_collect.sh
+├── p4b_gather.sh
+├── p4b_gather.txt
+├── p4b_prepare.sh
+├── p4b_push.sh
+├── p5b_prepare.sh
+├── p5b_run.sh
+├── p5_prepare.sh
+├── p5_run.sh
+├── PHASE4_PLAN.md
+├── phase5_getwindow.txt
+├── phase5_handoff.txt
+├── phase5_needed.txt
+├── push_phase4.sh
+├── README.md
+├── results
+│   ├── contamination_probe_answer.json
+│   ├── diagnostics
+│   │   ├── diag_by_arm.csv
+│   │   ├── diag_by_run.csv
+│   │   └── needle.json
+│   ├── L-FDR
+│   │   ├── contamination_probe_answer.json
+│   │   ├── final_L-FDR_1.json
+│   │   ├── final_L-FDR_2.json
+│   │   ├── final_L-FDR_3.json
+│   │   ├── final_L-FDR_4.json
+│   │   ├── final_L-FDR_5.json
+│   │   ├── summary_arms.md
+│   │   ├── summary_runs.csv
+│   │   ├── trials_L-FDR_1.jsonl
+│   │   ├── trials_L-FDR_2.jsonl
+│   │   ├── trials_L-FDR_3.jsonl
+│   │   ├── trials_L-FDR_4.jsonl
+│   │   └── trials_L-FDR_5.jsonl
+│   ├── L-FDR-14B
+│   │   ├── contamination_probe_answer.json
+│   │   ├── final_L-FDR-14B_1.json
+│   │   ├── final_L-FDR-14B_2.json
+│   │   ├── final_L-FDR-14B_3.json
+│   │   ├── final_L-FDR-14B_4.json
+│   │   ├── final_L-FDR-14B_5.json
+│   │   ├── summary_arms.md
+│   │   ├── summary_runs.csv
+│   │   ├── trials_L-FDR-14B_1.jsonl
+│   │   ├── trials_L-FDR-14B_2.jsonl
+│   │   ├── trials_L-FDR-14B_3.jsonl
+│   │   ├── trials_L-FDR-14B_4.jsonl
+│   │   └── trials_L-FDR-14B_5.jsonl
+│   ├── L-FDR-3B
+│   │   ├── contamination_probe_answer.json
+│   │   ├── final_L-FDR-3B_1.json
+│   │   ├── final_L-FDR-3B_2.json
+│   │   ├── final_L-FDR-3B_3.json
+│   │   ├── final_L-FDR-3B_4.json
+│   │   ├── final_L-FDR-3B_5.json
+│   │   ├── summary_arms.md
+│   │   ├── summary_runs.csv
+│   │   ├── trials_L-FDR-3B_1.jsonl
+│   │   ├── trials_L-FDR-3B_2.jsonl
+│   │   ├── trials_L-FDR-3B_3.jsonl
+│   │   ├── trials_L-FDR-3B_4.jsonl
+│   │   └── trials_L-FDR-3B_5.jsonl
+│   ├── L-naive
+│   │   ├── contamination_probe_answer.json
+│   │   ├── final_L-naive_1.json
+│   │   ├── final_L-naive_2.json
+│   │   ├── final_L-naive_3.json
+│   │   ├── final_L-naive_4.json
+│   │   ├── final_L-naive_5.json
+│   │   ├── summary_arms.md
+│   │   ├── summary_runs.csv
+│   │   ├── trials_L-naive_1.jsonl
+│   │   ├── trials_L-naive_2.jsonl
+│   │   ├── trials_L-naive_3.jsonl
+│   │   ├── trials_L-naive_4.jsonl
+│   │   └── trials_L-naive_5.jsonl
+│   ├── p4b
+│   │   ├── audit
+│   │   │   ├── af-p4b-3-audit.log
+│   │   │   ├── audit_candidates.csv
+│   │   │   ├── audit_candidates.jsonl
+│   │   │   └── audit_summary.json
+│   │   ├── canary_fdr
+│   │   │   ├── af-p4b-2-canary-fdr.log
+│   │   │   ├── final_r2_C-FDR_10.json
+│   │   │   ├── final_r2_C-FDR_11.json
+│   │   │   ├── final_r2_C-FDR_12.json
+│   │   │   ├── final_r2_C-FDR_13.json
+│   │   │   ├── final_r2_C-FDR_4.json
+│   │   │   ├── final_r2_C-FDR_5.json
+│   │   │   ├── final_r2_C-FDR_6.json
+│   │   │   ├── final_r2_C-FDR_7.json
+│   │   │   ├── final_r2_C-FDR_8.json
+│   │   │   ├── final_r2_C-FDR_9.json
+│   │   │   ├── trials_r2_C-FDR_10.jsonl
+│   │   │   ├── trials_r2_C-FDR_11.jsonl
+│   │   │   ├── trials_r2_C-FDR_12.jsonl
+│   │   │   ├── trials_r2_C-FDR_13.jsonl
+│   │   │   ├── trials_r2_C-FDR_4.jsonl
+│   │   │   ├── trials_r2_C-FDR_5.jsonl
+│   │   │   ├── trials_r2_C-FDR_6.jsonl
+│   │   │   ├── trials_r2_C-FDR_7.jsonl
+│   │   │   ├── trials_r2_C-FDR_8.jsonl
+│   │   │   └── trials_r2_C-FDR_9.jsonl
+│   │   ├── canary_naive
+│   │   │   ├── af-p4b-1-canary-naive.log
+│   │   │   ├── final_r2_C-naive_10.json
+│   │   │   ├── final_r2_C-naive_11.json
+│   │   │   ├── final_r2_C-naive_12.json
+│   │   │   ├── final_r2_C-naive_13.json
+│   │   │   ├── final_r2_C-naive_4.json
+│   │   │   ├── final_r2_C-naive_5.json
+│   │   │   ├── final_r2_C-naive_6.json
+│   │   │   ├── final_r2_C-naive_7.json
+│   │   │   ├── final_r2_C-naive_8.json
+│   │   │   ├── final_r2_C-naive_9.json
+│   │   │   ├── trials_r2_C-naive_10.jsonl
+│   │   │   ├── trials_r2_C-naive_11.jsonl
+│   │   │   ├── trials_r2_C-naive_12.jsonl
+│   │   │   ├── trials_r2_C-naive_13.jsonl
+│   │   │   ├── trials_r2_C-naive_4.jsonl
+│   │   │   ├── trials_r2_C-naive_5.jsonl
+│   │   │   ├── trials_r2_C-naive_6.jsonl
+│   │   │   ├── trials_r2_C-naive_7.jsonl
+│   │   │   ├── trials_r2_C-naive_8.jsonl
+│   │   │   └── trials_r2_C-naive_9.jsonl
+│   │   ├── census
+│   │   │   ├── af-p4b-4-census.log
+│   │   │   ├── census_proxy.csv
+│   │   │   ├── census_proxy.jsonl
+│   │   │   ├── census_summary.json
+│   │   │   └── census_top_full.csv
+│   │   └── P4B_REPORT.md
+│   ├── p5
+│   │   ├── p5_a_regime
+│   │   │   ├── p5_run_K200_B120_fdr_10.json
+│   │   │   ├── p5_run_K200_B120_fdr_1.json
+│   │   │   ├── p5_run_K200_B120_fdr_2.json
+│   │   │   ├── p5_run_K200_B120_fdr_3.json
+│   │   │   ├── p5_run_K200_B120_fdr_4.json
+│   │   │   ├── p5_run_K200_B120_fdr_5.json
+│   │   │   ├── p5_run_K200_B120_fdr_6.json
+│   │   │   ├── p5_run_K200_B120_fdr_7.json
+│   │   │   ├── p5_run_K200_B120_fdr_8.json
+│   │   │   ├── p5_run_K200_B120_fdr_9.json
+│   │   │   ├── p5_run_K200_B120_naive_10.json
+│   │   │   ├── p5_run_K200_B120_naive_1.json
+│   │   │   ├── p5_run_K200_B120_naive_2.json
+│   │   │   ├── p5_run_K200_B120_naive_3.json
+│   │   │   ├── p5_run_K200_B120_naive_4.json
+│   │   │   ├── p5_run_K200_B120_naive_5.json
+│   │   │   ├── p5_run_K200_B120_naive_6.json
+│   │   │   ├── p5_run_K200_B120_naive_7.json
+│   │   │   ├── p5_run_K200_B120_naive_8.json
+│   │   │   ├── p5_run_K200_B120_naive_9.json
+│   │   │   ├── p5_run_K50_B120_fdr_10.json
+│   │   │   ├── p5_run_K50_B120_fdr_1.json
+│   │   │   ├── p5_run_K50_B120_fdr_2.json
+│   │   │   ├── p5_run_K50_B120_fdr_3.json
+│   │   │   ├── p5_run_K50_B120_fdr_4.json
+│   │   │   ├── p5_run_K50_B120_fdr_5.json
+│   │   │   ├── p5_run_K50_B120_fdr_6.json
+│   │   │   ├── p5_run_K50_B120_fdr_7.json
+│   │   │   ├── p5_run_K50_B120_fdr_8.json
+│   │   │   ├── p5_run_K50_B120_fdr_9.json
+│   │   │   ├── p5_run_K50_B120_naive_10.json
+│   │   │   ├── p5_run_K50_B120_naive_1.json
+│   │   │   ├── p5_run_K50_B120_naive_2.json
+│   │   │   ├── p5_run_K50_B120_naive_3.json
+│   │   │   ├── p5_run_K50_B120_naive_4.json
+│   │   │   ├── p5_run_K50_B120_naive_5.json
+│   │   │   ├── p5_run_K50_B120_naive_6.json
+│   │   │   ├── p5_run_K50_B120_naive_7.json
+│   │   │   ├── p5_run_K50_B120_naive_8.json
+│   │   │   ├── p5_run_K50_B120_naive_9.json
+│   │   │   ├── p5_run_K50_B30_fdr_10.json
+│   │   │   ├── p5_run_K50_B30_fdr_1.json
+│   │   │   ├── p5_run_K50_B30_fdr_2.json
+│   │   │   ├── p5_run_K50_B30_fdr_3.json
+│   │   │   ├── p5_run_K50_B30_fdr_4.json
+│   │   │   ├── p5_run_K50_B30_fdr_5.json
+│   │   │   ├── p5_run_K50_B30_fdr_6.json
+│   │   │   ├── p5_run_K50_B30_fdr_7.json
+│   │   │   ├── p5_run_K50_B30_fdr_8.json
+│   │   │   ├── p5_run_K50_B30_fdr_9.json
+│   │   │   ├── p5_run_K50_B30_naive_10.json
+│   │   │   ├── p5_run_K50_B30_naive_1.json
+│   │   │   ├── p5_run_K50_B30_naive_2.json
+│   │   │   ├── p5_run_K50_B30_naive_3.json
+│   │   │   ├── p5_run_K50_B30_naive_4.json
+│   │   │   ├── p5_run_K50_B30_naive_5.json
+│   │   │   ├── p5_run_K50_B30_naive_6.json
+│   │   │   ├── p5_run_K50_B30_naive_7.json
+│   │   │   ├── p5_run_K50_B30_naive_8.json
+│   │   │   ├── p5_run_K50_B30_naive_9.json
+│   │   │   └── p5_runs.csv
+│   │   ├── p5_b_regime
+│   │   │   ├── p5_run_K10_B120_fdr_1.json
+│   │   │   ├── p5_run_K10_B120_fdr_2.json
+│   │   │   ├── p5_run_K10_B120_fdr_3.json
+│   │   │   ├── p5_run_K10_B120_fdr_4.json
+│   │   │   ├── p5_run_K10_B120_fdr_5.json
+│   │   │   ├── p5_run_K10_B120_fdr_6.json
+│   │   │   ├── p5_run_K10_B120_fdr_7.json
+│   │   │   ├── p5_run_K10_B120_fdr_8.json
+│   │   │   ├── p5_run_K10_B120_naive_1.json
+│   │   │   ├── p5_run_K10_B120_naive_2.json
+│   │   │   ├── p5_run_K10_B120_naive_3.json
+│   │   │   ├── p5_run_K10_B120_naive_4.json
+│   │   │   ├── p5_run_K10_B120_naive_5.json
+│   │   │   ├── p5_run_K10_B120_naive_6.json
+│   │   │   ├── p5_run_K10_B120_naive_7.json
+│   │   │   ├── p5_run_K10_B120_naive_8.json
+│   │   │   ├── p5_run_K10_B30_fdr_1.json
+│   │   │   ├── p5_run_K10_B30_fdr_2.json
+│   │   │   ├── p5_run_K10_B30_fdr_3.json
+│   │   │   ├── p5_run_K10_B30_fdr_4.json
+│   │   │   ├── p5_run_K10_B30_fdr_5.json
+│   │   │   ├── p5_run_K10_B30_fdr_6.json
+│   │   │   ├── p5_run_K10_B30_fdr_7.json
+│   │   │   ├── p5_run_K10_B30_fdr_8.json
+│   │   │   ├── p5_run_K10_B30_naive_1.json
+│   │   │   ├── p5_run_K10_B30_naive_2.json
+│   │   │   ├── p5_run_K10_B30_naive_3.json
+│   │   │   ├── p5_run_K10_B30_naive_4.json
+│   │   │   ├── p5_run_K10_B30_naive_5.json
+│   │   │   ├── p5_run_K10_B30_naive_6.json
+│   │   │   ├── p5_run_K10_B30_naive_7.json
+│   │   │   ├── p5_run_K10_B30_naive_8.json
+│   │   │   └── p5_runs.csv
+│   │   ├── p5_cells.csv
+│   │   ├── p5_c_regime
+│   │   │   ├── p5_run_K2_B60_fdr_1.json
+│   │   │   ├── p5_run_K2_B60_fdr_2.json
+│   │   │   ├── p5_run_K2_B60_fdr_3.json
+│   │   │   ├── p5_run_K2_B60_fdr_4.json
+│   │   │   ├── p5_run_K2_B60_naive_1.json
+│   │   │   ├── p5_run_K2_B60_naive_2.json
+│   │   │   ├── p5_run_K2_B60_naive_3.json
+│   │   │   ├── p5_run_K2_B60_naive_4.json
+│   │   │   └── p5_runs.csv
+│   │   ├── p5_holdout_gain_vs_n.png
+│   │   ├── p5_optimism_vs_n.png
+│   │   ├── p5_paired.csv
+│   │   └── P5_REPORT.md
+│   ├── p5b
+│   ├── phase0
+│   │   ├── contamination_probe.txt
+│   │   ├── grammar_prompt.txt
+│   │   ├── grammar_selftest.csv
+│   │   ├── phase0_cache.json
+│   │   ├── phase0_report.md
+│   │   ├── proxy_check.csv
+│   │   └── spec_freeze.json
+│   ├── phase3
+│   │   ├── phase3_arms.csv
+│   │   ├── phase3_arms.md
+│   │   ├── phase3_decoys.csv
+│   │   ├── phase3_lock.json
+│   │   ├── PHASE3_METHOD_NOTES.md
+│   │   ├── phase3_run_L-FDR-14B_1.json
+│   │   ├── phase3_run_L-FDR-14B_2.json
+│   │   ├── phase3_run_L-FDR-14B_3.json
+│   │   ├── phase3_run_L-FDR-14B_4.json
+│   │   ├── phase3_run_L-FDR-14B_5.json
+│   │   ├── phase3_run_L-FDR_1.json
+│   │   ├── phase3_run_L-FDR_2.json
+│   │   ├── phase3_run_L-FDR-3B_1.json
+│   │   ├── phase3_run_L-FDR-3B_2.json
+│   │   ├── phase3_run_L-FDR-3B_3.json
+│   │   ├── phase3_run_L-FDR-3B_4.json
+│   │   ├── phase3_run_L-FDR-3B_5.json
+│   │   ├── phase3_run_L-FDR_3.json
+│   │   ├── phase3_run_L-FDR_4.json
+│   │   ├── phase3_run_L-FDR_5.json
+│   │   ├── phase3_run_L-naive_1.json
+│   │   ├── phase3_run_L-naive_2.json
+│   │   ├── phase3_run_L-naive_3.json
+│   │   ├── phase3_run_L-naive_4.json
+│   │   ├── phase3_run_L-naive_5.json
+│   │   ├── phase3_run_R_1.json
+│   │   ├── phase3_run_R_2.json
+│   │   ├── phase3_run_R_3.json
+│   │   ├── phase3_run_R_4.json
+│   │   ├── phase3_run_R_5.json
+│   │   ├── phase3_run_R-naive_1.json
+│   │   ├── phase3_run_R-naive_2.json
+│   │   ├── phase3_run_R-naive_3.json
+│   │   ├── phase3_run_R-naive_4.json
+│   │   ├── phase3_run_R-naive_5.json
+│   │   ├── phase3_runs.csv
+│   │   ├── phase3_runs.json
+│   │   ├── phase3_summary.json
+│   │   └── PUSHED_MD5.txt
+│   ├── phase4
+│   │   ├── a_cpu
+│   │   │   ├── final_r1_R-FDR_1.json
+│   │   │   ├── final_r1_R-FDR_2.json
+│   │   │   ├── final_r1_R-FDR_3.json
+│   │   │   ├── final_r1_R-FDR_4.json
+│   │   │   ├── final_r1_R-FDR_5.json
+│   │   │   ├── final_r2_R-FDR_1.json
+│   │   │   ├── final_r2_R-FDR_2.json
+│   │   │   ├── final_r2_R-FDR_3.json
+│   │   │   ├── final_r2_R-FDR_4.json
+│   │   │   ├── final_r2_R-FDR_5.json
+│   │   │   ├── summary_arms.md
+│   │   │   ├── summary_runs.csv
+│   │   │   ├── trials_r1_R-FDR_1.jsonl
+│   │   │   ├── trials_r1_R-FDR_2.jsonl
+│   │   │   ├── trials_r1_R-FDR_3.jsonl
+│   │   │   ├── trials_r1_R-FDR_4.jsonl
+│   │   │   ├── trials_r1_R-FDR_5.jsonl
+│   │   │   ├── trials_r2_R-FDR_1.jsonl
+│   │   │   ├── trials_r2_R-FDR_2.jsonl
+│   │   │   ├── trials_r2_R-FDR_3.jsonl
+│   │   │   ├── trials_r2_R-FDR_4.jsonl
+│   │   │   └── trials_r2_R-FDR_5.jsonl
+│   │   ├── a_gpu
+│   │   │   ├── final_r1_L-FDR-14B_1.json
+│   │   │   ├── summary_arms.md
+│   │   │   ├── summary_runs.csv
+│   │   │   ├── trials_r1_L-FDR-14B_1.jsonl
+│   │   │   └── trials_r1_L-FDR-14B_2.jsonl
+│   │   ├── b_gpu
+│   │   │   ├── final_r1_LF-FDR-14B_1.json
+│   │   │   ├── final_r1_LF-FDR-14B_2.json
+│   │   │   ├── summary_arms.md
+│   │   │   ├── summary_runs.csv
+│   │   │   ├── trials_r1_LF-FDR-14B_1.jsonl
+│   │   │   ├── trials_r1_LF-FDR-14B_2.jsonl
+│   │   │   └── trials_r1_LF-FDR-14B_3.jsonl
+│   │   ├── c_cpu
+│   │   │   ├── final_r2_C-FDR_1.json
+│   │   │   ├── final_r2_C-FDR_2.json
+│   │   │   ├── final_r2_C-FDR_3.json
+│   │   │   ├── final_r2_C-naive_1.json
+│   │   │   ├── final_r2_C-naive_2.json
+│   │   │   ├── final_r2_C-naive_3.json
+│   │   │   ├── summary_arms.md
+│   │   │   ├── summary_runs.csv
+│   │   │   ├── trials_r2_C-FDR_1.jsonl
+│   │   │   ├── trials_r2_C-FDR_2.jsonl
+│   │   │   ├── trials_r2_C-FDR_3.jsonl
+│   │   │   ├── trials_r2_C-naive_1.jsonl
+│   │   │   ├── trials_r2_C-naive_2.jsonl
+│   │   │   └── trials_r2_C-naive_3.jsonl
+│   │   ├── phase4_arms.csv
+│   │   ├── phase4_canary.csv
+│   │   ├── phase4_gap_by_arm.png
+│   │   ├── PHASE4_REPORT.md
+│   │   └── phase4_runs_all.csv
+│   ├── phase4_prerevision_nov21
+│   │   ├── a_cpu
+│   │   │   ├── final_r1_R-FDR_6.json
+│   │   │   ├── final_r1_R-FDR_7.json
+│   │   │   ├── trials_r1_R-FDR_6.jsonl
+│   │   │   ├── trials_r1_R-FDR_7.jsonl
+│   │   │   └── trials_r1_R-FDR_8.jsonl
+│   │   ├── b_cpu
+│   │   │   ├── final_r2_R-FDR_101.json
+│   │   │   ├── final_r2_R-FDR_102.json
+│   │   │   ├── summary_arms.md
+│   │   │   ├── summary_runs.csv
+│   │   │   ├── trials_r2_R-FDR_101.jsonl
+│   │   │   ├── trials_r2_R-FDR_102.jsonl
+│   │   │   └── trials_r2_R-FDR_103.jsonl
+│   │   ├── b_cpu_pilot_2224
+│   │   │   ├── final_r2_R-FDR_101.json
+│   │   │   ├── final_r2_R-FDR_102.json
+│   │   │   ├── summary_arms.md
+│   │   │   ├── summary_runs.csv
+│   │   │   ├── trials_r2_R-FDR_101.jsonl
+│   │   │   ├── trials_r2_R-FDR_102.jsonl
+│   │   │   └── trials_r2_R-FDR_103.jsonl
+│   │   └── b_gpu
+│   │       └── trials_r2_L-FDR-14B_101.jsonl
+│   ├── phase4_prev_20261123_221501
+│   │   ├── a_cpu
+│   │   │   ├── final_r1_R-FDR_1.json
+│   │   │   ├── final_r1_R-FDR_2.json
+│   │   │   ├── final_r1_R-FDR_3.json
+│   │   │   ├── final_r1_R-FDR_4.json
+│   │   │   ├── final_r1_R-FDR_5.json
+│   │   │   ├── final_r2_R-FDR_1.json
+│   │   │   ├── final_r2_R-FDR_2.json
+│   │   │   ├── final_r2_R-FDR_3.json
+│   │   │   ├── final_r2_R-FDR_4.json
+│   │   │   ├── final_r2_R-FDR_5.json
+│   │   │   ├── summary_arms.md
+│   │   │   ├── summary_runs.csv
+│   │   │   ├── trials_r1_R-FDR_1.jsonl
+│   │   │   ├── trials_r1_R-FDR_2.jsonl
+│   │   │   ├── trials_r1_R-FDR_3.jsonl
+│   │   │   ├── trials_r1_R-FDR_4.jsonl
+│   │   │   ├── trials_r1_R-FDR_5.jsonl
+│   │   │   ├── trials_r2_R-FDR_1.jsonl
+│   │   │   ├── trials_r2_R-FDR_2.jsonl
+│   │   │   ├── trials_r2_R-FDR_3.jsonl
+│   │   │   ├── trials_r2_R-FDR_4.jsonl
+│   │   │   └── trials_r2_R-FDR_5.jsonl
+│   │   ├── af_phase4_summarize.py
+│   │   ├── a_gpu
+│   │   │   ├── final_r1_L-FDR-14B_1.json
+│   │   │   ├── summary_arms.md
+│   │   │   ├── summary_runs.csv
+│   │   │   ├── trials_r1_L-FDR-14B_1.jsonl
+│   │   │   └── trials_r1_L-FDR-14B_2.jsonl
+│   │   ├── b_cpu
+│   │   ├── b_gpu
+│   │   │   ├── final_r1_LF-FDR-14B_1.json
+│   │   │   ├── final_r1_LF-FDR-14B_2.json
+│   │   │   ├── summary_arms.md
+│   │   │   ├── summary_runs.csv
+│   │   │   ├── trials_r1_LF-FDR-14B_1.jsonl
+│   │   │   ├── trials_r1_LF-FDR-14B_2.jsonl
+│   │   │   └── trials_r1_LF-FDR-14B_3.jsonl
+│   │   ├── c_cpu
+│   │   │   ├── final_r2_C-FDR_1.json
+│   │   │   ├── final_r2_C-FDR_2.json
+│   │   │   ├── final_r2_C-FDR_3.json
+│   │   │   ├── final_r2_C-naive_1.json
+│   │   │   ├── final_r2_C-naive_2.json
+│   │   │   ├── final_r2_C-naive_3.json
+│   │   │   ├── summary_arms.md
+│   │   │   ├── summary_runs.csv
+│   │   │   ├── trials_r2_C-FDR_1.jsonl
+│   │   │   ├── trials_r2_C-FDR_2.jsonl
+│   │   │   ├── trials_r2_C-FDR_3.jsonl
+│   │   │   ├── trials_r2_C-naive_1.jsonl
+│   │   │   ├── trials_r2_C-naive_2.jsonl
+│   │   │   └── trials_r2_C-naive_3.jsonl
+│   │   ├── PASTE_SUMMARY.md
+│   │   └── phase4_runs_all.csv
+│   ├── R
+│   │   ├── final_R_1.json
+│   │   ├── final_R_2.json
+│   │   ├── final_R_3.json
+│   │   ├── final_R_4.json
+│   │   ├── final_R_5.json
+│   │   ├── summary_arms.md
+│   │   ├── summary_runs.csv
+│   │   ├── trials_R_1.jsonl
+│   │   ├── trials_R_2.jsonl
+│   │   ├── trials_R_3.jsonl
+│   │   ├── trials_R_4.jsonl
+│   │   └── trials_R_5.jsonl
+│   ├── README.md
+│   └── R-naive
+│       ├── final_R-naive_1.json
+│       ├── final_R-naive_2.json
+│       ├── final_R-naive_3.json
+│       ├── final_R-naive_4.json
+│       ├── final_R-naive_5.json
+│       ├── summary_arms.md
+│       ├── summary_runs.csv
+│       ├── trials_R-naive_1.jsonl
+│       ├── trials_R-naive_2.jsonl
+│       ├── trials_R-naive_3.jsonl
+│       ├── trials_R-naive_4.jsonl
+│       └── trials_R-naive_5.jsonl
+├── RUN_ORDER.md
+├── run_phase4.sh
+└── struct.txt
+
+122 directories, 808 files

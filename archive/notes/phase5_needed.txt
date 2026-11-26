@@ -1,0 +1,386 @@
+===== getwindow =====
+
+===== Track =====
+class Track:
+    def __init__(self, W, neg_train, neg_eval):
+        y, t = W["y"], W["t"]
+        a = int(np.searchsorted(t, 3600 * F["hours_train"], "left"))
+        b = int(np.searchsorted(t, 3600 * (F["hours_train"] + F["hours_eval"]), "left"))
+        es0 = a - int(F["es_frac"] * a)
+        self.neg_train = neg_train
+        self.idx = (
+            _sub(y, 0, es0, neg_train, np.random.RandomState(SEED + 13)),
+            _sub(y, es0, a, neg_eval, np.random.RandomState(SEED + 7)),
+            _sub(y, a, b, neg_eval, np.random.RandomState(SEED + 8)),
+        )
+        self.y = tuple(y[i] for i in self.idx)
+        self.base = tuple(
+            np.column_stack([W[n][i] for n in ("c1", "c2", "c3", "c4")]).astype(np.float32) for i in self.idx
+        )
+        self.yev = self.y[2]
+
+    def col(self, arr: np.ndarray):
+        return tuple(arr[i].astype(np.float32)[:, None] for i in self.idx)
+
+    def fit(self, extras: list, seed: int) -> dict:
+        mats = [
+            np.ascontiguousarray(np.column_stack([self.base[k]] + [e[k] for e in extras]), dtype=np.float32)
+            for k in range(3)
+        ]
+        p = {**PARAMS, "scale_pos_weight": F["spw_full"] * self.neg_train, "seed": SEED + int(seed)}
+        dp = dict(max_bin=p["max_bin"], verbose=-1, feature_pre_filter=False)
+        d_tr = lgb.Dataset(mats[0], self.y[0], params=dp, free_raw_data=True).construct()
+        d_es = lgb.Dataset(mats[1], self.y[1], reference=d_tr, params=dp, free_raw_data=True).construct()
+        m = lgb.train(
+            p, d_tr, num_boost_round=F["rounds"], valid_sets=[d_es], valid_names=["es"],
+            callbacks=[lgb.early_stopping(F["early"], verbose=False)],
+        )
+        bi = int(m.best_iteration or F["rounds"])
+        pe = m.predict(mats[2], num_iteration=bi).astype(np.float32)
+        return dict(pred=pe, auc=auc(self.yev, pe), iters=bi)
+
+
+def block_aucs(y, p, nb):
+    e = np.linspace(0, len(y), nb + 1).astype(int)
+    return np.array([auc(y[a:b], p[a:b]) if 0 < y[a:b].sum() < b - a else np.nan for a, b in zip(e[:-1], e[1:])])
+
+
+_SIGNS: Dict[int, np.ndarray] = {}
+
+
+def signflip_p(d: np.ndarray) -> float:
+    d = d[np.isfinite(d)]
+    n = len(d)
+    if n < 4:
+        return 1.0
+    if n not in _SIGNS:
+        _SIGNS[n] = np.array(list(itertools.product((-1.0, 1.0), repeat=n)))
+    return float(np.mean((_SIGNS[n] @ d) / n >= d.mean() - 1e-15))
+
+
+# =============================================================================
+# 5. ONLINE FDR (LORD++)
+# =============================================================================
+def _gamma(j: int) -> float:
+    j = max(int(j), 1)
+    return 0.07720838 * np.log(max(j, 2)) / (j * np.exp(np.sqrt(np.log(j))))
+
+
+class Lord:
+    def __init__(self, alpha: float):
+        self.alpha, self.w0, self.rej = alpha, alpha / 2.0, []
+
+    def alpha_t(self, t: int) -> float:
+        a = _gamma(t) * self.w0
+        if self.rej:
+            a += (self.alpha - self.w0) * _gamma(t - self.rej[0])
+            a += sum(self.alpha * _gamma(t - r) for r in self.rej[1:])
+        return float(a)
+
+
+# =============================================================================
+# 6. PROPOSERS: Ollama client + quantized feedback prompt
+# =============================================================================
+class Ollama:
+    def __init__(self, url: str, model: str, timeout: int = 300):
+        self.url, self.model, self.timeout = url.rstrip("/"), model, timeout
+        self.tokens = {"prompt": 0, "completion": 0}
+
+    def _get(self, path):
+        with urllib.request.urlopen(urllib.request.Request(self.url + path), timeout=5) as r:
+            return json.loads(r.read().decode())
+
+    def alive(self) -> bool:
+        try:
+            self._get("/api/tags")
+            return True
+        except Exception:
+            return False
+
+    def ensure_ready(self, start: bool, install: bool) -> None:
+        if not self.alive():
+            if not start:
+                raise RuntimeError(f"Ollama unreachable at {self.url} (start it or pass --start-ollama)")
+            if shutil.which("ollama") is None:
+                if not install:
+                    raise RuntimeError("ollama binary missing (pass --install-ollama)")
+                log("installing Ollama ...")
+                subprocess.run(
+                    "apt-get update -qq && apt-get install -y -qq zstd curl && "
+                    "curl -fsSL https://ollama.com/install.sh | sh",
+                    shell=True, check=True,
+                )
+            env = os.environ.copy()
+            Path("/tmp/ollama_models").mkdir(parents=True, exist_ok=True)
+            env.setdefault("OLLAMA_MODELS", "/tmp/ollama_models")
+            subprocess.Popen(
+                ["ollama", "serve"], stdout=open("/tmp/ollama_serve.log", "a"),
+                stderr=subprocess.STDOUT, env=env, start_new_session=True,
+            )
+            for _ in range(60):
+                if self.alive():
+                    break
+                time.sleep(1)
+            else:
+                raise RuntimeError("ollama serve did not start in 60 s (see /tmp/ollama_serve.log)")
+        have = [m.get("name", "") for m in self._get("/api/tags").get("models", [])]
+        if not any(m == self.model or m.startswith(self.model + ":") for m in have):
+            log(f"pulling {self.model} ...")
+            subprocess.run(["ollama", "pull", self.model], check=True)
+        try:
+            gpu = subprocess.run(["nvidia-smi", "-L"], capture_output=True, text=True).stdout.strip().replace("\n", " | ")
+            if gpu:
+                log("GPU: " + gpu)
+        except Exception:
+            pass
+
+    def chat(self, messages, temperature=0.6, schema=None, num_predict=200) -> str:
+        payload: Dict[str, Any] = {
+            "model": self.model, "messages": messages, "stream": False,
+            "options": {"temperature": temperature, "num_predict": num_predict, "num_ctx": 4096},
+        }
+        if schema is not None:
+            payload["format"] = schema
+
+        def post(pl):
+            req = urllib.request.Request(
+                self.url + "/api/chat", data=json.dumps(pl).encode(),
+                headers={"Content-Type": "application/json"}, method="POST",
+            )
+            with urllib.request.urlopen(req, timeout=self.timeout) as r:
+                d = json.loads(r.read().decode())
+                self.tokens["prompt"] += d.get("prompt_eval_count", 0)
+                self.tokens["completion"] += d.get("eval_count", 0)
+                return d.get("message", {}).get("content", "").strip()
+
+        try:
+            return post(payload)
+        except urllib.error.HTTPError as e:
+            if schema is not None and e.code in (400, 422):
+                payload["format"] = "json"
+                return post(payload)
+            raise
+
+
+def parse_json(text: str) -> Any:
+    s = re.sub(r"^```(?:json)?\s*|\s*```$", "", text.strip(), flags=re.I)
+    try:
+        return json.loads(s)
+    except json.JSONDecodeError:
+        a, b = s.find("{"), s.rfind("}")
+        if a != -1 and b > a:
+            return json.loads(s[a:b + 1])
+        raise
+
+
+def fmt_delta(rec: dict) -> str:
+    if rec["status"] == "accepted":
+        return f"ACCEPTED ({round(rec['d_full'], 3):+.3f})"
+    if rec["status"] == "rejected":
+        return f"rejected ({round(rec['d_full'], 3):+.3f})"
+    return "screened out (no gain)"
+
+
+def build_messages(i: int, n: int, history: List[dict], rung: int, grammar_prompt: str) -> List[dict]:
+    """Same quantized feedback interface across all rungs (scales search space, not freedom)."""
+    cfg = RUNG_CFG[rung]
+    ops = {o: 0 for o in cfg["all_ops"]}
+    for h in history:
+        ops[h["spec"]["op"]] = ops.get(h["spec"]["op"], 0) + 1
+    least = min(ops, key=lambda k: ops[k])
+    acc = [h for h in history if h["status"] == "accepted"]
+    lines = [
+        f"Proposal {i} of {n}.",
+        "Accepted features so far (do not repeat): "
+        + (", ".join(json.dumps(h["spec"], sort_keys=True) for h in acc[-8:]) if acc else "none yet"),
+    ]
+    if history:
+        lines.append("Recent results:")
+        for h in history[-10:]:
+            lines.append(f"  {json.dumps(h['spec'], sort_keys=True)} -> {fmt_delta(h)}")
+    lines.append(f"Operator '{least}' is the least explored so far. Combine different key sets. Output ONE new JSON spec.")
+    return [{"role": "system", "content": grammar_prompt}, {"role": "user", "content": "\n".join(lines)}]
+
+
+# =============================================================================
+# 7. THE LAB: one (rung, arm, run) job
+# =============================================================================
+class Lab:
+    def __init__(self, W: Dict[str, np.ndarray]):
+        t0 = time.time()
+        self.W = W
+        self.Wp = {k: v[(W["c0"] % F["proxy_mod"]) == 0] for k, v in W.items()}
+        self.full = Track(W, F["neg_train"], F["neg_eval"])
+        self.prox = Track(self.Wp, F["proxy_neg_train"], 1.0)
+        log(
+            f"tracks ready in {time.time() - t0:.0f}s | full train/ES/eval {[len(i) for i in self.full.idx]} "
+            f"(eval pos {int(self.full.yev.sum()):,}) | proxy {[len(i) for i in self.prox.idx]} (eval pos {int(self.prox.yev.sum()):,})"
+        )
+
+    def reset(self):
+        self.stack: List[dict] = []
+        self.ref_seed = 0
+        self.ref: Dict[str, Any] = {}
+
+    def refit(self, seed: int):
+        self.ref_seed = seed
+        f = self.full.fit([s["full"] for s in self.stack], seed)
+        p = self.prox.fit([s["prox"] for s in self.stack], seed)
+        self.ref = dict(full_pred=f["pred"], full_auc=f["auc"], prox_auc=p["auc"])
+        return f["auc"], p["auc"]
+
+    def columns(self, spec: dict, is_decoy: bool, dseed: int):
+        ap = compute(spec, self.Wp)
+        fin = float(np.isfinite(ap).mean())
+        if is_decoy:
+            ap = make_decoy(ap, dseed)
+        return ap, fin
+
+    def full_cols(self, spec: dict, is_decoy: bool, dseed: int):
+        af = compute(spec, self.W)
+        return make_decoy(af, dseed) if is_decoy else af
+
+    def add_to_stack(self, spec, is_decoy, dseed, mats_full, mats_prox):
+        self.stack.append(dict(spec=spec, is_decoy=is_decoy, dseed=dseed, full=mats_full, prox=mats_prox))
+
+    def evaluate(self, spec: dict, is_decoy: bool, dseed: int, gate: str, lord: Lord, n_tests: int) -> dict:
+        t0 = time.time()
+        ap, fin = self.columns(spec, is_decoy, dseed)
+        mp = self.prox.col(ap)
+        del ap
+        rp = self.prox.fit([s["prox"] for s in self.stack] + [mp], self.ref_seed)
+        d_proxy = rp["auc"] - self.ref["prox_auc"]
+        rec = dict(finite_frac=round(fin, 4), d_proxy=round(d_proxy, 6))
+        if d_proxy < F["proxy_theta"]:
+            rec.update(status="screened", d_full=None, p=None, alpha_t=None, eval_secs=round(time.time() - t0, 2))
+            return rec
+        af = self.full_cols(spec, is_decoy, dseed)
+        mf = self.full.col(af)
+        del af
+        rc = self.full.fit([s["full"] for s in self.stack] + [mf], self.ref_seed)
+        d_full = rc["auc"] - self.ref["full_auc"]
+        blk = block_aucs(self.full.yev, rc["pred"], F["blocks"]) - block_aucs(self.full.yev, self.ref["full_pred"], F["blocks"])
+        p = signflip_p(blk)
+        t_idx = n_tests + 1
+        alpha_t = lord.alpha_t(t_idx)
+        if gate == "naive":
+            accept = rc["auc"] > self.ref["full_auc"]
+        else:
+            accept = bool(p <= alpha_t and d_full >= F["materiality"])
+        rec.update(
+            status="accepted" if accept else "rejected",
+            d_full=round(d_full, 6), p=round(p, 6), alpha_t=round(alpha_t, 6),
+            t_test=t_idx, cand_seed=self.ref_seed,
+            blocks_pos=int(np.sum(blk[np.isfinite(blk)] > 0)),
+            cand_auc=round(rc["auc"], 6),
+        )
+        if accept:
+            self.add_to_stack(spec, is_decoy, dseed, mf, mp)
+            if gate == "naive":
+                self.ref.update(full_pred=rc["pred"], full_auc=rc["auc"], prox_auc=rp["auc"])
+            else:
+                self.refit(self.ref_seed + 1)
+        rec["eval_secs"] = round(time.time() - t0, 2)
+        return rec
+
+
+def replay(lab: Lab, recs: List[dict], gate: str, lord: Lord) -> int:
+    lab.reset()
+    lab.refit(0)
+    n_tests = 0
+    for r in recs:
+        if r.get("t_test"):
+            n_tests = max(n_tests, r["t_test"])
+        if r["status"] != "accepted":
+            continue
+        spec = r["spec"]
+        mf = lab.full.col(lab.full_cols(spec, r["is_decoy"], r["dseed"]))
+        ap, _ = lab.columns(spec, r["is_decoy"], r["dseed"])
+        mp = lab.prox.col(ap)
+        lab.add_to_stack(spec, r["is_decoy"], r["dseed"], mf, mp)
+        if gate == "fdr":
+            lord.rej.append(r["t_test"])
+            lab.refit(lab.ref_seed + 1)
+
+===== main =====
+def main(argv=None) -> None:
+    kaggle = Path("/kaggle/working").exists()
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--rung", type=int, default=DEFAULT_RUNG, choices=[0, 1, 2], help="grammar scale rung (0, 1, 2)")
+    ap.add_argument("--jobs", default="", help='e.g. "R-naive:1-5" or "L-naive-14B:1-10"')
+    ap.add_argument("--n", type=int, default=60, help="evaluated proposals per run (default: 60)")
+    ap.add_argument("--work-dir", default="", help="default: /kaggle/working/af_lab_r{rung}")
+    ap.add_argument("--cache-dir", default="/tmp/af_cache" if kaggle else "./af_cache")
+    ap.add_argument("--model", default="", help="override Ollama model (default: inferred per arm)")
+    ap.add_argument("--ollama-url", default="http://127.0.0.1:11434")
+    ap.add_argument("--start-ollama", action="store_true", default=kaggle)
+    ap.add_argument("--install-ollama", action="store_true", default=kaggle)
+    ap.add_argument("--mock-llm", action="store_true", help="LLM arms use random sampler (smoke tests only)")
+    ap.add_argument("--max-mins", type=float, default=700.0)
+    ap.add_argument("--report", action="store_true")
+    ap.add_argument("--dry-run", action="store_true")
+    a, _ = ap.parse_known_args(argv)
+
+    default_work = f"/kaggle/working/af_lab_r{a.rung}" if kaggle else f"./af_lab_r{a.rung}"
+    work = Path(a.work_dir or default_work)
+    work.mkdir(parents=True, exist_ok=True)
+
+    if a.report:
+        return report(work)
+
+    if a.dry_run:
+        for r in (0, 1, 2):
+            rng = np.random.RandomState(r)
+            bad = normalize({"op": "count", "keys": ["zz"]}, r)[0]
+            ok = all(normalize(sample_spec(rng, r), r)[0] for _ in range(300))
+            st = grammar_stats(r, a.n)
+            log(f"dry-run rung={r}: grammar_ok={ok} invalid_rejected={not bad} stats={st}")
+        return
+
+    jobs_str = a.jobs or os.environ.get("AF_JOBS") or DEFAULT_JOBS
+    jobs = parse_jobs(jobs_str) if jobs_str else []
+    if not jobs:
+        raise SystemExit('nothing to do: set DEFAULT_JOBS or pass --jobs "R-naive:1-5"')
+
+    st = grammar_stats(a.rung, a.n)
+    log(f"rung={a.rung} | jobs={jobs_str} | n={a.n} | space={st}")
+
+    llms: Dict[str, Ollama] = {}
+    if not a.mock_llm:
+        for arm, _ in jobs:
+            _, default_model = ARM_SPECS[arm]
+            model_name = a.model or default_model
+            if model_name and model_name not in llms:
+                client = Ollama(a.ollama_url, model_name)
+                client.ensure_ready(a.start_ollama, a.install_ollama)
+                llms[model_name] = client
+                probe = work / f"contamination_probe_{model_name.replace(':', '_')}.json"
+                if not probe.exists():
+                    ans = client.chat(
+                        [{"role": "user", "content": "Here is an anonymized click log with columns c0..c4 (categorical IDs) and t "
+                          "(seconds), target = click converted. Which public dataset or competition is this? Answer briefly."}],
+                        temperature=0.0, num_predict=200,
+                    )
+                    probe.write_text(json.dumps(dict(model=model_name, answer=ans), indent=2))
+
+    W = get_window(Path(a.cache_dir))
+    lab = Lab(W)
+    lab.reset()
+    t0 = time.time()
+    lab.refit(0)
+    log(f"baseline (4 raw IDs) full-track AUC {lab.ref['full_auc']:.5f} (frozen Phase 0: {F['dev_baseline']:.5f})")
+    if not TEST and abs(lab.ref["full_auc"] - F["dev_baseline"]) > 0.003:
+        log("WARNING: baseline differs from frozen Phase 0 by > 0.003 - check window/obfuscation")
+
+    deadline = t0 + 60 * a.max_mins
+    for arm, run in jobs:
+        _, default_model = ARM_SPECS[arm]
+        model_name = a.model or default_model
+        llm = llms.get(model_name) if (model_name and not a.mock_llm) else None
+        if not run_job(lab, a.rung, arm, run, a.n, work, llm, a.mock_llm, deadline):
+            break
+    report(work)
+
+
+if __name__ == "__main__":
+    main()

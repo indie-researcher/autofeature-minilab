@@ -2,7 +2,7 @@
 # p5_prepare.sh - Phase 5: build the regime-map runner (Q2), 3 Kaggle CPU notebooks, the analysis + calibration (Q1) scripts, plan doc.
 #   bash p5_prepare.sh [--no-smoke]        (run from the repo root; nothing is pushed or committed here)
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 KUSER="${KUSER:-yoka33}"
 SRC3="${SRC3:-code/af_phase3_sealed_combined.py}"
 SMOKE=1; [ "${1:-}" = "--no-smoke" ] && SMOKE=0

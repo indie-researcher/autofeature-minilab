@@ -3,7 +3,7 @@
 # Derives code/af_phase5b_regime.py from code/af_phase5_regime.py (patched), writes the analysis script, plan, 3 CPU notebooks.
 #   bash p5b_prepare.sh [--no-smoke]      (repo root; nothing is pushed or committed here)
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 KUSER="${KUSER:-yoka33}"
 SMOKE=1; [ "${1:-}" = "--no-smoke" ] && SMOKE=0
 fail() { echo "ERROR: $*" >&2; exit 1; }
@@ -235,11 +235,11 @@ mk kaggle/p5b_b_gates af-p5b-b-gates "10:120:8"             "fdr24,decoyq"      
 mk kaggle/p5b_c_gates af-p5b-c-gates "2:60:4"               "fdr24,decoyq"         # ~4.8 h
 
 # ============================================================================================ run script
-cat > p5b_run.sh <<'RUN'
+cat > scripts/p5b_run.sh <<'RUN'
 #!/usr/bin/env bash
 # p5b_run.sh - bash p5b_run.sh --dry | push | status | collect | collect-local   (requires git tag phase5b-freeze for push; FORCE=1 overrides)
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 KUSER="${KUSER:-yoka33}"; MODE="${1:-}"
 NBS=(p5b_a_gates:af-p5b-a-gates p5b_b_gates:af-p5b-b-gates p5b_c_gates:af-p5b-c-gates)
 case "$MODE" in
@@ -271,7 +271,7 @@ for e in "${NBS[@]}"; do d="kaggle/${e%%:*}"; echo "-- $d"; kaggle kernels push 
 [ ${#FAILED[@]} -eq 0 ] || { echo "FAILED pushes: ${FAILED[*]}"; exit 1; }
 echo "Pushed. Estimated: a ~1.2 h, b ~2.2 h, c ~4.8 h. status: bash p5b_run.sh status | collect: bash p5b_run.sh collect"
 RUN
-chmod +x p5b_run.sh
+chmod +x scripts/p5b_run.sh
 
 # ============================================================================================ tests
 if [ "$SMOKE" = "1" ] && python3 -c "import lightgbm, pandas" 2>/dev/null; then
@@ -296,4 +296,4 @@ PY
   AF_TEST=1 AF_TEST_OUT=/tmp/p5b_smoke timeout 900 python3 code/af_phase5b_regime.py --gates fdr24,decoyq,naive 2>&1 | tail -5
   ls /tmp/p5b_smoke | head -4
 else echo "(smoke tests skipped)"; fi
-echo; echo "READY. Next: git add code docs kaggle p5b_prepare.sh p5b_run.sh && git commit -m 'Phase 5b plan, gates and runner' && git tag phase5b-freeze"
+echo; echo "READY. Next: git add code docs kaggle scripts/p5b_prepare.sh scripts/p5b_run.sh && git commit -m 'Phase 5b plan, gates and runner' && git tag phase5b-freeze"

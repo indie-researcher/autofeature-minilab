@@ -3,7 +3,7 @@
 #   1 canary, naive gate   2 canary, FDR gate (paired decoys)   3 audit of FDR-rejected candidates   4 grammar census
 # Usage (repo root):  bash p4b_prepare.sh [--no-smoke]      env: KUSER=yoka33  CAN_RUNS=4-13
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 KUSER="${KUSER:-yoka33}"
 CAN_RUNS="${CAN_RUNS:-4-13}"                 # pilot canary used run ids 1-3; same ids in both gates = same decoys (paired)
 SRC4="${SRC4:-code/af_phase4.py}"

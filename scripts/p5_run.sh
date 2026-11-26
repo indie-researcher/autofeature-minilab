@@ -3,7 +3,7 @@
 #   bash p5_run.sh --dry | push | status | collect | collect-local
 # push requires the git tag phase5-freeze (override with FORCE=1). collect downloads to out_p5/ and results/p5/<nb>/, then runs the analysis.
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 KUSER="${KUSER:-yoka33}"; MODE="${1:-}"
 NBS=(p5_a_regime:af-p5-a-regime p5_b_regime:af-p5-b-regime p5_c_regime:af-p5-c-regime)
 case "$MODE" in

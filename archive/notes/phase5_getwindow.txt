@@ -1,0 +1,82 @@
+def get_window(cache_dir: Path) -> Dict[str, np.ndarray]:
+    p = cache_dir / "W_DEV.npz"
+    if p.exists():
+        log(f"DEV window: cache {p}")
+        z = np.load(p)
+        return enrich_temporal_keys({k: z[k] for k in z.files})
+    W = window_arrays(load_dev_window())
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    tmp = cache_dir / "W_DEV.tmp.npz"
+    np.savez(tmp, **W)
+    os.replace(tmp, p)
+    return enrich_temporal_keys(W)
+
+
+# =============================================================================
+# 3. STEPPED GRAMMAR RUNGS (Rung 0 -> Rung 1 -> Rung 2)
+# =============================================================================
+RUNG_CFG: Dict[int, Dict[str, Any]] = {
+    0: dict(
+        keys=("c0", "c1", "c2", "c3", "c4", "h"),
+        max_keys=4,
+        lags=(1, 2, 3),
+        roll_w=(60, 600, 3600),
+        quantiles=(),
+        basic_ops=("count", "nunique", "cumcount", "roll"),
+        all_ops=("count", "nunique", "cumcount", "lag", "roll", "ratio"),
+    ),
+    1: dict(
+        # Axis 1: Key-space expansion ONLY (~12x atomic specs). Ops & parameter grids identical to Rung 0.
+        keys=("c0", "c1", "c2", "c3", "c4", "h", "m15", "m5", "m1", "s10"),
+        max_keys=5,
+        lags=(1, 2, 3),
+        roll_w=(60, 600, 3600),
+        quantiles=(),
+        basic_ops=("count", "nunique", "cumcount", "roll"),
+        all_ops=("count", "nunique", "cumcount", "lag", "roll", "ratio"),
+    ),
+    2: dict(
+        # Axis 2 & 3: Dense parameter grids (5 windows, 5 lags, 5 quantiles) + 2 extra ops (`quantile`, `burst`).
+        keys=("c0", "c1", "c2", "c3", "c4", "h", "m15", "m5", "m1", "s10"),
+        max_keys=5,
+        lags=(1, 2, 3, 5, 10),
+        roll_w=(10, 60, 300, 600, 3600),
+        quantiles=(0.1, 0.25, 0.5, 0.75, 0.9),
+        basic_ops=("count", "nunique", "cumcount", "roll", "quantile", "burst"),
+        all_ops=("count", "nunique", "cumcount", "lag", "roll", "quantile", "burst", "ratio"),
+    ),
+}
+
+
+def grammar_stats(rung: int, budget: int = 60) -> Dict[str, Any]:
+    cfg = RUNG_CFG[rung]
+    n_k = len(cfg["keys"])
+    max_k = cfg["max_keys"]
+    key_tuples = sum(math.comb(n_k, r) for r in range(1, max_k + 1))
+    nunique_cnt = sum(math.comb(n_k, r) * (n_k - r) for r in range(1, max_k + 1))
+    lag_cnt = key_tuples * len(cfg["lags"]) * 2
+    roll_cnt = key_tuples * len(cfg["roll_w"])
+    quant_cnt = nunique_cnt * len(cfg["quantiles"]) if "quantile" in cfg["all_ops"] else 0
+    burst_pairs = sum(1 for a in cfg["roll_w"] for b in cfg["roll_w"] if a < b)
+    burst_cnt = key_tuples * burst_pairs if "burst" in cfg["all_ops"] else 0
+    leaf_cnt = key_tuples + key_tuples + nunique_cnt + roll_cnt + quant_cnt + burst_cnt
+    atomic_cnt = leaf_cnt + lag_cnt
+    ratio_cnt = leaf_cnt * (leaf_cnt - 1)
+    p1_atomic = 1.0 - (1.0 - 1.0 / atomic_cnt) ** budget
+    p5_atomic = 1.0 - (1.0 - p1_atomic) ** 5
+    return dict(
+        rung=rung, n_keys=n_k, max_keys=max_k, key_tuples=key_tuples,
+        atomic_specs=atomic_cnt, ratio_specs=ratio_cnt, total_specs=atomic_cnt + ratio_cnt,
+        needle_hit_1run_atomic_pct=round(100.0 * p1_atomic, 2),
+        needle_hit_5runs_atomic_pct=round(100.0 * p5_atomic, 2),
+    )
+
+
+def build_grammar_prompt(rung: int) -> str:
+    cfg = RUNG_CFG[rung]
+    keys_str = ",".join(cfg["keys"])
+    lags_str = "|".join(str(x) for x in cfg["lags"])
+    roll_str = "|".join(str(x) for x in cfg["roll_w"])
+    leaf_names = "|".join(cfg["basic_ops"])
+    key_desc = "c0..c4 (anonymous categorical IDs) and h (hour index 0..7)"
+    if rung >= 1:

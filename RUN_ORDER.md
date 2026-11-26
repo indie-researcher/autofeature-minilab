@@ -12,3 +12,9 @@
 
 ## Stop Rule
 Stop immediately and verify results if any arm exceeds expected decoy false positive rate or if validation diverges by >0.003 from baseline.
+
+## After Phase 3
+- Phase 4 (closed early; pilots only): `scripts/run_phase4.sh`, collect with `scripts/gather_phase4_results.sh`, report with `code/af_phase4_report.py`.
+- Phase 4b (CPU): `scripts/p4b_prepare.sh` -> `scripts/p4b_push.sh` -> `scripts/p4b_collect.sh`.
+- Phase 5 (regime map): `scripts/p5_prepare.sh` -> `scripts/p5_run.sh push|status|collect` (analysis: `code/af_phase5_analyze.py`; calibration: `code/af_phase5_calibration.py`).
+- Phase 5b (gates): `scripts/p5b_prepare.sh` -> `scripts/p5b_run.sh push|status|collect` (analysis: `code/af_phase5b_analyze.py`).
